@@ -2,6 +2,10 @@
 
 <!-- start custom head snippets -->
 
+{% if page.custom_tab_title %}
+  <title>{{ page.custom_tab_title }}</title>
+{% endif %}
+
 <!-- Support for Academicons -->
 <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
 
