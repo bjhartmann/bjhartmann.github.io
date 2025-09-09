@@ -1,7 +1,7 @@
 # _data/navigation.yml
 main:
   - title: "Research"
-    url: /publications/
+    url: /research/
   - title: "Teaching"
     url: /teaching/
   - title: "CV"
