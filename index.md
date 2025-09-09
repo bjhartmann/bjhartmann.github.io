@@ -3,6 +3,7 @@ layout: single
 title: "About Me"
 author_profile: true
 classes: [narrow, hide-title]
+hide_meta: true
 ---
 
 **About me**
