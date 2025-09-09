@@ -41,3 +41,12 @@
     "vendor/font-awesome/solid",
     "vendor/font-awesome/brands"
 ;
+
+.hide-title .page__title { display: none; }        /* hide big H1 on pages using classes: hide-title */
+.greedy-nav .hidden-links,
+.greedy-nav__toggle,
+.navicon,
+#theme-toggle { display: none !important; }        /* remove burger + theme icon */
+.greedy-nav .visible-links { display:flex; gap:1rem; flex-wrap:wrap; }  /* allow wrapping */
+
+.page__footer { padding: 0.5rem 0; }   
