@@ -1,17 +1,8 @@
 ---
-layout: archive
+layout: single
 title: "CV"
-permalink: /cv-json/
+permalink: /cv/
 author_profile: false
-redirect_from:
-  - /resume-json
 ---
 
-{% include base_path %}
-
-{% include cv-template.html %}
-
-<div class="cv-download-links">
-  <a href="{{ base_path }}/files/cv.pdf" class="btn btn--primary">Download CV as PDF</a>
-  <a href="{{ base_path }}" class="btn btn--inverse">View Markdown CV</a>
-</div>
+Please find my CV here: <a href="/files/Academic_CV.pdf" target="_blank" rel="noopener">Download CV (PDF)</a>.
