@@ -6,7 +6,7 @@ classes: [narrow]
 redirect_from: 
   - /about/
   - /about.html
-custom_tab_title: "Home | Björn Hartmann"
+custom_tab_title: " | Björn Hartmann"
 ---
 
 **About me**
