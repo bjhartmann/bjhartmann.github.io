@@ -1,36 +1,66 @@
 ---
-layout: archive
-title: "Publications"
+layout: single
+title: "Research"
 permalink: /publications/
 author_profile: true
 ---
 
-{% if site.author.googlescholar %}
-  <div class="wordwrap">You can also find my articles on <a href="{{site.author.googlescholar}}">my Google Scholar profile</a>.</div>
-{% endif %}
+{% assign pubs = site.publications | sort: "date" | reverse %}
 
-{% include base_path %}
+<style>
+  .pub-item { padding: 0.6rem 0; border-bottom: 1px solid #eee; }
+  .pub-top { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+  .pub-title { font-weight: 600; text-decoration: none; cursor: pointer; }
+  .pub-links a { text-decoration: none; }
+  .pub-authors { color: #555; margin-top: 0.2rem; }
+  .pub-abstract { display: none; margin-top: 0.6rem; color: #333; }
+  @media (max-width: 640px) { .pub-top { flex-direction: column; align-items: flex-start; } }
+</style>
 
-<!-- New style rendering if publication categories are defined -->
-{% if site.publication_category %}
-  {% for category in site.publication_category  %}
-    {% assign title_shown = false %}
-    {% for post in site.publications reversed %}
-      {% if post.category != category[0] %}
-        {% continue %}
+<div class="pub-list">
+  {% for post in pubs %}
+    {% assign pid = post.slug | default: post.title | slugify %}
+    <div class="pub-item">
+      <div class="pub-top">
+        <!-- Clickable title toggles abstract -->
+        <a href="#" class="pub-title" data-target="abs-{{ pid }}">{{ post.title }}</a>
+        <span class="pub-links">
+          {% if post.paperurl %}
+            [<a href="{{ post.paperurl }}" target="_blank" rel="noopener">
+              {{ post.paperlabel | default: "paper" }}
+            </a>]
+          {% endif %}
+          {% if post.slidesurl %}
+            [<a href="{{ post.slidesurl }}" target="_blank" rel="noopener">
+              {{ post.slideslabel | default: "slides" }}
+            </a>]
+          {% endif %}
+        </span>
+      </div>
+
+      {% if post.authors %}
+        <div class="pub-authors">{{ post.authors }}</div>
       {% endif %}
-      {% unless title_shown %}
-        <h2>{{ category[1].title }}</h2><hr />
-        {% assign title_shown = true %}
-      {% endunless %}
-      {% include archive-single.html %}
-    {% endfor %}
+
+      {% if post.abstract %}
+        <div id="abs-{{ pid }}" class="pub-abstract">
+          {{ post.abstract | markdownify }}
+        </div>
+      {% endif %}
+    </div>
   {% endfor %}
-{% else %}
-  {% for post in site.publications reversed %}
-    {% include archive-single.html %}
-  {% endfor %}
-{% endif %}
+</div>
 
-
-
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.pub-title').forEach(function (el) {
+    el.addEventListener('click', function (e) {
+      e.preventDefault();
+      var id = this.getAttribute('data-target');
+      var panel = document.getElementById(id);
+      if (!panel) return;
+      panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
+    });
+  });
+});
+</script>
