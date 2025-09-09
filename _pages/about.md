@@ -14,4 +14,4 @@ In the academic year 2025/26, I visited
 <a href="https://sites.google.com/site/valentinyiakos/" target="_blank">Ákos Valentinyi</a> (University of Manchester) as a Visiting Researcher. 
  
 
-You can find my CV <a href="/files/Academic_CV.pdf" target="_blank" rel="noopener"> here </a>.
+You can find my CV <a href="/files/Academic_CV.pdf" target="_blank" rel="noopener"> here</a>.
