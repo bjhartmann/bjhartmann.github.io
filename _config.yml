@@ -24,11 +24,7 @@ author:
   # Biographic information
   avatar           : "/images/me.jpg"
   name             : "Björn Hartmann"
-  pronouns         : # example: "she/her"  
-  bio              : # "Short biography for the left-hand sidebar"
-  location         : # "Earth"
   employer         : "University of St. Gallen"
-  uri              : # URL
   email            : "bjoern.hartmann@unisg.ch" 
 
   # Academic websites
