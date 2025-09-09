@@ -5,6 +5,9 @@ author_profile: true
 classes: [narrow, hide-title]
 hide_meta: true
 custom_tab_title: " | Björn Hartmann"
+redirect_from:
+  - /about/
+  - /about.html
 ---
 
 **About me**
