@@ -1,12 +1,36 @@
 ---
-layout: archive
+layout: single
 title: "Teaching"
 permalink: /teaching/
 author_profile: true
 ---
 
-{% include base_path %}
+{% assign teaching_sorted = site.teaching | sort: "date" | reverse %}
 
-{% for post in site.teaching reversed %}
-  {% include archive-single.html %}
-{% endfor %}
+<style>
+  .teaching-wrap { margin-top: .5rem; }
+  .institution { font-variant-caps: small-caps; font-weight: 700; margin: .75rem 0 .5rem; }
+  .t-item { margin-bottom: 1rem; }
+  .t-row { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+  .t-title { font-weight: 700; }
+  .t-dates { font-style: italic; white-space: nowrap; }
+  .t-level { margin-left: 1rem; font-style: italic; }
+  .t-role { margin-left: 1rem; }
+  @media (max-width: 640px) { .t-row { flex-direction: column; align-items: flex-start; } }
+</style>
+
+<div class="teaching-wrap">
+  <!-- If all courses are at one institution, keep the static header: -->
+  <div class="institution">University of St. Gallen</div>
+
+  {% for course in teaching_sorted %}
+    <div class="t-item">
+      <div class="t-row">
+        <span class="t-title">• {{ course.title }}</span>
+        {% if course.dates %}<span class="t-dates">{{ course.dates }}</span>{% endif %}
+      </div>
+      {% if course.level %}<div class="t-level">{{ course.level }}</div>{% endif %}
+      {% if course.role %}<div class="t-role">{{ course.role }}</div>{% endif %}
+    </div>
+  {% endfor %}
+</div>
