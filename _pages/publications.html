@@ -20,10 +20,17 @@ author_profile: true
 <div class="pub-list">
   {% for post in pubs %}
     {% assign pid = post.slug | default: post.title | slugify %}
+    {% assign is_wp = post.category == "workingpaper" and post.abstract %}
     <div class="pub-item">
       <div class="pub-top">
-        <!-- Clickable title toggles abstract -->
-        <a href="#" class="pub-title" data-target="abs-{{ pid }}">{{ post.title }}</a>
+        {% if is_wp %}
+          <!-- Clickable title toggles abstract -->
+          <a href="#" class="pub-title" data-target="abs-{{ pid }}">{{ post.title }}</a>
+        {% else %}
+          <!-- Static title (no dropdown) -->
+          <span class="pub-title">{{ post.title }}</span>
+        {% endif %}
+
         <span class="pub-links">
           {% if post.paperurl %}
             [<a href="{{ post.paperurl }}" target="_blank" rel="noopener">
@@ -42,7 +49,7 @@ author_profile: true
         <div class="pub-authors">{{ post.authors }}</div>
       {% endif %}
 
-      {% if post.abstract %}
+      {% if is_wp %}
         <div id="abs-{{ pid }}" class="pub-abstract">
           {{ post.abstract | markdownify }}
         </div>
@@ -53,7 +60,7 @@ author_profile: true
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  document.querySelectorAll('.pub-title').forEach(function (el) {
+  document.querySelectorAll('.pub-title[data-target]').forEach(function (el) {
     el.addEventListener('click', function (e) {
       e.preventDefault();
       var id = this.getAttribute('data-target');
