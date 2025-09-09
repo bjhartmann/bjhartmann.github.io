@@ -2,8 +2,8 @@
 title: "Income Distribution, Welfare, and the Patterns of Trade"
 authors: 'with <a href="https://sites.google.com/site/foellmireto/home" target="_blank" rel="noopener">Reto Föllmi</a> & <a href="https://sites.google.com/view/josefzweimueller/home" target="_blank" rel="noopener">Josef Zweimüller</a>'collection: publications
 permalink: /publication/income-distribution
-date: 2025-06-01
-paperurl: /files/Income_Distribution_and_Trade.pdf
+date: 2025-08-01
+paperurl: "https://www.ifo.de/DocDL/cesifo1_wp12107.pdf"
 paperlabel: "CESifo WP"             # 👈 custom label
 slidesurl: /files/income_distribution_slides.pdf
 slideslabel: "slides"
