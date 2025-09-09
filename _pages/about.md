@@ -7,6 +7,7 @@ redirect_from:
   - /about/
   - /about.html
 ---
+
 **About me**
 
 I am a 5th year Ph.D. student in Economics at the University of St. Gallen. My primary advisor is Reto Föllmi. My research interests cover International Trade, Economic Growth, and Structural Change.
