@@ -26,6 +26,17 @@ redirect_from:
   .pub-toggle { background: none; border: 0; padding: 0; font: inherit; color: inherit; cursor: pointer; text-align: left; }
   .pub-toggle:focus-visible { outline: 2px solid #94a3b8; outline-offset: 2px; }
 
+  /* Caret that rotates when open */
+.pub-toggle::after {
+  content: "▸";
+  margin-left: .4rem;
+  transition: transform .15s ease;
+}
+.pub-toggle[aria-expanded="true"]::after {
+  transform: rotate(90deg);
+}
+
+  
   .pub-links a { text-decoration: none; }
   .pub-links a:hover { text-decoration: underline; }
 
