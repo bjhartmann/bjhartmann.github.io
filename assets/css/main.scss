@@ -141,3 +141,11 @@ html[data-theme="dark"] .greedy-nav { background: var(--header-bg) !important; }
   color: var(--header-hover-fg) !important;
 }
 
+
+.greedy-nav .visible-links a,
+.masthead .masthead__menu-item > a {
+  padding: .55rem .6rem;  /* tighter spacing so they don’t look like buttons */
+  border-radius: 0;       /* removes the rounded “pill” shape */
+  transition: color .12s ease; /* smoother color change on hover/focus */
+}
+
