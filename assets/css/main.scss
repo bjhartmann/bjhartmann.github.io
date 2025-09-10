@@ -168,3 +168,24 @@ html[data-theme="dark"] .greedy-nav { background: var(--header-bg) !important; }
   color: var(--header-fg) !important;
 }
 
+/* Fixes collapsed/invisible avatar in Minimal Mistakes sidebar */
+.author__avatar img {
+  display: block !important;
+  width: 160px;     /* adjust size */
+  height: auto;
+  border-radius: 50%;
+  max-width: 100%;   /* prevent overflow in narrow sidebars */
+}
+
+.author__avatar {
+  display: block !important;
+  min-height: 120px;
+  overflow: visible;
+}
+
+.sidebar,
+.sidebar__left {
+  overflow: visible;
+}
+
+
