@@ -81,3 +81,40 @@
 }
 
 
+/* Pick ONE of these for a calmer header blue */
+:root {
+  /* current: --header-bg: #1e40af; */
+
+  /* Muted navy (my pick) */
+  --header-bg: #0f2a4a;
+
+  /* Indigo 900 */
+  /* --header-bg: #1e3a8a; */
+
+  /* Slate navy */
+  /* --header-bg: #0d3b66; */
+
+  /* Keep text colors */
+  --header-fg: #ffffff;
+  --header-fg-dim: rgba(255,255,255,.88);
+  --header-hover-fg: #ffffff;
+}
+
+/* Paint the header and set link colors */
+.masthead,
+.masthead__inner-wrap,
+.greedy-nav { background: var(--header-bg) !important; }
+
+.masthead { border-bottom: 0 !important; box-shadow: 0 2px 6px rgba(0,0,0,.08); }
+
+.masthead a { color: var(--header-fg-dim) !important; text-decoration: none; }
+.masthead a:hover,
+.masthead a:focus { color: var(--header-hover-fg) !important; }
+
+.masthead .masthead__menu-item--lg a { color: var(--header-fg) !important; font-weight: 700; }
+
+/* Keep same header color in dark mode (if you use it) */
+html[data-theme="dark"] .masthead,
+html[data-theme="dark"] .masthead__inner-wrap,
+html[data-theme="dark"] .greedy-nav { background: var(--header-bg) !important; }
+
