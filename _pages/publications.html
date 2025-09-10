@@ -14,19 +14,27 @@ redirect_from:
 <style>
   .pub-section { margin: 2rem 0 1rem; }
   .pub-h2 { font-size: 1.35rem; font-weight: 800; margin: 0 0 .75rem; }
+
   .pub-item { padding: 0.6rem 0; border-bottom: 1px solid #eee; }
   .pub-top { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
-  /* Titles: plain text look (no underline/blue) */
+
+  /* Titles look like plain text */
   .pub-title { font-weight: 600; color: inherit; text-decoration: none; }
   .pub-title:hover { text-decoration: none; }
+
+  /* Toggle button reset/accessibility */
   .pub-toggle { background: none; border: 0; padding: 0; font: inherit; color: inherit; cursor: pointer; text-align: left; }
   .pub-toggle:focus-visible { outline: 2px solid #94a3b8; outline-offset: 2px; }
+
   .pub-links a { text-decoration: none; }
   .pub-links a:hover { text-decoration: underline; }
+
   .pub-authors { color: #555; margin-top: 0.2rem; }
   .pub-venue  { color: #666; margin-top: 0.15rem; font-style: italic; }
+
   .pub-abstract { display: none; margin-top: 0.6rem; color: #333; }
   .pub-abstract[aria-hidden="false"] { display: block; }
+
   @media (max-width: 640px) { .pub-top { flex-direction: column; align-items: flex-start; } }
 </style>
 
@@ -44,15 +52,19 @@ redirect_from:
 
       {% for post in cat_posts %}
         {% assign pid = post.slug | default: post.title | slugify %}
+        {% assign is_wp = post.category == "workingpaper" %}
         {% assign has_abstract = post.abstract and post.abstract != "" %}
+        {% assign show_toggle = is_wp and has_abstract %}
 
         <div class="pub-item">
           <div class="pub-top">
-            {% if has_abstract %}
-              <button class="pub-title pub-toggle" aria-expanded="false" aria-controls="abs-{{ pid }}">
+            {% if show_toggle %}
+              <!-- Working Paper: title toggles abstract -->
+              <button class="pub-title pub-toggle" aria-expanded="false" aria-controls="abs-{{ pid }}" type="button">
                 {{ post.title }}
               </button>
             {% else %}
+              <!-- Non-toggle title (WiP or no abstract) -->
               <span class="pub-title">{{ post.title }}</span>
             {% endif %}
 
@@ -79,7 +91,7 @@ redirect_from:
             <div class="pub-venue">{{ post.venue }}</div>
           {% endif %}
 
-          {% if has_abstract %}
+          {% if show_toggle %}
             <div id="abs-{{ pid }}" class="pub-abstract" aria-hidden="true">
               {{ post.abstract | markdownify }}
             </div>
@@ -92,7 +104,7 @@ redirect_from:
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  // Toggle abstracts with ARIA updates
+  // Toggle abstracts (only present for Working Papers with abstract)
   document.querySelectorAll('.pub-toggle[aria-controls]').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var id = btn.getAttribute('aria-controls');
