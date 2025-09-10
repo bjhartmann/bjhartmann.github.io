@@ -10,6 +10,7 @@ redirect_from:
   - /about.html
 ---
 
+<img src="{{ site.author.avatar | relative_url }}" alt="avatar test" style="max-width:200px;display:block;border-radius:50%">
 
 **About me**
 
