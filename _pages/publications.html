@@ -111,11 +111,16 @@ redirect_from:
             <div class="pub-venue">{{ post.venue }}</div>
           {% endif %}
 
-          {% if show_toggle %}
-            <div id="{{ abs_id }}" class="pub-abstract" aria-hidden="true" hidden>
-              {{ post.abstract | markdownify }}
-            </div>
-          {% endif %}
+ {% if show_toggle %}
+  <div id="{{ abs_id }}" class="pub-abstract" aria-hidden="true" hidden>
+    {% if has_abstract %}
+      {{ post.abstract | markdownify }}
+    {% else %}
+      <em>No abstract available.</em>
+    {% endif %}
+  </div>
+{% endif %}
+
         </div>
       {% endcapture %}
     {% endif %}
