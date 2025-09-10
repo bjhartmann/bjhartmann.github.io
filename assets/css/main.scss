@@ -190,7 +190,7 @@ html[data-theme="dark"] .greedy-nav { background: var(--header-bg) !important; }
 /* Push the whole sidebar info down by 2rem */
 @media (min-width: 1024px) {
   .author__profile {
-    margin-top: 2rem !important;   /* adjust value to taste */
+    margin-top: 10rem !important;   /* adjust value to taste */
   }
      .page__content   { padding-top: 0 !important; 
     }
