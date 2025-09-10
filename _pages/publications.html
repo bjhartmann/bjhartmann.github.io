@@ -26,15 +26,20 @@ redirect_from:
   .pub-toggle { background: none; border: 0; padding: 0; font: inherit; color: inherit; cursor: pointer; text-align: left; }
   .pub-toggle:focus-visible { outline: 2px solid #94a3b8; outline-offset: 2px; }
 
-  /* Caret that rotates when open */
-.pub-toggle::after {
+/* Reset: never add an after-element to plain titles */
+.pub-title::after { content: none !important; }
+
+/* Caret only on actual toggle buttons that control a panel */
+button.pub-toggle[aria-controls]::after {
   content: "▸";
   margin-left: .4rem;
   transition: transform .15s ease;
+  line-height: 1;
 }
-.pub-toggle[aria-expanded="true"]::after {
+button.pub-toggle[aria-expanded="true"][aria-controls]::after {
   transform: rotate(90deg);
 }
+
 
   
   .pub-links a { text-decoration: none; }
