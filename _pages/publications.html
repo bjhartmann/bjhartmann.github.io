@@ -49,6 +49,9 @@ redirect_from:
   /* Only styling (no visibility rules) */
   .pub-abstract { margin-top: 0.6rem; color: #333; }
 
+  /* Defensive: force hidden elements to stay hidden */
+  [hidden] { display: none !important; }
+  
   @media (max-width: 640px) { .pub-top { flex-direction: column; align-items: flex-start; } }
 </style>
 
