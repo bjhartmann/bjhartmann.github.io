@@ -10,9 +10,9 @@
             <a href="{{ '/' | relative_url }}">{{ site.masthead_title | default: 'Home' }}</a>
           </li>
 
-          <!-- Other tabs; add a class on the first one so we can indent the group -->
+          <!-- Other tabs; now all are large -->
           {% for link in site.data.navigation.main %}
-            <li class="masthead__menu-item{% if forloop.first %} nav-offset-start{% endif %}">
+            <li class="masthead__menu-item masthead__menu-item--lg{% if forloop.first %} nav-offset-start{% endif %}">
               <a href="{{ link.url | relative_url }}">{{ link.title }}</a>
             </li>
           {% endfor %}
