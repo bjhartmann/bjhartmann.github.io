@@ -53,7 +53,7 @@
 
 /* Slimmer reading width ONLY on pages with "slim" class */
 .slim .page__content {
-  max-width: 62ch;       /* ~62 characters per line = comfy reading */
+  max-width: 50ch;       /* ~62 characters per line = comfy reading */
   margin-left: 0;        /* align to the left (next to the sidebar) */
   margin-right: auto;    /* leftover space on the right */
 }
