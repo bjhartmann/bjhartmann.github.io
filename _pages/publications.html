@@ -53,6 +53,10 @@ redirect_from:
 </style>
 
 {% for cat in category_order %}
+  {%- comment -%}
+    Build the list of items for this category without using where_exp (unsupported on GH Pages Jekyll 3.10).
+    We iterate over all publications, pick matches manually, and capture the HTML into `items`.
+  {%- endcomment -%}
   {% assign items = "" %}
 
   {% for post in pubs %}
@@ -64,12 +68,13 @@ redirect_from:
     {% endif %}
 
     {% if matches_cat %}
+      {%- comment -%} Robust unique id & abstract presence {%- endcomment -%}
       {% assign pid_source = post.id | default: post.slug | default: post.title %}
-      {% assign pid = pid_source | replace: '/', '-' | replace: '.', '-' | replace: ' ', '-' %}
+      {% assign pid = pid_source | slugify %}
       {% assign abs_id = "abs-" | append: pid %}
-      {% assign has_abstract = post.abstract | to_s | strip != "" %}
-      {# ✅ always show toggle for working papers, even if no abstract #}
-      {% assign show_toggle = (cat == "workingpaper") %}
+
+      {% assign has_abstract = post.abstract | default: "" | strip %}
+      {% assign show_toggle = cat == "workingpaper" and has_abstract != "" %}
 
       {% capture items %}{{ items }}
         <div class="pub-item">
@@ -80,7 +85,7 @@ redirect_from:
                 {{ post.title }}
               </button>
             {% else %}
-              <!-- Non-toggle title (WiP or Other Writing) -->
+              <!-- Non-toggle title (WiP or no abstract) -->
               <span class="pub-title">{{ post.title }}</span>
             {% endif %}
 
@@ -109,11 +114,7 @@ redirect_from:
 
           {% if show_toggle %}
             <div id="{{ abs_id }}" class="pub-abstract" aria-hidden="true" hidden>
-              {% if has_abstract %}
-                {{ post.abstract | markdownify }}
-              {% else %}
-                <em>No abstract available.</em>
-              {% endif %}
+              {{ post.abstract | markdownify }}
             </div>
           {% endif %}
         </div>
@@ -127,7 +128,7 @@ redirect_from:
         {% case cat %}
           {% when "workingpaper" %}Working Papers
           {% when "workinprogress" %}Work in Progress
-          {% when "otherwriting" %}Other Writing
+          {% when "otherwriting" %}Other Writings
           {% else %}{{ cat | capitalize }}
         {% endcase %}
       </h2>
@@ -141,20 +142,16 @@ document.addEventListener('click', function (e) {
   const btn = e.target.closest('.pub-toggle');
   if (!btn) return;
 
-  let panel = null;
-  const controls = btn.getAttribute('aria-controls');
-  if (controls) {
-    panel = document.getElementById(controls);
-  }
-  if (!panel) {
-    const container = btn.closest('.pub-item');
-    panel = container ? container.querySelector('.pub-abstract') : null;
-  }
+  // Prefer aria-controls if present; fallback to nearest .pub-abstract
+  const id = btn.getAttribute('aria-controls');
+  const panel = id ? document.getElementById(id) : btn.closest('.pub-item')?.querySelector('.pub-abstract');
   if (!panel) return;
 
-  const expanded = btn.getAttribute('aria-expanded') === 'true';
-  btn.setAttribute('aria-expanded', String(!expanded));
-  panel.setAttribute('aria-hidden', String(expanded));
-  panel.hidden = expanded; // toggle with native hidden attribute
+  const wasExpanded = btn.getAttribute('aria-expanded') === 'true';
+  const isExpanded = !wasExpanded;
+
+  btn.setAttribute('aria-expanded', String(isExpanded));
+  panel.setAttribute('aria-hidden', String(!isExpanded));
+  panel.hidden = !isExpanded;
 });
 </script>
