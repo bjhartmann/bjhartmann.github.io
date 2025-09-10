@@ -206,7 +206,7 @@ html[data-theme="dark"] .greedy-nav { background: var(--header-bg) !important; }
 
 /* 5) If some pages hide the big H1 (class: hide-title), keep alignment anyway */
 .hide-title .page__content { padding-top: 0 !important; }
-.hide-title .author__profile { margin-top: 0 !important; }
+.hide-title .author__profile { margin-top: 10rem !important; }
 
 .page__content .notice:first-child,
 .page__content .toc:first-child,
