@@ -5,14 +5,14 @@
     <div class="masthead__menu">
       <nav id="site-nav" class="greedy-nav">
         <ul class="visible-links">
-          <!-- Top-left home button -->
+          <!-- Home stays at far left -->
           <li class="masthead__menu-item masthead__menu-item--lg persist">
-            <a href="{{ '/' | relative_url }}">{{ site.masthead_title | default: site.title }}</a>
+            <a href="{{ '/' | relative_url }}">{{ site.masthead_title | default: 'Home' }}</a>
           </li>
 
-          <!-- Real nav items -->
+          <!-- Other tabs; add a class on the first one so we can indent the group -->
           {% for link in site.data.navigation.main %}
-            <li class="masthead__menu-item">
+            <li class="masthead__menu-item{% if forloop.first %} nav-offset-start{% endif %}">
               <a href="{{ link.url | relative_url }}">{{ link.title }}</a>
             </li>
           {% endfor %}
