@@ -120,17 +120,25 @@ redirect_from:
 {% endfor %}
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  // Toggle abstracts (only present for Working Papers with abstract)
-  document.querySelectorAll('.pub-toggle[aria-controls]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var id = btn.getAttribute('aria-controls');
-      var panel = document.getElementById(id);
-      if (!panel) return;
-      var expanded = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', String(!expanded));
-      panel.setAttribute('aria-hidden', String(expanded));
-    });
-  });
+document.addEventListener('click', function (e) {
+  const btn = e.target.closest('.pub-toggle');
+  if (!btn) return;
+
+  // Prefer aria-controls target if present…
+  let panel = null;
+  const controls = btn.getAttribute('aria-controls');
+  if (controls) {
+    panel = document.getElementById(controls);
+  }
+  // …fallback: find the abstract within the same pub-item
+  if (!panel) {
+    const container = btn.closest('.pub-item');
+    panel = container ? container.querySelector('.pub-abstract') : null;
+  }
+  if (!panel) return;
+
+  const expanded = btn.getAttribute('aria-expanded') === 'true';
+  btn.setAttribute('aria-expanded', String(!expanded));
+  panel.setAttribute('aria-hidden', String(expanded));
 });
 </script>
