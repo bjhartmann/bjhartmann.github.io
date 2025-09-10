@@ -18,47 +18,49 @@ redirect_from:
   .pub-item { padding: 0.6rem 0; border-bottom: 1px solid #eee; }
   .pub-top { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
 
-  /* Titles look like plain text */
   .pub-title { font-weight: 600; color: inherit; text-decoration: none; }
   .pub-title:hover { text-decoration: none; }
 
-  /* Toggle button reset/accessibility */
   .pub-toggle { background: none; border: 0; padding: 0; font: inherit; color: inherit; cursor: pointer; text-align: left; }
   .pub-toggle:focus-visible { outline: 2px solid #94a3b8; outline-offset: 2px; }
 
-/* Reset: never add an after-element to plain titles */
-.pub-title::after { content: none !important; }
+  /* Reset: never add an after-element to plain titles */
+  .pub-title::after { content: none !important; }
 
-/* Caret only on actual toggle buttons that control a panel */
-button.pub-toggle[aria-controls]::after {
-  content: "▸";
-  margin-left: .4rem;
-  transition: transform .15s ease;
-  line-height: 1;
-}
-button.pub-toggle[aria-expanded="true"][aria-controls]::after {
-  transform: rotate(90deg);
-}
+  /* Caret only on actual toggle buttons that control a panel */
+  button.pub-toggle[aria-controls]::after {
+    content: "▸";
+    margin-left: .4rem;
+    transition: transform .15s ease;
+    line-height: 1;
+  }
+  button.pub-toggle[aria-expanded="true"][aria-controls]::after {
+    transform: rotate(90deg);
+  }
 
-
-  
+  .pub-links { white-space: normal; }
   .pub-links a { text-decoration: none; }
   .pub-links a:hover { text-decoration: underline; }
+  .pub-links a + a { margin-left: .25rem; }
 
   .pub-authors { color: #555; margin-top: 0.2rem; }
   .pub-venue  { color: #666; margin-top: 0.15rem; font-style: italic; }
 
-  .pub-abstract { display: none; margin-top: 0.6rem; color: #333; }
-  .pub-abstract[aria-hidden="false"] { display: block; }
+  /* Progressive enhancement: only hide abstracts when JS is present */
+  .pub-abstract { margin-top: 0.6rem; color: #333; }
+  .js .pub-abstract[hidden] { display: none; }
 
-  @media (max-width: 640px) { .pub-top { flex-direction: column; align-items: flex-start; } }
+  @media (max-width: 640px) {
+    .pub-top { flex-direction: column; align-items: flex-start; }
+  }
 </style>
 
+<script>
+  // Add a .js class early for progressive enhancement
+  document.documentElement.classList.add('js');
+</script>
+
 {% for cat in category_order %}
-  {%- comment -%}
-    Build the list of items for this category without using where_exp (unsupported on GH Pages Jekyll 3.10).
-    We iterate over all publications, pick matches manually, and capture the HTML into `items`.
-  {%- endcomment -%}
   {% assign items = "" %}
 
   {% for post in pubs %}
@@ -73,50 +75,67 @@ button.pub-toggle[aria-expanded="true"][aria-controls]::after {
       {% assign pid = post.slug | default: post.title | slugify %}
       {% assign has_abstract = post.abstract != blank %}
       {% assign show_toggle = (cat == "workingpaper") and has_abstract %}
-      {% assign abs_id = "abs-" | append: pid | append: "-" | append: forloop.index %}
+
+      {%- comment -%} 
+      Create stable IDs for button/panel; avoid relying on loop index alone.
+      {%- endcomment -%}
+      {% assign uid = pid | append: "-" | append: post.date | replace: " ", "-" | replace: ":", "-" %}
+      {% assign btn_id = "btn-" | append: uid %}
+      {% assign abs_id = "abs-" | append: uid %}
 
       {% capture items %}{{ items }}
-        <div class="pub-item">
+        <article class="pub-item" itemscope itemtype="https://schema.org/ScholarlyArticle">
           <div class="pub-top">
             {% if show_toggle %}
               <!-- Working Paper: title toggles abstract -->
-              <button class="pub-title pub-toggle" aria-expanded="false" aria-controls="{{ abs_id }}" type="button">
+              <button class="pub-title pub-toggle"
+                      id="{{ btn_id }}"
+                      type="button"
+                      aria-expanded="false"
+                      aria-controls="{{ abs_id }}"
+                      itemprop="name">
                 {{ post.title }}
               </button>
             {% else %}
               <!-- Non-toggle title (WiP or no abstract) -->
-              <span class="pub-title">{{ post.title }}</span>
+              <span class="pub-title" role="heading" aria-level="3" itemprop="name">{{ post.title }}</span>
             {% endif %}
 
             <span class="pub-links">
               {% if post.paperurl %}
-                [<a href="{{ post.paperurl }}" target="_blank" rel="noopener">{{ post.paperlabel | default: "paper" }}</a>]
+                <a href="{{ post.paperurl }}" target="_blank" rel="noopener">{{ post.paperlabel | default: "paper" }}</a>
               {% endif %}
               {% if post.slidesurl %}
-                [<a href="{{ post.slidesurl }}" target="_blank" rel="noopener">{{ post.slideslabel | default: "slides" }}</a>]
+                <a href="{{ post.slidesurl }}" target="_blank" rel="noopener">{{ post.slideslabel | default: "slides" }}</a>
               {% endif %}
               {% if post.codeurl %}
-                [<a href="{{ post.codeurl }}" target="_blank" rel="noopener">{{ post.codelabel | default: "code" }}</a>]
+                <a href="{{ post.codeurl }}" target="_blank" rel="noopener">{{ post.codelabel | default: "code" }}</a>
               {% endif %}
               {% if post.doi %}
-                [<a href="https://doi.org/{{ post.doi | escape }}" target="_blank" rel="noopener">doi</a>]
+                <a href="https://doi.org/{{ post.doi | escape }}" target="_blank" rel="noopener" itemprop="sameAs">doi</a>
               {% endif %}
             </span>
           </div>
 
           {% if post.authors %}
-            <div class="pub-authors">{{ post.authors }}</div>
+            <div class="pub-authors" itemprop="author">{{ post.authors }}</div>
           {% endif %}
           {% if post.venue %}
-            <div class="pub-venue">{{ post.venue }}</div>
+            <div class="pub-venue" itemprop="isPartOf">{{ post.venue }}</div>
           {% endif %}
 
           {% if show_toggle %}
-            <div id="{{ abs_id }}" class="pub-abstract" aria-hidden="true">
+            <div id="{{ abs_id }}"
+                 class="pub-abstract"
+                 role="region"
+                 aria-labelledby="{{ btn_id }}"
+                 aria-hidden="true"
+                 hidden
+                 itemprop="description">
               {{ post.abstract | markdownify }}
             </div>
           {% endif %}
-        </div>
+        </article>
       {% endcapture %}
     {% endif %}
   {% endfor %}
@@ -143,9 +162,7 @@ document.addEventListener('click', function (e) {
   // Prefer aria-controls target if present…
   let panel = null;
   const controls = btn.getAttribute('aria-controls');
-  if (controls) {
-    panel = document.getElementById(controls);
-  }
+  if (controls) panel = document.getElementById(controls);
   // …fallback: find the abstract within the same pub-item
   if (!panel) {
     const container = btn.closest('.pub-item');
@@ -156,5 +173,12 @@ document.addEventListener('click', function (e) {
   const expanded = btn.getAttribute('aria-expanded') === 'true';
   btn.setAttribute('aria-expanded', String(!expanded));
   panel.setAttribute('aria-hidden', String(expanded));
+
+  // Keep the hidden attribute in sync for keyboard/focus
+  if (expanded) {
+    panel.setAttribute('hidden', '');
+  } else {
+    panel.removeAttribute('hidden');
+  }
 });
 </script>
