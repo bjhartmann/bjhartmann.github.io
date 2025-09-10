@@ -2,7 +2,7 @@
 layout: single
 title: " "
 author_profile: true
-classes: [narrow, hide-title]
+classes: [slim, hide-title]
 hide_meta: true
 custom_tab_title: "Björn Hartmann"
 redirect_from:
