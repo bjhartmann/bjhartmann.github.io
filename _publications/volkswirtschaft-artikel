@@ -5,5 +5,8 @@ authors: "with Reto Föllmi \\ Die Volkswirtschaft "
 permalink: /publication/volkswirtschaft-artikel
 date: 2025-06-06
 paperurl: "https://dievolkswirtschaft.ch/de/2025/06/machen-zoelle-wirtschaftlich-sinn/"
+paperlabel: "german"             # 👈 custom label
+slidesurl: "https://dievolkswirtschaft.ch/fr/2025/06/les-droits-de-douane-sont-ils-judicieux-dun-point-de-vue-economique/"
+slideslabel: "french"
 category: otherwriting
 ---
