@@ -168,6 +168,8 @@ html[data-theme="dark"] .greedy-nav { background: var(--header-bg) !important; }
   color: var(--header-fg) !important;
 }
 
+.author__avatar { display: none !important; }
+
 .home-portrait {
   display: block;
   max-width: 220px;   /* adjust to taste */
