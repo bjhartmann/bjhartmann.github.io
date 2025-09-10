@@ -171,11 +171,11 @@ html[data-theme="dark"] .greedy-nav { background: var(--header-bg) !important; }
 /* Fixes collapsed/invisible avatar in Minimal Mistakes sidebar */
 .author__avatar img {
   display: block !important;
-  width: 160px;         /* adjust if you like */
-  height: auto;
   max-width: 100%;
+  height: auto;
   border-radius: 50%;
 }
+
 
 /* Don’t reserve space if there’s no image */
 .author__avatar {
