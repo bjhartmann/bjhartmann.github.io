@@ -5,7 +5,7 @@
  * This file controls what is imported from /_sass
  *
  * Note that the files are processed in the order they are imported, so they are partly
-   sorted by the dependencies. Also, the first two lines of the file are required by Jekyll.
+ * sorted by the dependencies. Also, the first two lines of the file are required by Jekyll.
  */
 
 @import
@@ -42,6 +42,8 @@
     "vendor/font-awesome/brands"
 ;
 
+/* -------------------- Your custom overrides below -------------------- */
+
 .hide-title .page__title { display: none; }        /* hide big H1 on pages using classes: hide-title */
 .greedy-nav .hidden-links,
 .greedy-nav__toggle,
@@ -65,9 +67,8 @@
 
 /* Indent the first non-Home tab so all tabs align with the page text */
 :root {
-  /* Adjust this until the tab column lines up with your main text.
-     340px works well for a ~300px sidebar + gap in Minimal Mistakes. */
-  --content-offset: 180px;
+  /* Adjust this until the tab column lines up with your main text. */
+  --content-offset: 160px;
 }
 
 /* Desktop/tablet: apply the offset */
@@ -80,19 +81,12 @@
   .masthead .nav-offset-start { margin-left: 0; }
 }
 
+/* -------------------- Header color system -------------------- */
 
 /* Pick ONE of these for a calmer header blue */
 :root {
-  /* current: --header-bg: #1e40af; */
-
   /* Muted navy (my pick) */
   --header-bg: #0f2a4a;
-
-  /* Indigo 900 */
-  /* --header-bg: #1e3a8a; */
-
-  /* Slate navy */
-  /* --header-bg: #0d3b66; */
 
   /* Keep text colors */
   --header-fg: #ffffff;
@@ -118,21 +112,31 @@ html[data-theme="dark"] .masthead,
 html[data-theme="dark"] .masthead__inner-wrap,
 html[data-theme="dark"] .greedy-nav { background: var(--header-bg) !important; }
 
-/* Remove white pill backgrounds from header links */
+/* -------------------- De-pill the navigation -------------------- */
+
+/* Base: remove any pill/box treatments from anchors */
 .greedy-nav .visible-links a,
 .masthead .masthead__menu-item > a {
   background: transparent !important;
   box-shadow: none !important;
   border: 0 !important;
+  border-radius: 0 !important;
   color: var(--header-fg-dim) !important; /* near-white text */
+  text-decoration: none;
+  /* keep spacing subtle so they read like text, not buttons */
+  padding: 0.25rem 0 !important;
+  transition: color .12s ease;
 }
 
-/* Home link a bit stronger */
+/* Stronger home/brand link */
 .masthead .masthead__menu-item--lg > a {
-  color: var(--header-fg) !important;      /* full white */
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  color: var(--header-fg) !important;
 }
 
-/* Hover/focus: no pill, just brighter text */
+/* Hover/focus: brighten text only (no background) */
 .greedy-nav .visible-links a:hover,
 .greedy-nav .visible-links a:focus,
 .masthead .masthead__menu-item > a:hover,
@@ -141,16 +145,7 @@ html[data-theme="dark"] .greedy-nav { background: var(--header-bg) !important; }
   color: var(--header-hover-fg) !important;
 }
 
-
-.greedy-nav .visible-links a,
-.masthead .masthead__menu-item > a {
-  padding: .55rem .6rem;  /* tighter spacing so they don’t look like buttons */
-  border-radius: 0;       /* removes the rounded “pill” shape */
-  transition: color .12s ease; /* smoother color change on hover/focus */
-}
-
-
-/* Kill the white pill backgrounds on header tabs */
+/* High-specificity overrides for link states */
 .masthead .greedy-nav .visible-links > li > a,
 .masthead .greedy-nav .visible-links > li > a:visited,
 .masthead .greedy-nav .visible-links > li > a:focus,
@@ -161,22 +156,17 @@ html[data-theme="dark"] .greedy-nav { background: var(--header-bg) !important; }
   box-shadow: none !important;
   border: 0 !important;
   border-radius: 0 !important;
-  padding: 0.25rem 0 !important; /* optional: slimmer, no “pill” */
+  padding: 0.25rem 0 !important;
   color: var(--header-fg-dim) !important;
 }
 
-.masthead .greedy-nav .visible-links > li > a:hover,
-.masthead .greedy-nav .visible-links > li > a:focus {
-  color: var(--header-hover-fg) !important;
-  background: transparent !important;
-}
-
-/* If the large “Home/Brand” link still looks pill-y, nuke it too */
-.masthead .masthead__menu-item--lg > a {
+/* Cover cases where the ACTIVE style is applied to the <li> */
+.masthead .greedy-nav .visible-links > li.active > a,
+.masthead .greedy-nav .visible-links > li[aria-current="page"] > a {
   background: transparent !important;
   box-shadow: none !important;
   border-radius: 0 !important;
-  color: var(--header-fg) !important;
+  color: var(--header-fg) !important; /* optional: make current page full white */
 }
 
-
+/* -------------------- End de-pill -------------------- */
