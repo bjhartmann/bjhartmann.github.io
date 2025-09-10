@@ -67,7 +67,7 @@
 :root {
   /* Adjust this until the tab column lines up with your main text.
      340px works well for a ~300px sidebar + gap in Minimal Mistakes. */
-  --content-offset: 200px;
+  --content-offset: 180px;
 }
 
 /* Desktop/tablet: apply the offset */
@@ -117,4 +117,27 @@
 html[data-theme="dark"] .masthead,
 html[data-theme="dark"] .masthead__inner-wrap,
 html[data-theme="dark"] .greedy-nav { background: var(--header-bg) !important; }
+
+/* Remove white pill backgrounds from header links */
+.greedy-nav .visible-links a,
+.masthead .masthead__menu-item > a {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  color: var(--header-fg-dim) !important; /* near-white text */
+}
+
+/* Home link a bit stronger */
+.masthead .masthead__menu-item--lg > a {
+  color: var(--header-fg) !important;      /* full white */
+}
+
+/* Hover/focus: no pill, just brighter text */
+.greedy-nav .visible-links a:hover,
+.greedy-nav .visible-links a:focus,
+.masthead .masthead__menu-item > a:hover,
+.masthead .masthead__menu-item > a:focus {
+  background: transparent !important;
+  color: var(--header-hover-fg) !important;
+}
 
