@@ -179,4 +179,14 @@ html[data-theme="dark"] .greedy-nav { background: var(--header-bg) !important; }
   margin: 0 0 1rem 0; /* or center: margin: 0 auto 1rem; */
 }
 
+/* Add equal spacing below the name heading in the author profile */
+.author__content h3,
+.author__content .author__name {
+  margin-bottom: 0.25rem;  /* tune this value */
+}
+
+/* Ensure consistent spacing between each item */
+.author__content > div {
+  margin-top: 0.25rem;
+}
 
