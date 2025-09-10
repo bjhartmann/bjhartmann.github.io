@@ -26,30 +26,28 @@ redirect_from:
   .pub-toggle { background: none; border: 0; padding: 0; font: inherit; color: inherit; cursor: pointer; text-align: left; }
   .pub-toggle:focus-visible { outline: 2px solid #94a3b8; outline-offset: 2px; }
 
-/* Reset: never add an after-element to plain titles */
-.pub-title::after { content: none !important; }
+  /* Reset: never add an after-element to plain titles */
+  .pub-title::after { content: none !important; }
 
-/* Caret only on actual toggle buttons that control a panel */
-button.pub-toggle[aria-controls]::after {
-  content: "▸";
-  margin-left: .4rem;
-  transition: transform .15s ease;
-  line-height: 1;
-}
-button.pub-toggle[aria-expanded="true"][aria-controls]::after {
-  transform: rotate(90deg);
-}
+  /* Caret only on actual toggle buttons that control a panel */
+  button.pub-toggle[aria-controls]::after {
+    content: "▸";
+    margin-left: .4rem;
+    transition: transform .15s ease;
+    line-height: 1;
+  }
+  button.pub-toggle[aria-expanded="true"][aria-controls]::after {
+    transform: rotate(90deg);
+  }
 
-
-  
   .pub-links a { text-decoration: none; }
   .pub-links a:hover { text-decoration: underline; }
 
   .pub-authors { color: #555; margin-top: 0.2rem; }
   .pub-venue  { color: #666; margin-top: 0.15rem; font-style: italic; }
 
-  .pub-abstract { display: none; margin-top: 0.6rem; color: #333; }
-  .pub-abstract[aria-hidden="false"] { display: block; }
+  /* Only styling (no visibility rules) */
+  .pub-abstract { margin-top: 0.6rem; color: #333; }
 
   @media (max-width: 640px) { .pub-top { flex-direction: column; align-items: flex-start; } }
 </style>
@@ -70,11 +68,12 @@ button.pub-toggle[aria-expanded="true"][aria-controls]::after {
     {% endif %}
 
     {% if matches_cat %}
-{% assign pid_source = post.id | default: post.slug | default: post.title %}
-{% assign pid = pid_source | replace: '/', '-' | replace: '.', '-' | replace: ' ', '-' %}
-{% assign abs_id = "abs-" | append: pid %}
-{% assign has_abstract = post.abstract != blank %}
-{% assign show_toggle = (cat == "workingpaper") and has_abstract %}
+      {%- comment -%} Robust unique id & abstract presence {%- endcomment -%}
+      {% assign pid_source = post.id | default: post.slug | default: post.title %}
+      {% assign pid = pid_source | replace: '/', '-' | replace: '.', '-' | replace: ' ', '-' %}
+      {% assign abs_id = "abs-" | append: pid %}
+      {% assign has_abstract = post.abstract | to_s | strip != "" %}
+      {% assign show_toggle = (cat == "workingpaper") and has_abstract %}
 
       {% capture items %}{{ items }}
         <div class="pub-item">
@@ -113,7 +112,7 @@ button.pub-toggle[aria-expanded="true"][aria-controls]::after {
           {% endif %}
 
           {% if show_toggle %}
-            <div id="{{ abs_id }}" class="pub-abstract" aria-hidden="true">
+            <div id="{{ abs_id }}" class="pub-abstract" aria-hidden="true" hidden>
               {{ post.abstract | markdownify }}
             </div>
           {% endif %}
@@ -157,5 +156,6 @@ document.addEventListener('click', function (e) {
   const expanded = btn.getAttribute('aria-expanded') === 'true';
   btn.setAttribute('aria-expanded', String(!expanded));
   panel.setAttribute('aria-hidden', String(expanded));
+  panel.hidden = expanded; // <-- key: use the native hidden attribute
 });
 </script>
