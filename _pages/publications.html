@@ -70,10 +70,10 @@ button.pub-toggle[aria-expanded="true"][aria-controls]::after {
     {% endif %}
 
     {% if matches_cat %}
-      {% assign pid = post.slug | default: post.title | slugify %}
-      {% assign has_abstract = post.abstract != blank %}
-      {% assign show_toggle = (cat == "workingpaper") and has_abstract %}
-      {% assign abs_id = "abs-" | append: pid | append: "-" | append: forloop.index %}
+{% assign pid = post.id | replace: '/', '-' | replace: '.', '-' %}
+{% assign abs_id = "abs-" | append: pid %}  
+{% assign has_abstract = post.abstract != blank %}
+{% assign show_toggle = (cat == "workingpaper") and has_abstract %}
 
       {% capture items %}{{ items }}
         <div class="pub-item">
