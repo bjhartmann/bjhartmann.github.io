@@ -9,6 +9,8 @@ redirect_from:
   - /about/
   - /about.html
 ---
+{% include author-profile.html %}
+
 
 **About me**
 
