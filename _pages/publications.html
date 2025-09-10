@@ -11,65 +11,102 @@ redirect_from:
 {% assign pubs = site.publications | sort: "date" | reverse %}
 
 <style>
+  .pub-section { margin: 2rem 0 1rem; }
+  .pub-h2 { font-size: 1.35rem; font-weight: 800; margin: 0 0 .75rem; }
+  .pub-year { margin: 1.2rem 0 .25rem; font-weight: 700; color: #333; }
   .pub-item { padding: 0.6rem 0; border-bottom: 1px solid #eee; }
   .pub-top { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
-  .pub-title { font-weight: 600; text-decoration: none; cursor: pointer; }
+  .pub-title { font-weight: 600; text-decoration: none; color: inherit; }
+  .pub-toggle { background: none; border: 0; padding: 0; font: inherit; color: inherit; cursor: pointer; text-align: left; }
+  .pub-toggle:focus-visible { outline: 2px solid #94a3b8; outline-offset: 2px; }
   .pub-links a { text-decoration: none; }
+  .pub-links a:hover, .pub-title:hover { text-decoration: underline; }
   .pub-authors { color: #555; margin-top: 0.2rem; }
+  .pub-venue  { color: #666; margin-top: 0.15rem; font-style: italic; }
   .pub-abstract { display: none; margin-top: 0.6rem; color: #333; }
+  .pub-abstract[aria-hidden="false"] { display: block; }
   @media (max-width: 640px) { .pub-top { flex-direction: column; align-items: flex-start; } }
 </style>
 
-<div class="pub-list">
-  {% for post in pubs %}
-    {% assign pid = post.slug | default: post.title | slugify %}
-    {% assign is_wp = post.category == "workingpaper" and post.abstract %}
-    <div class="pub-item">
-      <div class="pub-top">
-        {% if is_wp %}
-          <!-- Clickable title toggles abstract -->
-          <a href="#" class="pub-title" data-target="abs-{{ pid }}">{{ post.title }}</a>
-        {% else %}
-          <!-- Static title (no dropdown) -->
-          <span class="pub-title">{{ post.title }}</span>
+{% assign category_order = "workingpaper,workinprogress" | split: "," %}
+
+{% for cat in category_order %}
+  {% assign cat_posts = pubs | where: "category", cat %}
+  {% if cat_posts.size > 0 %}
+    <section class="pub-section">
+      <h2 class="pub-h2">
+        {% case cat %}
+          {% when "workingpaper" %}Working Papers
+          {% when "workinprogress" %}Work in Progress
+          {% else %}{{ cat | capitalize }}
+        {% endcase %}
+      </h2>
+
+      {% assign current_year = "" %}
+      {% for post in cat_posts %}
+        {% assign year = post.date | date: "%Y" %}
+        {% if year != current_year %}
+          {% assign current_year = year %}
+          <div class="pub-year">{{ current_year }}</div>
         {% endif %}
 
-        <span class="pub-links">
-          {% if post.paperurl %}
-            [<a href="{{ post.paperurl }}" target="_blank" rel="noopener">
-              {{ post.paperlabel | default: "paper" }}
-            </a>]
-          {% endif %}
-          {% if post.slidesurl %}
-            [<a href="{{ post.slidesurl }}" target="_blank" rel="noopener">
-              {{ post.slideslabel | default: "slides" }}
-            </a>]
-          {% endif %}
-        </span>
-      </div>
+        {% assign pid = post.slug | default: post.title | slugify %}
+        {% assign has_abstract = post.abstract and post.abstract != "" %}
 
-      {% if post.authors %}
-        <div class="pub-authors">{{ post.authors }}</div>
-      {% endif %}
+        <div class="pub-item">
+          <div class="pub-top">
+            {% if has_abstract %}
+              <button class="pub-title pub-toggle" aria-expanded="false" aria-controls="abs-{{ pid }}">
+                {{ post.title }}
+              </button>
+            {% else %}
+              <span class="pub-title">{{ post.title }}</span>
+            {% endif %}
 
-      {% if is_wp %}
-        <div id="abs-{{ pid }}" class="pub-abstract">
-          {{ post.abstract | markdownify }}
+            <span class="pub-links">
+              {% if post.paperurl %}
+                [<a href="{{ post.paperurl }}" target="_blank" rel="noopener">{{ post.paperlabel | default: "paper" }}</a>]
+              {% endif %}
+              {% if post.slidesurl %}
+                [<a href="{{ post.slidesurl }}" target="_blank" rel="noopener">{{ post.slideslabel | default: "slides" }}</a>]
+              {% endif %}
+              {% if post.codeurl %}
+                [<a href="{{ post.codeurl }}" target="_blank" rel="noopener">{{ post.codelabel | default: "code" }}</a>]
+              {% endif %}
+              {% if post.doi %}
+                [<a href="https://doi.org/{{ post.doi | escape }}" target="_blank" rel="noopener">doi</a>]
+              {% endif %}
+            </span>
+          </div>
+
+          {% if post.authors %}
+            <div class="pub-authors">{{ post.authors }}</div>
+          {% endif %}
+          {% if post.venue %}
+            <div class="pub-venue">{{ post.venue }}</div>
+          {% endif %}
+
+          {% if has_abstract %}
+            <div id="abs-{{ pid }}" class="pub-abstract" aria-hidden="true">
+              {{ post.abstract | markdownify }}
+            </div>
+          {% endif %}
         </div>
-      {% endif %}
-    </div>
-  {% endfor %}
-</div>
+      {% endfor %}
+    </section>
+  {% endif %}
+{% endfor %}
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  document.querySelectorAll('.pub-title[data-target]').forEach(function (el) {
-    el.addEventListener('click', function (e) {
-      e.preventDefault();
-      var id = this.getAttribute('data-target');
+  document.querySelectorAll('.pub-toggle[aria-controls]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var id = btn.getAttribute('aria-controls');
       var panel = document.getElementById(id);
       if (!panel) return;
-      panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
+      var expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      panel.setAttribute('aria-hidden', String(expanded));
     });
   });
 });
