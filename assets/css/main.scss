@@ -187,14 +187,12 @@ html[data-theme="dark"] .greedy-nav { background: var(--header-bg) !important; }
 .author__content > *:first-child { margin-top: 0; }
 
 
-/* Push the whole sidebar info down by 2rem */
+/* Move the whole sidebar column down by 10rem on desktop */
 @media (min-width: 1024px) {
-  .author__profile {
-    margin-top: 10rem !important;   /* adjust value to taste */
-  }
-     .page__content   { padding-top: 0 !important; 
-    }
+  .sidebar, .sidebar__left { padding-top: 10rem !important; }  /* <-- main nudge */
+  .author__profile { margin-top: 0 !important; }               /* avoid double shift */
 }
+
 
 
 /* 2) Remove any “mystery” top margin from the first element in the main column */
