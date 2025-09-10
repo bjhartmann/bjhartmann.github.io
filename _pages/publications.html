@@ -70,8 +70,9 @@ button.pub-toggle[aria-expanded="true"][aria-controls]::after {
     {% endif %}
 
     {% if matches_cat %}
-{% assign pid = post.id | replace: '/', '-' | replace: '.', '-' %}
-{% assign abs_id = "abs-" | append: pid %}  
+{% assign pid_source = post.id | default: post.slug | default: post.title %}
+{% assign pid = pid_source | replace: '/', '-' | replace: '.', '-' | replace: ' ', '-' %}
+{% assign abs_id = "abs-" | append: pid %}
 {% assign has_abstract = post.abstract != blank %}
 {% assign show_toggle = (cat == "workingpaper") and has_abstract %}
 
