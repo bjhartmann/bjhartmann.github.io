@@ -189,7 +189,7 @@ html[data-theme="dark"] .greedy-nav { background: var(--header-bg) !important; }
 
 /* Move the whole sidebar column down by 10rem on desktop */
 @media (min-width: 1024px) {
-  .sidebar, .sidebar__left { padding-top: 10rem !important; }  /* <-- main nudge */
+  .sidebar, .sidebar__left { padding-top: 7rem !important; }  /* <-- main nudge */
   .author__profile { margin-top: 0 !important; }               /* avoid double shift */
 }
 
