@@ -71,13 +71,21 @@ redirect_from:
     {% endif %}
 
     {% if matches_cat %}
-      {%- comment -%} Robust unique id & abstract presence {%- endcomment -%}
+      {%- comment -%} Robust unique id {%- endcomment -%}
       {% assign pid_source = post.id | default: post.slug | default: post.title %}
       {% assign pid = pid_source | slugify %}
       {% assign abs_id = "abs-" | append: pid %}
 
-      {% assign has_abstract = post.abstract | default: "" | strip %}
-      {% assign show_toggle = cat == "workingpaper" and has_abstract != "" %}
+      {%- comment -%} Robust abstract extraction (front-matter → excerpt → content) {%- endcomment -%}
+      {% assign abs_from_frontmatter = post.abstract | default: "" %}
+      {% assign abs_from_excerpt     = post.excerpt  | default: "" %}
+      {% assign abs_from_content     = post.content  | default: "" %}
+      {% assign abs_text_raw = abs_from_frontmatter | default: abs_from_excerpt | default: abs_from_content %}
+      {% assign abs_text = abs_text_raw | markdownify | strip_html | strip %}
+      {% assign has_abstract = abs_text != "" %}
+
+      {%- comment -%} Only WPs are toggleable; they’ll toggle iff an abstract exists {%- endcomment -%}
+      {% assign show_toggle = (cat == "workingpaper") and has_abstract %}
 
       {% capture items %}{{ items }}
         <div class="pub-item">
@@ -117,7 +125,7 @@ redirect_from:
 
           {% if show_toggle %}
             <div id="{{ abs_id }}" class="pub-abstract" aria-hidden="true" hidden>
-              {{ post.abstract | markdownify }}
+              {{ abs_from_frontmatter | default: abs_from_excerpt | default: abs_from_content | markdownify }}
             </div>
           {% endif %}
         </div>
