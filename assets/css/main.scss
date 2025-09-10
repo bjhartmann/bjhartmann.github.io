@@ -186,11 +186,6 @@ html[data-theme="dark"] .greedy-nav { background: var(--header-bg) !important; }
 .author__content > * { margin-top: 0.5rem; }
 .author__content > *:first-child { margin-top: 0; }
 
-@media (min-width: 1024px) {
-  .page__inner-wrap,
-  .sidebar,
-  .sidebar__left { padding-top: 0 !important; }
-}
 
 /* 1) Align the top edges of sidebar + main content */
 @media (min-width: 1024px) {
