@@ -51,18 +51,16 @@
 
 .page__footer { padding: 0.5rem 0; }   
 
-/* Slimmer reading width ONLY on pages with "slim" class */
+/* Slimmer reading width on pages that set classes: slim */
 .slim .page__content {
-  max-width: 50ch;       /* ~62 characters per line = comfy reading */
-  margin-left: 0;        /* align to the left (next to the sidebar) */
-  margin-right: auto;    /* leftover space on the right */
+  max-width: 50ch;   /* you can tweak this */
+  width: auto;       /* ensure width isn’t locked by earlier rules */
+  margin-left: 0;
+  margin-right: auto;
 }
 
-/* If you prefer perfectly centered content (less common with a sidebar), use: */
-/* .slim .page__content { margin-left: auto; margin-right: auto; } */
-
-/* Let it breathe on small screens */
 @media (max-width: 800px) {
   .slim .page__content { max-width: 100%; }
 }
+
 
