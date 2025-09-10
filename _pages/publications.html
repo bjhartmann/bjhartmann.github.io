@@ -18,18 +18,14 @@ redirect_from:
   .pub-item { padding: 0.6rem 0; border-bottom: 1px solid #eee; }
   .pub-top { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
 
-  /* Titles look like plain text */
   .pub-title { font-weight: 600; color: inherit; text-decoration: none; }
   .pub-title:hover { text-decoration: none; }
 
-  /* Toggle button reset/accessibility */
   .pub-toggle { background: none; border: 0; padding: 0; font: inherit; color: inherit; cursor: pointer; text-align: left; }
   .pub-toggle:focus-visible { outline: 2px solid #94a3b8; outline-offset: 2px; }
 
-  /* Reset: never add an after-element to plain titles */
   .pub-title::after { content: none !important; }
 
-  /* Caret only on actual toggle buttons that control a panel */
   button.pub-toggle[aria-controls]::after {
     content: "▸";
     margin-left: .4rem;
@@ -53,38 +49,69 @@ redirect_from:
 </style>
 
 {% for cat in category_order %}
-  {%- comment -%}
-    Build the list of items for this category without using where_exp (unsupported on GH Pages Jekyll 3.10).
-    We iterate over all publications, pick matches manually, and capture the HTML into `items`.
-  {%- endcomment -%}
   {% assign items = "" %}
+  {% assign cat_lc = cat | downcase %}
 
   {% for post in pubs %}
+    {%- comment -%}
+      Robust, case-insensitive category matching that handles:
+      - post.category: "WorkingPaper" or "workingpapers"
+      - post.categories: ["WorkingPaper", ...]
+    {%- endcomment -%}
     {% assign matches_cat = false %}
-    {% if post.category == cat %}
+    {% assign post_cat_lc = post.category | to_s | downcase %}
+    {% if post_cat_lc == cat_lc %}
       {% assign matches_cat = true %}
-    {% elsif post.categories and post.categories contains cat %}
-      {% assign matches_cat = true %}
+    {% elsif post.categories %}
+      {% for c in post.categories %}
+        {% if c | downcase == cat_lc %}
+          {% assign matches_cat = true %}
+        {% endif %}
+      {% endfor %}
     {% endif %}
 
     {% if matches_cat %}
-      {%- comment -%} Robust unique id & abstract presence {%- endcomment -%}
+      {%- comment -%} Unique ID + abstract presence {%- endcomment -%}
       {% assign pid_source = post.id | default: post.slug | default: post.title %}
       {% assign pid = pid_source | replace: '/', '-' | replace: '.', '-' | replace: ' ', '-' %}
       {% assign abs_id = "abs-" | append: pid %}
       {% assign has_abstract = post.abstract | to_s | strip != "" %}
-      {% assign show_toggle = (cat == "workingpaper") and has_abstract %}
+
+      {%- comment -%}
+        Consider *any* alias of working paper as toggleable.
+      {%- endcomment -%}
+      {% assign is_wp_alias = false %}
+      {% assign wp_aliases = "workingpaper,workingpapers,wp" | split: "," %}
+      {% if post_cat_lc == "" and post.categories %}
+        {% assign post_cat_lc = "" %}
+      {% endif %}
+      {% if post_cat_lc != "" %}
+        {% for a in wp_aliases %}
+          {% if post_cat_lc == a %}
+            {% assign is_wp_alias = true %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+      {% if is_wp_alias == false and post.categories %}
+        {% for c in post.categories %}
+          {% for a in wp_aliases %}
+            {% if c | downcase == a %}
+              {% assign is_wp_alias = true %}
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      {% endif %}
+
+      {% assign show_toggle = is_wp_alias and has_abstract %}
 
       {% capture items %}{{ items }}
         <div class="pub-item">
           <div class="pub-top">
             {% if show_toggle %}
-              <!-- Working Paper: title toggles abstract -->
               <button class="pub-title pub-toggle" aria-expanded="false" aria-controls="{{ abs_id }}" type="button">
                 {{ post.title }}
               </button>
             {% else %}
-              <!-- Non-toggle title (WiP or no abstract) -->
               <span class="pub-title">{{ post.title }}</span>
             {% endif %}
 
@@ -123,14 +150,14 @@ redirect_from:
 
   {% if items != "" %}
     <section class="pub-section" id="{{ cat }}">
-<h2 class="pub-h2">
-  {% case cat %}
-    {% when "workingpaper" %}Working Papers
-    {% when "workinprogress" %}Work in Progress
-    {% when "otherwriting" %}Other Writings
-    {% else %}{{ cat | capitalize }}
-  {% endcase %}
-</h2>
+      <h2 class="pub-h2">
+        {% case cat %}
+          {% when "workingpaper" %}Working Papers
+          {% when "workinprogress" %}Work in Progress
+          {% when "otherwriting" %}Other Writing
+          {% else %}{{ cat | capitalize }}
+        {% endcase %}
+      </h2>
       {{ items }}
     </section>
   {% endif %}
@@ -141,13 +168,9 @@ document.addEventListener('click', function (e) {
   const btn = e.target.closest('.pub-toggle');
   if (!btn) return;
 
-  // Prefer aria-controls target if present…
   let panel = null;
   const controls = btn.getAttribute('aria-controls');
-  if (controls) {
-    panel = document.getElementById(controls);
-  }
-  // …fallback: find the abstract within the same pub-item
+  if (controls) panel = document.getElementById(controls);
   if (!panel) {
     const container = btn.closest('.pub-item');
     panel = container ? container.querySelector('.pub-abstract') : null;
@@ -157,6 +180,6 @@ document.addEventListener('click', function (e) {
   const expanded = btn.getAttribute('aria-expanded') === 'true';
   btn.setAttribute('aria-expanded', String(!expanded));
   panel.setAttribute('aria-hidden', String(expanded));
-  panel.hidden = expanded; // <-- key: use the native hidden attribute
+  panel.hidden = expanded; // native toggle
 });
 </script>
