@@ -23,7 +23,7 @@ masthead_title           : "Home"
 #               Additional customization can be done by editing /_includes/author-profile.html
 author:
   # Biographic information
-  avatar           : "/images/me.jpg"
+  avatar           : "/assets/images/me.jpg"
   name             : "Björn Hartmann"
   employer         : "University of St. Gallen"
   email            : "bjoern.hartmann@unisg.ch" 
