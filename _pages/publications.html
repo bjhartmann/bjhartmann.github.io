@@ -39,7 +39,11 @@ redirect_from:
 </style>
 
 {% for cat in category_order %}
-  {% assign cat_posts = pubs | where: "category", cat %}
+  {%- comment -%}
+    Robust filter: supports either `category: workingpaper` or `categories: [workingpaper]`
+  {%- endcomment -%}
+  {% assign cat_posts = pubs | where_exp: "p", "p.category == cat or (p.categories and p.categories contains cat)" %}
+
   {% if cat_posts.size > 0 %}
     <section class="pub-section" id="{{ cat }}">
       <h2 class="pub-h2">
@@ -52,15 +56,16 @@ redirect_from:
 
       {% for post in cat_posts %}
         {% assign pid = post.slug | default: post.title | slugify %}
-        {% assign is_wp = post.category == "workingpaper" %}
-        {% assign has_abstract = post.abstract and post.abstract != "" %}
+        {% assign is_wp = post.category == "workingpaper" or (post.categories and post.categories contains "workingpaper") %}
+        {% assign has_abstract = post.abstract != blank %}
         {% assign show_toggle = is_wp and has_abstract %}
+        {% assign abs_id = "abs-" | append: pid | append: "-" | append: forloop.index %}
 
         <div class="pub-item">
           <div class="pub-top">
             {% if show_toggle %}
               <!-- Working Paper: title toggles abstract -->
-              <button class="pub-title pub-toggle" aria-expanded="false" aria-controls="abs-{{ pid }}" type="button">
+              <button class="pub-title pub-toggle" aria-expanded="false" aria-controls="{{ abs_id }}" type="button">
                 {{ post.title }}
               </button>
             {% else %}
@@ -92,7 +97,7 @@ redirect_from:
           {% endif %}
 
           {% if show_toggle %}
-            <div id="abs-{{ pid }}" class="pub-abstract" aria-hidden="true">
+            <div id="{{ abs_id }}" class="pub-abstract" aria-hidden="true">
               {{ post.abstract | markdownify }}
             </div>
           {% endif %}
