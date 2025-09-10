@@ -149,3 +149,34 @@ html[data-theme="dark"] .greedy-nav { background: var(--header-bg) !important; }
   transition: color .12s ease; /* smoother color change on hover/focus */
 }
 
+
+/* Kill the white pill backgrounds on header tabs */
+.masthead .greedy-nav .visible-links > li > a,
+.masthead .greedy-nav .visible-links > li > a:visited,
+.masthead .greedy-nav .visible-links > li > a:focus,
+.masthead .greedy-nav .visible-links > li > a:active,
+.masthead .greedy-nav .visible-links > li > a[aria-current="page"],
+.masthead .greedy-nav .visible-links > li > a.active {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0.25rem 0 !important; /* optional: slimmer, no “pill” */
+  color: var(--header-fg-dim) !important;
+}
+
+.masthead .greedy-nav .visible-links > li > a:hover,
+.masthead .greedy-nav .visible-links > li > a:focus {
+  color: var(--header-hover-fg) !important;
+  background: transparent !important;
+}
+
+/* If the large “Home/Brand” link still looks pill-y, nuke it too */
+.masthead .masthead__menu-item--lg > a {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  color: var(--header-fg) !important;
+}
+
+
