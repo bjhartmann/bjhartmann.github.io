@@ -54,13 +54,13 @@
 .page__footer { padding: 0.5rem 0; }   
 
 /* Slimmer reading width on pages that set classes: slim */
+/* Slimmer reading width on pages that set classes: slim */
 .slim .page__content {
-  max-width: 50ch;   /* you can tweak this */
-  width: auto;       /* ensure width isn’t locked by earlier rules */
-  margin-left: 0;
+  max-width: 50ch;
+  width: auto;
+  /* Do NOT override margin-left; the theme uses it to make room for the sidebar */
   margin-right: auto;
 }
-
 @media (max-width: 800px) {
   .slim .page__content { max-width: 100%; }
 }
