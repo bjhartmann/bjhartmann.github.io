@@ -40,9 +40,12 @@ redirect_from:
 
 {% for cat in category_order %}
   {%- comment -%}
-    Robust filter: supports either `category: workingpaper` or `categories: [workingpaper]`
+    Robustly gather posts that are either `category: <cat>` or `categories: [<cat>, ...]`.
+    We avoid parentheses inside where_exp to keep Liquid parsing happy.
   {%- endcomment -%}
-  {% assign cat_posts = pubs | where_exp: "p", "p.category == cat or (p.categories and p.categories contains cat)" %}
+  {% assign cat_posts_1 = pubs | where: "category", cat %}
+  {% assign cat_posts_2 = pubs | where_exp: "p", "p.categories and p.categories contains cat" %}
+  {% assign cat_posts = cat_posts_1 | concat: cat_posts_2 | uniq %}
 
   {% if cat_posts.size > 0 %}
     <section class="pub-section" id="{{ cat }}">
@@ -56,9 +59,8 @@ redirect_from:
 
       {% for post in cat_posts %}
         {% assign pid = post.slug | default: post.title | slugify %}
-        {% assign is_wp = post.category == "workingpaper" or (post.categories and post.categories contains "workingpaper") %}
         {% assign has_abstract = post.abstract != blank %}
-        {% assign show_toggle = is_wp and has_abstract %}
+        {% assign show_toggle = (cat == "workingpaper") and has_abstract %}
         {% assign abs_id = "abs-" | append: pid | append: "-" | append: forloop.index %}
 
         <div class="pub-item">
