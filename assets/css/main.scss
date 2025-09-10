@@ -114,21 +114,53 @@ html[data-theme="dark"] .greedy-nav { background: var(--header-bg) !important; }
 
 /* -------------------- De-pill the navigation -------------------- */
 
-/* Base: remove any pill/box treatments from anchors */
-.greedy-nav .visible-links a,
-.masthead .masthead__menu-item > a {
+/* Final hammer: remove any pill/box treatments from nav items & links */
+.masthead .greedy-nav .visible-links > li,
+.masthead .greedy-nav .visible-links > li::before,
+.masthead .greedy-nav .visible-links > li::after,
+.masthead .greedy-nav .visible-links > li > a,
+.masthead .greedy-nav .visible-links > li > a::before,
+.masthead .greedy-nav .visible-links > li > a::after {
   background: transparent !important;
   box-shadow: none !important;
   border: 0 !important;
   border-radius: 0 !important;
-  color: var(--header-fg-dim) !important; /* near-white text */
+}
+
+/* Keep nav text styling minimal (reads like text, not buttons) */
+.masthead .greedy-nav .visible-links > li > a {
+  color: var(--header-fg-dim) !important;
+  padding: 0.25rem 0 !important; /* skinny, no “pill” */
   text-decoration: none;
-  /* keep spacing subtle so they read like text, not buttons */
-  padding: 0.25rem 0 !important;
   transition: color .12s ease;
 }
 
-/* Stronger home/brand link */
+/* Hover/focus/current page states */
+.masthead .greedy-nav .visible-links > li > a:hover,
+.masthead .greedy-nav .visible-links > li > a:focus {
+  color: var(--header-hover-fg) !important;
+}
+
+.masthead .greedy-nav .visible-links > li.active > a,
+.masthead .greedy-nav .visible-links > li[aria-current="page"] > a,
+.masthead .greedy-nav .visible-links > li > a[aria-current="page"],
+.masthead .greedy-nav .visible-links > li > a.active {
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--header-fg) !important; /* optional highlight for current page */
+}
+
+/* Also strip any default “button/pill” on generic masthead links */
+.masthead .masthead__menu-item > a,
+.masthead .masthead__menu-item > a::before,
+.masthead .masthead__menu-item > a::after {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+}
+
+/* Brand/Home link */
 .masthead .masthead__menu-item--lg > a {
   background: transparent !important;
   box-shadow: none !important;
@@ -136,37 +168,3 @@ html[data-theme="dark"] .greedy-nav { background: var(--header-bg) !important; }
   color: var(--header-fg) !important;
 }
 
-/* Hover/focus: brighten text only (no background) */
-.greedy-nav .visible-links a:hover,
-.greedy-nav .visible-links a:focus,
-.masthead .masthead__menu-item > a:hover,
-.masthead .masthead__menu-item > a:focus {
-  background: transparent !important;
-  color: var(--header-hover-fg) !important;
-}
-
-/* High-specificity overrides for link states */
-.masthead .greedy-nav .visible-links > li > a,
-.masthead .greedy-nav .visible-links > li > a:visited,
-.masthead .greedy-nav .visible-links > li > a:focus,
-.masthead .greedy-nav .visible-links > li > a:active,
-.masthead .greedy-nav .visible-links > li > a[aria-current="page"],
-.masthead .greedy-nav .visible-links > li > a.active {
-  background: transparent !important;
-  box-shadow: none !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  padding: 0.25rem 0 !important;
-  color: var(--header-fg-dim) !important;
-}
-
-/* Cover cases where the ACTIVE style is applied to the <li> */
-.masthead .greedy-nav .visible-links > li.active > a,
-.masthead .greedy-nav .visible-links > li[aria-current="page"] > a {
-  background: transparent !important;
-  box-shadow: none !important;
-  border-radius: 0 !important;
-  color: var(--header-fg) !important; /* optional: make current page full white */
-}
-
-/* -------------------- End de-pill -------------------- */
