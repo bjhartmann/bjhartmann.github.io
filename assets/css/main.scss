@@ -50,3 +50,19 @@
 .greedy-nav .visible-links { display:flex; gap:1rem; flex-wrap:wrap; }  /* allow wrapping */
 
 .page__footer { padding: 0.5rem 0; }   
+
+/* Slimmer reading width ONLY on pages with "slim" class */
+.slim .page__content {
+  max-width: 62ch;       /* ~62 characters per line = comfy reading */
+  margin-left: 0;        /* align to the left (next to the sidebar) */
+  margin-right: auto;    /* leftover space on the right */
+}
+
+/* If you prefer perfectly centered content (less common with a sidebar), use: */
+/* .slim .page__content { margin-left: auto; margin-right: auto; } */
+
+/* Let it breathe on small screens */
+@media (max-width: 800px) {
+  .slim .page__content { max-width: 100%; }
+}
+
