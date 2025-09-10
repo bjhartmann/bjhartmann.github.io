@@ -40,29 +40,26 @@ redirect_from:
 
 {% for cat in category_order %}
   {%- comment -%}
-    Robustly gather posts that are either `category: <cat>` or `categories: [<cat>, ...]`.
-    We avoid parentheses inside where_exp to keep Liquid parsing happy.
+    Build the list of items for this category without using where_exp (unsupported on GH Pages Jekyll 3.10).
+    We iterate over all publications, pick matches manually, and capture the HTML into `items`.
   {%- endcomment -%}
-  {% assign cat_posts_1 = pubs | where: "category", cat %}
-  {% assign cat_posts_2 = pubs | where_exp: "p", "p.categories and p.categories contains cat" %}
-  {% assign cat_posts = cat_posts_1 | concat: cat_posts_2 | uniq %}
+  {% assign items = "" %}
 
-  {% if cat_posts.size > 0 %}
-    <section class="pub-section" id="{{ cat }}">
-      <h2 class="pub-h2">
-        {% case cat %}
-          {% when "workingpaper" %}Working Papers
-          {% when "workinprogress" %}Work in Progress
-          {% else %}{{ cat | capitalize }}
-        {% endcase %}
-      </h2>
+  {% for post in pubs %}
+    {% assign matches_cat = false %}
+    {% if post.category == cat %}
+      {% assign matches_cat = true %}
+    {% elsif post.categories and post.categories contains cat %}
+      {% assign matches_cat = true %}
+    {% endif %}
 
-      {% for post in cat_posts %}
-        {% assign pid = post.slug | default: post.title | slugify %}
-        {% assign has_abstract = post.abstract != blank %}
-        {% assign show_toggle = (cat == "workingpaper") and has_abstract %}
-        {% assign abs_id = "abs-" | append: pid | append: "-" | append: forloop.index %}
+    {% if matches_cat %}
+      {% assign pid = post.slug | default: post.title | slugify %}
+      {% assign has_abstract = post.abstract != blank %}
+      {% assign show_toggle = (cat == "workingpaper") and has_abstract %}
+      {% assign abs_id = "abs-" | append: pid | append: "-" | append: forloop.index %}
 
+      {% capture items %}{{ items }}
         <div class="pub-item">
           <div class="pub-top">
             {% if show_toggle %}
@@ -104,7 +101,20 @@ redirect_from:
             </div>
           {% endif %}
         </div>
-      {% endfor %}
+      {% endcapture %}
+    {% endif %}
+  {% endfor %}
+
+  {% if items != "" %}
+    <section class="pub-section" id="{{ cat }}">
+      <h2 class="pub-h2">
+        {% case cat %}
+          {% when "workingpaper" %}Working Papers
+          {% when "workinprogress" %}Work in Progress
+          {% else %}{{ cat | capitalize }}
+        {% endcase %}
+      </h2>
+      {{ items }}
     </section>
   {% endif %}
 {% endfor %}
