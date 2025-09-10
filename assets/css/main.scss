@@ -190,3 +190,25 @@ html[data-theme="dark"] .greedy-nav { background: var(--header-bg) !important; }
   margin-top: 0.25rem;
 }
 
+/* 1) Align the top edges of sidebar + main content */
+@media (min-width: 1024px) {
+  .author__profile { margin-top: 0 !important; padding-top: 0 !important; }
+  .page__content   { padding-top: 0 !important; }
+}
+
+/* 2) Remove any “mystery” top margin from the first element in the main column */
+.page__content > *:first-child { margin-top: 0 !important; }
+
+/* 3) Make the page title’s spacing predictable when it’s visible */
+.page__title { margin-top: 0 !important; margin-bottom: 0.5rem !important; }
+
+/* 4) Ensure consistent gaps between stacked items in the author block */
+.author__content > * { margin-top: 0.5rem; }
+.author__content > *:first-child { margin-top: 0; }
+
+/* 5) If some pages hide the big H1 (class: hide-title), keep alignment anyway */
+.hide-title .page__content { padding-top: 0 !important; }
+.hide-title .author__profile { margin-top: 0 !important; }
+
+
+
