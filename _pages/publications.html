@@ -18,7 +18,7 @@ redirect_from:
   .pub-item { padding: 0.6rem 0; border-bottom: 1px solid #eee; }
   .pub-top { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
 
-  /* Keep [paper]/[slides]/[code]/[doi] on the summary row */
+  /* Fix: ensure [paper] links show up inside <summary> */
   details.pub-toggle > summary .pub-top {
     display: inline-flex;
     width: 100%;
@@ -27,15 +27,22 @@ redirect_from:
     gap: 1rem;
   }
 
+  /* Title now blue but no underline on hover */
   .pub-title { font-weight: 600; color: #2563eb; text-decoration: none; }
   .pub-title:hover { text-decoration: none; }
 
+  /* All other links (coauthors, [paper], etc.) same color as caret */
   .pub-links a,
   .pub-authors a,
-  .pub-venue a { color: #555; text-decoration: none; }
+  .pub-venue a {
+    color: #555;
+    text-decoration: none;
+  }
   .pub-links a:hover,
   .pub-authors a:hover,
-  .pub-venue a:hover { text-decoration: underline; }
+  .pub-venue a:hover {
+    text-decoration: underline;
+  }
 
   .pub-authors { color: #555; margin-top: 0.2rem; }
   .pub-venue   { color: #666; margin-top: 0.2rem; }
@@ -53,56 +60,64 @@ redirect_from:
   @media print {
     details.pub-toggle[open] > summary .caret::after,
     details.pub-toggle > summary .caret::after { content: none; }
-    details.pub-toggle { border: 0; padding: 0; page-break-inside: avoid; }
+    details.pub-toggle { border: 0; padding: 0; }
+    details.pub-toggle { page-break-inside: avoid; }
   }
 
   @media (max-width: 640px) { .pub-top { flex-direction: column; align-items: flex-start; } }
 </style>
 
 {%- for cat in category_order -%}
-  {%- assign items = "" -%}
+  {% assign items = "" %}
 
-  {%- for post in pubs -%}
-    {%- assign matches_cat = false -%}
-    {%- if post.category == cat -%}
-      {%- assign matches_cat = true -%}
-    {%- elsif post.categories and post.categories contains cat -%}
-      {%- assign matches_cat = true -%}
-    {%- endif -%}
+  {% for post in pubs %}
+    {% assign matches_cat = false %}
+    {% if post.category == cat %}
+      {% assign matches_cat = true %}
+    {% elsif post.categories and post.categories contains cat %}
+      {% assign matches_cat = true %}
+    {% endif %}
 
-    {%- if matches_cat -%}
+    {% if matches_cat %}
       {%- assign pid_source = post.id | default: post.slug | default: post.title -%}
       {%- assign pid = pid_source | slugify -%}
       {%- assign abs_id = "abs-" | append: pid -%}
 
-      {%- comment -%} Abstract: ONLY from front-matter {%- endcomment -%}
-      {%- assign abs_md = post.abstract | default: "" -%}
-      {%- assign has_abstract = abs_md | strip | size > 0 -%}
+      {%- assign abs_from_frontmatter = post.abstract | default: "" -%}
+      {%- assign abs_from_excerpt     = post.excerpt  | default: "" -%}
+      {%- assign abs_from_content     = post.content  | default: "" -%}
+      {%- assign abs_text_raw = abs_from_frontmatter | default: abs_from_excerpt | default: abs_from_content -%}
+      {%- assign abs_text = abs_text_raw | markdownify | strip_html | strip -%}
+      {%- assign has_abstract = abs_text != "" -%}
 
-      {%- comment -%} Category flags {%- endcomment -%}
       {%- assign is_wp = false -%}
-      {%- if post.category == 'workingpaper' or (post.categories and post.categories contains 'workingpaper') -%}
+      {%- if post.category == 'workingpaper' -%}
+        {%- assign is_wp = true -%}
+      {%- elsif post.categories and post.categories contains 'workingpaper' -%}
         {%- assign is_wp = true -%}
       {%- endif -%}
 
-      {%- assign is_ow = false -%}
-      {%- if post.category == 'otherwriting' or (post.categories and post.categories contains 'otherwriting') -%}
-        {%- assign is_ow = true -%}
-      {%- endif -%}
-
-      {%- assign show_toggle = has_abstract and (is_wp or is_ow) -%}
+      {%- assign show_toggle = is_wp and has_abstract -%}
 
       {%- capture authors_text -%}{{ post.authors | default: "" | strip }}{%- endcapture -%}
       {%- capture venue_text   -%}{{ post.venue   | default: "" | strip }}{%- endcapture -%}
       {%- assign date_iso = post.date | date: "%Y-%m-%d" -%}
 
-      {%- comment -%} Links for this item {%- endcomment -%}
+      {%- comment -%} Build links for THIS post (must be inside the loop) {%- endcomment -%}
       {% capture render_links %}
         <span class="pub-links">
-          {% if post.paperurl %}[<a href="{{ post.paperurl }}" target="_blank" rel="noopener noreferrer">{{ post.paperlabel | default: "paper" }}</a>]{% endif %}
-          {% if post.slidesurl %}[<a href="{{ post.slidesurl }}" target="_blank" rel="noopener noreferrer">{{ post.slideslabel | default: "slides" }}</a>]{% endif %}
-          {% if post.codeurl %}[<a href="{{ post.codeurl }}" target="_blank" rel="noopener noreferrer">{{ post.codelabel | default: "code" }}</a>]{% endif %}
-          {% if post.doi %}[<a href="https://doi.org/{{ post.doi | escape }}" target="_blank" rel="noopener noreferrer">doi</a>]{% endif %}
+          {% if post.paperurl %}
+            [<a href="{{ post.paperurl }}" target="_blank" rel="noopener noreferrer">{{ post.paperlabel | default: "paper" }}</a>]
+          {% endif %}
+          {% if post.slidesurl %}
+            [<a href="{{ post.slidesurl }}" target="_blank" rel="noopener noreferrer">{{ post.slideslabel | default: "slides" }}</a>]
+          {% endif %}
+          {% if post.codeurl %}
+            [<a href="{{ post.codeurl }}" target="_blank" rel="noopener noreferrer">{{ post.codelabel | default: "code" }}</a>]
+          {% endif %}
+          {% if post.doi %}
+            [<a href="https://doi.org/{{ post.doi | escape }}" target="_blank" rel="noopener noreferrer">doi</a>]
+          {% endif %}
         </span>
       {% endcapture %}
 
@@ -126,7 +141,7 @@ redirect_from:
             </summary>
             <meta itemprop="datePublished" content="{{ date_iso }}" />
             <div id="{{ abs_id }}" class="pub-abstract" itemprop="abstract">
-              {{ abs_md | markdownify }}
+              {{ abs_from_frontmatter | default: abs_from_excerpt | default: abs_from_content | markdownify }}
             </div>
           </details>
         {% else %}
@@ -146,12 +161,12 @@ redirect_from:
         {% endif %}
       {% endcapture %}
 
-      {%- assign items = items | append: item -%}
-    {%- endif -%}
-  {%- endfor -%}
+      {% assign items = items | append: item %}
+    {% endif %}
+  {% endfor %}
 
-  {%- if items != "" -%}
-    <section class="pub-section" id="{{ cat }}" aria-label="{{ cat | replace: 'workingpaper','Working Papers' | replace: 'workinprogress','Work in Progress' | replace: 'otherwriting','Other Writings' }}">
+  {% if items != "" %}
+    <section class="pub-section" id="{{ cat }}" aria-label="{{ cat | replace: 'workingpaper', 'Working Papers' | replace: 'workinprogress','Work in Progress' | replace: 'otherwriting','Other Writings' }}">
       <h2 class="pub-h2">
         {% case cat %}
           {% when "workingpaper" %}Working Papers
@@ -162,7 +177,7 @@ redirect_from:
       </h2>
       {{ items }}
     </section>
-  {%- endif -%}
+  {% endif %}
 {%- endfor -%}
 
 <script>
@@ -180,3 +195,5 @@ redirect_from:
   openFromHash();
 })();
 </script>
+
+when does the drop-down menu appear?
