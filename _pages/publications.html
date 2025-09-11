@@ -29,7 +29,6 @@ redirect_from:
 
   .pub-abstract { margin-top: 0.6rem; color: #333; }
 
-  /* details/summary native toggle styling */
   details.pub-toggle { border-bottom: 1px solid #eee; padding: .6rem 0; }
   details.pub-toggle > summary { list-style: none; cursor: pointer; }
   details.pub-toggle > summary::-webkit-details-marker { display: none; }
@@ -49,26 +48,6 @@ redirect_from:
 
   @media (max-width: 640px) { .pub-top { flex-direction: column; align-items: flex-start; } }
 </style>
-
-{%- comment -%}
-  Utility to render the per-item links block
-{%- endcomment -%}
-{% capture render_links %}
-  <span class="pub-links">
-    {% if post.paperurl %}
-      [<a href="{{ post.paperurl }}" target="_blank" rel="noopener noreferrer">{{ post.paperlabel | default: "paper" }}</a>]
-    {% endif %}
-    {% if post.slidesurl %}
-      [<a href="{{ post.slidesurl }}" target="_blank" rel="noopener noreferrer">{{ post.slideslabel | default: "slides" }}</a>]
-    {% endif %}
-    {% if post.codeurl %}
-      [<a href="{{ post.codeurl }}" target="_blank" rel="noopener noreferrer">{{ post.codelabel | default: "code" }}</a>]
-    {% endif %}
-    {% if post.doi %}
-      [<a href="https://doi.org/{{ post.doi | escape }}" target="_blank" rel="noopener noreferrer">doi</a>]
-    {% endif %}
-  </span>
-{% endcapture %}
 
 {%- for cat in category_order -%}
   {% assign items = "" %}
@@ -93,9 +72,6 @@ redirect_from:
       {%- assign abs_text = abs_text_raw | markdownify | strip_html | strip -%}
       {%- assign has_abstract = abs_text != "" -%}
 
-      {%- comment -%}
-        Determine if this POST itself is a working paper (independent of outer loop var).
-      {%- endcomment -%}
       {%- assign is_wp = false -%}
       {%- if post.category == 'workingpaper' -%}
         {%- assign is_wp = true -%}
@@ -109,18 +85,34 @@ redirect_from:
       {%- capture venue_text   -%}{{ post.venue   | default: "" | strip }}{%- endcapture -%}
       {%- assign date_iso = post.date | date: "%Y-%m-%d" -%}
 
+      {% capture links_block %}
+        <span class="pub-links">
+          {% if post.paperurl %}
+            [<a href="{{ post.paperurl }}" target="_blank" rel="noopener noreferrer">{{ post.paperlabel | default: "paper" }}</a>]
+          {% endif %}
+          {% if post.slidesurl %}
+            [<a href="{{ post.slidesurl }}" target="_blank" rel="noopener noreferrer">{{ post.slideslabel | default: "slides" }}</a>]
+          {% endif %}
+          {% if post.codeurl %}
+            [<a href="{{ post.codeurl }}" target="_blank" rel="noopener noreferrer">{{ post.codelabel | default: "code" }}</a>]
+          {% endif %}
+          {% if post.doi %}
+            [<a href="https://doi.org/{{ post.doi | escape }}" target="_blank" rel="noopener noreferrer">doi</a>]
+          {% endif %}
+        </span>
+      {% endcapture %}
+
       {% capture item %}
         {% if show_toggle %}
-          <!-- Working Paper with abstract: keep title, links, AUTHORS & VENUE visible in summary; only abstract collapses. -->
           <details id="{{ pid }}" class="pub-item pub-toggle" itemscope itemtype="https://schema.org/ScholarlyArticle">
             <summary>
-              <div class="pub-top">
+  <span class="pub-top" style="display:flex;justify-content:space-between;align-items:baseline;gap:1rem;">
                 <span>
                   <span class="pub-title" itemprop="name">{{ post.title }}</span>
                   <span class="caret" aria-hidden="true"></span>
                 </span>
-                {{ render_links | strip }}
-              </div>
+                {{ links_block | strip }}
+              </span>
               {% if authors_text != "" %}
                 <div class="pub-authors" itemprop="author">{{ authors_text }}</div>
               {% endif %}
@@ -134,11 +126,10 @@ redirect_from:
             </div>
           </details>
         {% else %}
-          <!-- WiP / Other / no-abstract item (non-toggle) -->
           <div id="{{ pid }}" class="pub-item" itemscope itemtype="https://schema.org/ScholarlyArticle">
             <div class="pub-top">
               <span class="pub-title" itemprop="name">{{ post.title }}</span>
-              {{ render_links | strip }}
+              {{ links_block | strip }}
             </div>
             {% if authors_text != "" %}
               <div class="pub-authors" itemprop="author">{{ authors_text }}</div>
