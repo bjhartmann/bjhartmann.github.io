@@ -8,8 +8,8 @@ redirect_from:
   - /publications/
 ---
 
-{% assign pubs = site.publications | sort: "date" | reverse %}
-{% assign category_order = "workingpaper,workinprogress,otherwriting" | split: "," %}
+{%- assign pubs = site.publications | sort: "date" | reverse -%}
+{%- assign category_order = "workingpaper,workinprogress,otherwriting" | split: "," -%}
 
 <style>
   .pub-section { margin: 2rem 0 1rem; }
@@ -22,43 +22,61 @@ redirect_from:
   .pub-title { font-weight: 600; color: inherit; text-decoration: none; }
   .pub-title:hover { text-decoration: none; }
 
-  /* Toggle button reset/accessibility */
-  .pub-toggle { background: none; border: 0; padding: 0; font: inherit; color: inherit; cursor: pointer; text-align: left; }
-  .pub-toggle:focus-visible { outline: 2px solid #94a3b8; outline-offset: 2px; }
-
-  /* Reset: never add an after-element to plain titles */
-  .pub-title::after { content: none !important; }
-
-  /* Caret only on actual toggle buttons that control a panel */
-  button.pub-toggle[aria-controls]::after {
-    content: "▸";
-    margin-left: .4rem;
-    transition: transform .15s ease;
-    line-height: 1;
-  }
-  button.pub-toggle[aria-expanded="true"][aria-controls]::after {
-    transform: rotate(90deg);
-  }
-
   .pub-links a { text-decoration: none; }
   .pub-links a:hover { text-decoration: underline; }
 
   .pub-authors { color: #555; margin-top: 0.2rem; }
   .pub-venue   { color: #666; margin-top: 0.2rem; }
 
-  /* Only styling (no visibility rules) */
   .pub-abstract { margin-top: 0.6rem; color: #333; }
+
+  /* details/summary native toggle styling */
+  details.pub-toggle { border-bottom: 1px solid #eee; padding: .6rem 0; }
+  details.pub-toggle > summary { list-style: none; cursor: pointer; }
+  details.pub-toggle > summary::-webkit-details-marker { display: none; }
+  details.pub-toggle > summary::after {
+    content: "▸";
+    margin-left: .4rem; line-height: 1; transition: transform .15s ease;
+  }
+  details.pub-toggle[open] > summary::after { transform: rotate(90deg); }
 
   /* Defensive: force hidden elements to stay hidden */
   [hidden] { display: none !important; }
-  
+
+  /* Print: expand all abstracts */
+  @media print {
+    details.pub-toggle[open] > summary::after,
+    details.pub-toggle > summary::after { content: none; }
+    details.pub-toggle { border: 0; padding: 0; }
+    details.pub-toggle { page-break-inside: avoid; }
+  }
+
   @media (max-width: 640px) { .pub-top { flex-direction: column; align-items: flex-start; } }
 </style>
 
-{% for cat in category_order %}
+{%- comment -%}
+  Utility to render the per-item links block
+{%- endcomment -%}
+{% capture render_links %}
+  <span class="pub-links">
+    {% if post.paperurl %}
+      [<a href="{{ post.paperurl }}" target="_blank" rel="noopener noreferrer">{{ post.paperlabel | default: "paper" }}</a>]
+    {% endif %}
+    {% if post.slidesurl %}
+      [<a href="{{ post.slidesurl }}" target="_blank" rel="noopener noreferrer">{{ post.slideslabel | default: "slides" }}</a>]
+    {% endif %}
+    {% if post.codeurl %}
+      [<a href="{{ post.codeurl }}" target="_blank" rel="noopener noreferrer">{{ post.codelabel | default: "code" }}</a>]
+    {% endif %}
+    {% if post.doi %}
+      [<a href="https://doi.org/{{ post.doi | escape }}" target="_blank" rel="noopener noreferrer">doi</a>]
+    {% endif %}
+  </span>
+{% endcapture %}
+
+{%- for cat in category_order -%}
   {%- comment -%}
-    Build the list of items for this category without using where_exp (unsupported on GH Pages Jekyll 3.10).
-    We iterate over all publications, pick matches manually, and capture the HTML into `items`.
+    Build the list of items for this category without where_exp (GH Pages Jekyll 3.10 compatible).
   {%- endcomment -%}
   {% assign items = "" %}
 
@@ -71,70 +89,66 @@ redirect_from:
     {% endif %}
 
     {% if matches_cat %}
-      {%- comment -%} Robust unique id {%- endcomment -%}
-      {% assign pid_source = post.id | default: post.slug | default: post.title %}
-      {% assign pid = pid_source | slugify %}
-      {% assign abs_id = "abs-" | append: pid %}
+      {%- assign pid_source = post.id | default: post.slug | default: post.title -%}
+      {%- assign pid = pid_source | slugify -%}
+      {%- assign abs_id = "abs-" | append: pid -%}
 
-      {%- comment -%} Robust abstract extraction (front-matter → excerpt → content) {%- endcomment -%}
-      {% assign abs_from_frontmatter = post.abstract | default: "" %}
-      {% assign abs_from_excerpt     = post.excerpt  | default: "" %}
-      {% assign abs_from_content     = post.content  | default: "" %}
-      {% assign abs_text_raw = abs_from_frontmatter | default: abs_from_excerpt | default: abs_from_content %}
-      {% assign abs_text = abs_text_raw | markdownify | strip_html | strip %}
-      {% assign has_abstract = abs_text != "" %}
+      {%- assign abs_from_frontmatter = post.abstract | default: "" -%}
+      {%- assign abs_from_excerpt     = post.excerpt  | default: "" -%}
+      {%- assign abs_from_content     = post.content  | default: "" -%}
+      {%- assign abs_text_raw = abs_from_frontmatter | default: abs_from_excerpt | default: abs_from_content -%}
+      {%- assign abs_text = abs_text_raw | markdownify | strip_html | strip -%}
+      {%- assign has_abstract = abs_text != "" -%}
 
-      {%- comment -%} Only WPs are toggleable; they’ll toggle iff an abstract exists {%- endcomment -%}
-      {% assign show_toggle = (cat == "workingpaper") and has_abstract %}
+      {%- assign show_toggle = (cat == "workingpaper") and has_abstract -%}
 
-      {% capture items %}{{ items }}
-        <div class="pub-item">
-          <div class="pub-top">
-            {% if show_toggle %}
-              <!-- Working Paper: title toggles abstract -->
-              <button class="pub-title pub-toggle" aria-expanded="false" aria-controls="{{ abs_id }}" type="button">
-                {{ post.title }}
-              </button>
-            {% else %}
-              <!-- Non-toggle title (WiP or no abstract) -->
-              <span class="pub-title">{{ post.title }}</span>
+      {%- capture authors_text -%}{{ post.authors | default: "" | strip }}{%- endcapture -%}
+      {%- capture venue_text   -%}{{ post.venue   | default: "" | strip }}{%- endcapture -%}
+      {%- assign date_iso = post.date | date: "%Y-%m-%d" -%}
+
+      {% capture item %}
+        {% if show_toggle %}
+          <!-- Working Paper with abstract: native <details>/<summary> for full a11y & no-JS support -->
+          <details id="{{ pid }}" class="pub-item pub-toggle" itemscope itemtype="https://schema.org/ScholarlyArticle">
+            <summary class="pub-top">
+              <span class="pub-title" itemprop="name">{{ post.title }}</span>
+              {{ render_links | strip }}
+            </summary>
+            {% if authors_text != "" %}
+              <div class="pub-authors" itemprop="author">{{ authors_text }}</div>
             {% endif %}
-
-            <span class="pub-links">
-              {% if post.paperurl %}
-                [<a href="{{ post.paperurl }}" target="_blank" rel="noopener">{{ post.paperlabel | default: "paper" }}</a>]
-              {% endif %}
-              {% if post.slidesurl %}
-                [<a href="{{ post.slidesurl }}" target="_blank" rel="noopener">{{ post.slideslabel | default: "slides" }}</a>]
-              {% endif %}
-              {% if post.codeurl %}
-                [<a href="{{ post.codeurl }}" target="_blank" rel="noopener">{{ post.codelabel | default: "code" }}</a>]
-              {% endif %}
-              {% if post.doi %}
-                [<a href="https://doi.org/{{ post.doi | escape }}" target="_blank" rel="noopener">doi</a>]
-              {% endif %}
-            </span>
-          </div>
-
-          {% if post.authors %}
-            <div class="pub-authors">{{ post.authors }}</div>
-          {% endif %}
-          {% if post.venue %}
-            <div class="pub-venue">{{ post.venue }}</div>
-          {% endif %}
-
-          {% if show_toggle %}
-            <div id="{{ abs_id }}" class="pub-abstract" aria-hidden="true" hidden>
+            {% if venue_text != "" %}
+              <div class="pub-venue" itemprop="isPartOf">{{ venue_text }}</div>
+            {% endif %}
+            <meta itemprop="datePublished" content="{{ date_iso }}" />
+            <div id="{{ abs_id }}" class="pub-abstract" itemprop="abstract">
               {{ abs_from_frontmatter | default: abs_from_excerpt | default: abs_from_content | markdownify }}
             </div>
-          {% endif %}
-        </div>
+          </details>
+        {% else %}
+          <!-- WiP / no-abstract item (non-toggle) -->
+          <div id="{{ pid }}" class="pub-item" itemscope itemtype="https://schema.org/ScholarlyArticle">
+            <div class="pub-top">
+              <span class="pub-title" itemprop="name">{{ post.title }}</span>
+              {{ render_links | strip }}
+            </div>
+            {% if authors_text != "" %}
+              <div class="pub-authors" itemprop="author">{{ authors_text }}</div>
+            {% endif %}
+            {% if venue_text != "" %}
+              <div class="pub-venue" itemprop="isPartOf">{{ venue_text }}</div>
+            {% endif %}
+            <meta itemprop="datePublished" content="{{ date_iso }}" />
+          </div>
+        {% endif %}
       {% endcapture %}
+
+      {% assign items = items | append: item %}
     {% endif %}
   {% endfor %}
 
   {% if items != "" %}
-    <section class="pub-section" id="{{ cat }}">
+    <section class="pub-section" id="{{ cat }}" aria-label="{{ cat | replace: 'workingpaper', 'Working Papers' | replace: 'workinprogress','Work in Progress' | replace: 'otherwriting','Other Writings' }}">
       <h2 class="pub-h2">
         {% case cat %}
           {% when "workingpaper" %}Working Papers
@@ -146,23 +160,23 @@ redirect_from:
       {{ items }}
     </section>
   {% endif %}
-{% endfor %}
+{%- endfor -%}
 
 <script>
-document.addEventListener('click', function (e) {
-  const btn = e.target.closest('.pub-toggle');
-  if (!btn) return;
-
-  // Prefer aria-controls if present; fallback to nearest .pub-abstract
-  const id = btn.getAttribute('aria-controls');
-  const panel = id ? document.getElementById(id) : btn.closest('.pub-item')?.querySelector('.pub-abstract');
-  if (!panel) return;
-
-  const wasExpanded = btn.getAttribute('aria-expanded') === 'true';
-  const isExpanded = !wasExpanded;
-
-  btn.setAttribute('aria-expanded', String(isExpanded));
-  panel.setAttribute('aria-hidden', String(!isExpanded));
-  panel.hidden = !isExpanded;
-});
+(function() {
+  // Progressive enhancement: if URL hash matches an item id or abstract id, open its details.
+  function openFromHash() {
+    var id = location.hash ? location.hash.slice(1) : null;
+    if (!id) return;
+    var el = document.getElementById(id);
+    if (!el) return;
+    // If it's a <details>, open it; if it's a child inside details, open the nearest details.
+    var details = el.tagName === 'DETAILS' ? el : el.closest('details');
+    if (details) details.open = true;
+    // Scroll into view with some offset for sticky headers.
+    setTimeout(function(){ el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 0);
+  }
+  window.addEventListener('hashchange', openFromHash);
+  openFromHash();
+})();
 </script>
