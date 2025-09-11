@@ -97,7 +97,7 @@ redirect_from:
         {%- assign is_wp = true -%}
       {%- endif -%}
 
-      {%- assign show_toggle = is_wp and has_abstract -%}
+      {%- assign show_toggle = has_abstract -%}
 
       {%- capture authors_text -%}{{ post.authors | default: "" | strip }}{%- endcapture -%}
       {%- capture venue_text   -%}{{ post.venue   | default: "" | strip }}{%- endcapture -%}
