@@ -67,26 +67,6 @@ redirect_from:
   @media (max-width: 640px) { .pub-top { flex-direction: column; align-items: flex-start; } }
 </style>
 
-{%- comment -%}
-  Utility to render the per-item links block
-{%- endcomment -%}
-{% capture render_links %}
-  <span class="pub-links">
-    {% if post.paperurl %}
-      [<a href="{{ post.paperurl }}" target="_blank" rel="noopener noreferrer">{{ post.paperlabel | default: "paper" }}</a>]
-    {% endif %}
-    {% if post.slidesurl %}
-      [<a href="{{ post.slidesurl }}" target="_blank" rel="noopener noreferrer">{{ post.slideslabel | default: "slides" }}</a>]
-    {% endif %}
-    {% if post.codeurl %}
-      [<a href="{{ post.codeurl }}" target="_blank" rel="noopener noreferrer">{{ post.codelabel | default: "code" }}</a>]
-    {% endif %}
-    {% if post.doi %}
-      [<a href="https://doi.org/{{ post.doi | escape }}" target="_blank" rel="noopener noreferrer">doi</a>]
-    {% endif %}
-  </span>
-{% endcapture %}
-
 {%- for cat in category_order -%}
   {% assign items = "" %}
 
@@ -122,6 +102,24 @@ redirect_from:
       {%- capture authors_text -%}{{ post.authors | default: "" | strip }}{%- endcapture -%}
       {%- capture venue_text   -%}{{ post.venue   | default: "" | strip }}{%- endcapture -%}
       {%- assign date_iso = post.date | date: "%Y-%m-%d" -%}
+
+      {%- comment -%} Build links for THIS post (must be inside the loop) {%- endcomment -%}
+      {% capture render_links %}
+        <span class="pub-links">
+          {% if post.paperurl %}
+            [<a href="{{ post.paperurl }}" target="_blank" rel="noopener noreferrer">{{ post.paperlabel | default: "paper" }}</a>]
+          {% endif %}
+          {% if post.slidesurl %}
+            [<a href="{{ post.slidesurl }}" target="_blank" rel="noopener noreferrer">{{ post.slideslabel | default: "slides" }}</a>]
+          {% endif %}
+          {% if post.codeurl %}
+            [<a href="{{ post.codeurl }}" target="_blank" rel="noopener noreferrer">{{ post.codelabel | default: "code" }}</a>]
+          {% endif %}
+          {% if post.doi %}
+            [<a href="https://doi.org/{{ post.doi | escape }}" target="_blank" rel="noopener noreferrer">doi</a>]
+          {% endif %}
+        </span>
+      {% endcapture %}
 
       {% capture item %}
         {% if show_toggle %}
