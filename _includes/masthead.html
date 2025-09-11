@@ -18,15 +18,15 @@ redirect_from:
   .pub-item { padding: 0.6rem 0; border-bottom: 1px solid #eee; }
   .pub-top { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
 
-  /* Title now blue but no underline on hover */
+  /* Title now blue */
   .pub-title { font-weight: 600; color: #2563eb; text-decoration: none; }
-  .pub-title:hover { text-decoration: none; }
+  .pub-title:hover { text-decoration: underline; }
 
-  /* All other links (coauthors, [paper], etc.) same color as caret */
+  /* All other links (coauthors, [paper], etc.) black */
   .pub-links a,
   .pub-authors a,
   .pub-venue a {
-    color: #333;
+    color: #000;
     text-decoration: none;
   }
   .pub-links a:hover,
@@ -44,7 +44,7 @@ redirect_from:
   details.pub-toggle > summary { list-style: none; cursor: pointer; }
   details.pub-toggle > summary::-webkit-details-marker { display: none; }
   details.pub-toggle > summary .caret::after {
-    content: "▸"; margin-left: .4rem; line-height: 1; transition: transform .15s ease; color: #333;
+    content: "▸"; margin-left: .4rem; line-height: 1; transition: transform .15s ease;
   }
   details.pub-toggle[open] > summary .caret::after { transform: rotate(90deg); }
 
