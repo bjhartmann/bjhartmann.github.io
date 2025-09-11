@@ -6,11 +6,17 @@ layout: compress
 
 <!doctype html>
 <html lang="{{ site.locale | slice: 0,2 }}" class="no-js"{% if site.site_theme == "dark" %} data-theme="dark"{% endif %}>
-  <head>
-    {% include head.html %}
-    {% include head/custom.html %}
-    <meta name="google-site-verification" content="QICV-KciStUDIv44_aHWLQccSVehpmXm-wDIi_aYF5I" />
-  </head>
+<head>
+  <meta charset="utf-8">
+  <title>{{ page.title | default: site.title }}</title>
+
+  {% seo %}
+  <meta name="google-site-verification" content="QICV-KciStUDIv44_aHWLQccSVehpmXm-wDIi_aYF5I" />
+
+  {% include head.html %}
+  {% include head/custom.html %}
+</head>
+
 
   <body>
 
