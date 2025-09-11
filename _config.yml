@@ -22,13 +22,11 @@ masthead_title           : "Home"
 #               If a field is blank the icon and link will not appear, otherwise it will be shown.
 #               Additional customization can be done by editing /_includes/author-profile.html
 author:
-  # Biographic information
-  name             : "Björn Hartmann"
-  email            : "bjoern.hartmann@unisg.ch" 
-  links:
-    - label: "University of St. Gallen"
-      icon: "fas fa-university"
-      url: "https://www.unisg.ch/en/"
+  name: "Björn Hartmann"
+  employer: "University of St. Gallen"
+  employer_url: "https://www.unisg.ch"
+  email: "bjoern.hartmann@unisg.ch"
+
 
   # Academic websites
   academia         : # URL
