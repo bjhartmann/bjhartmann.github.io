@@ -91,7 +91,17 @@ redirect_from:
       {%- assign has_abstract = abs_text != "" -%}
 
 
-      {%- assign show_toggle = has_abstract -%}
+{%- assign is_wp = false -%}
+{%- if post.category == 'workingpaper' or (post.categories and post.categories contains 'workingpaper') -%}
+  {%- assign is_wp = true -%}
+{%- endif -%}
+
+{%- assign is_ow = false -%}
+{%- if post.category == 'otherwriting' or (post.categories and post.categories contains 'otherwriting') -%}
+  {%- assign is_ow = true -%}
+{%- endif -%}
+
+{%- assign show_toggle = has_abstract and (is_wp or is_ow) -%}
 
       {%- capture authors_text -%}{{ post.authors | default: "" | strip }}{%- endcapture -%}
       {%- capture venue_text   -%}{{ post.venue   | default: "" | strip }}{%- endcapture -%}
