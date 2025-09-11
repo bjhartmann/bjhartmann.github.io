@@ -87,13 +87,11 @@ redirect_from:
       {%- capture venue_text   -%}{{ post.venue   | default: "" | strip }}{%- endcapture -%}
       {%- assign date_iso = post.date | date: "%Y-%m-%d" -%}
 
-      {%- comment -%} Only treat *explicit* front matter `abstract:` as a dropdown {%- endcomment -%}
-      {%- assign abs_from_frontmatter_raw = post.abstract | default: "" -%}
-      {%- assign abs_from_frontmatter = abs_from_frontmatter_raw | markdownify | strip_html | strip -%}
-      {%- assign has_explicit_abstract = abs_from_frontmatter != "" -%}
+      {%- comment -%} Only show dropdown if abstract in front matter is non-empty {%- endcomment -%}
+      {%- assign abs_raw = post.abstract | to_s -%}
+      {%- assign has_explicit_abstract = abs_raw | strip | size > 0 -%}
       {%- assign show_toggle = has_explicit_abstract -%}
 
-      {%- comment -%} Build links for THIS post (must be inside the loop) {%- endcomment -%}
       {% capture render_links %}
         <span class="pub-links">
           {% if post.paperurl %}
@@ -131,7 +129,7 @@ redirect_from:
             </summary>
             <meta itemprop="datePublished" content="{{ date_iso }}" />
             <div id="{{ abs_id }}" class="pub-abstract" itemprop="abstract">
-              {{ abs_from_frontmatter_raw | markdownify }}
+              {{ abs_raw | markdownify }}
             </div>
           </details>
         {% else %}
