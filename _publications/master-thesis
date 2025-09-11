@@ -4,9 +4,15 @@ venue: "Master Thesis"
 collection: publications
 permalink: /publication/master-thesis
 date: 2025-08-01
-paperurl: "https://www.ifo.de/DocDL/cesifo1_wp12107.pdf"
-paperlabel: "paper"             # 👈 custom label
+paperurl: /files/MA.pdf
+paperlabel: "paper"          
 abstract: >
-  We develop a two-country model of international trade featuring non-homothetic preferences and income inequality, generating a price schedule where cheap necessities coexist with expensive luxury goods. A central mechanism driving price differences is firm’s ability to shift fixed costs between countries, shaping trade patterns and welfare. In a North–South setting, poor consumers in the rich country are most negatively affected by this fixed cost shifting, leading to a *Manhattan effect*. Following mean-preserving redistribution, import volumes rise in the unequal country and fall in the more equal one. In an open economy, strictly more consumers lose out from increased inequality compared to the autarky case, due to firms adjusting their pricing-to-market behaviour.
+  The present study develops quality-ladder models of endogenous growth with and without
+rm heterogeneity. It analyses the eects of trade and trade liberalisation on the level of
+manufacturing productivity, on rm selection and on the investment into research. In this
+framework, I demonstrate that trade liberalisation unambiguously tightens rm selection
+and makes the economy more productive. Additionally, there is a reallocation of resources
+from non-exporting to exporting industries. Trade liberalisation increases the investment
+into research for suciently small, yet plausible, values of the elasticity of substitution.
 category: otherwritings
 ---
