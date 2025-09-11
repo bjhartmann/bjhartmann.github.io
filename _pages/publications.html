@@ -128,7 +128,9 @@ redirect_from:
               <span class="pub-top">
                 <span>
                   <span class="pub-title" itemprop="name">{{ post.title }}</span>
-                  <span class="caret" aria-hidden="true"></span>
+{% if show_toggle %}
+  <span class="caret" aria-hidden="true"></span>
+{% endif %}
                 </span>
                 {{ render_links | strip }}
               </span>
