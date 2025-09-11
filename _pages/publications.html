@@ -34,19 +34,18 @@ redirect_from:
   details.pub-toggle { border-bottom: 1px solid #eee; padding: .6rem 0; }
   details.pub-toggle > summary { list-style: none; cursor: pointer; }
   details.pub-toggle > summary::-webkit-details-marker { display: none; }
-  details.pub-toggle > summary::after {
-    content: "▸";
-    margin-left: .4rem; line-height: 1; transition: transform .15s ease;
+  details.pub-toggle > summary .caret::after {
+    content: "▸"; margin-left: .4rem; line-height: 1; transition: transform .15s ease;
   }
-  details.pub-toggle[open] > summary::after { transform: rotate(90deg); }
+  details.pub-toggle[open] > summary .caret::after { transform: rotate(90deg); }
 
   /* Defensive: force hidden elements to stay hidden */
   [hidden] { display: none !important; }
 
   /* Print: expand all abstracts */
   @media print {
-    details.pub-toggle[open] > summary::after,
-    details.pub-toggle > summary::after { content: none; }
+    details.pub-toggle[open] > summary .caret::after,
+    details.pub-toggle > summary .caret::after { content: none; }
     details.pub-toggle { border: 0; padding: 0; }
     details.pub-toggle { page-break-inside: avoid; }
   }
@@ -75,9 +74,6 @@ redirect_from:
 {% endcapture %}
 
 {%- for cat in category_order -%}
-  {%- comment -%}
-    Build the list of items for this category without where_exp (GH Pages Jekyll 3.10 compatible).
-  {%- endcomment -%}
   {% assign items = "" %}
 
   {% for post in pubs %}
@@ -108,10 +104,13 @@ redirect_from:
 
       {% capture item %}
         {% if show_toggle %}
-          <!-- Working Paper with abstract: native <details>/<summary> for full a11y & no-JS support -->
+          <!-- Working Paper with abstract: show title, links, authors, venue in SUMMARY so they remain visible; only abstract is collapsible. -->
           <details id="{{ pid }}" class="pub-item pub-toggle" itemscope itemtype="https://schema.org/ScholarlyArticle">
             <summary class="pub-top">
-              <span class="pub-title" itemprop="name">{{ post.title }}</span>
+              <span>
+                <span class="pub-title" itemprop="name">{{ post.title }}</span>
+                <span class="caret" aria-hidden="true"></span>
+              </span>
               {{ render_links | strip }}
             </summary>
             {% if authors_text != "" %}
@@ -170,10 +169,8 @@ redirect_from:
     if (!id) return;
     var el = document.getElementById(id);
     if (!el) return;
-    // If it's a <details>, open it; if it's a child inside details, open the nearest details.
     var details = el.tagName === 'DETAILS' ? el : el.closest('details');
     if (details) details.open = true;
-    // Scroll into view with some offset for sticky headers.
     setTimeout(function(){ el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 0);
   }
   window.addEventListener('hashchange', openFromHash);
