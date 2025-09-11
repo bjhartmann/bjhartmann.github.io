@@ -18,7 +18,6 @@ redirect_from:
   .pub-item { padding: 0.6rem 0; border-bottom: 1px solid #eee; }
   .pub-top { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
 
-  /* Titles look like plain text */
   .pub-title { font-weight: 600; color: inherit; text-decoration: none; }
   .pub-title:hover { text-decoration: none; }
 
@@ -39,10 +38,8 @@ redirect_from:
   }
   details.pub-toggle[open] > summary .caret::after { transform: rotate(90deg); }
 
-  /* Defensive: force hidden elements to stay hidden */
   [hidden] { display: none !important; }
 
-  /* Print: expand all abstracts */
   @media print {
     details.pub-toggle[open] > summary .caret::after,
     details.pub-toggle > summary .caret::after { content: none; }
@@ -96,7 +93,17 @@ redirect_from:
       {%- assign abs_text = abs_text_raw | markdownify | strip_html | strip -%}
       {%- assign has_abstract = abs_text != "" -%}
 
-      {%- assign show_toggle = (cat == "workingpaper") and has_abstract -%}
+      {%- comment -%}
+        Determine if this POST itself is a working paper (independent of outer loop var).
+      {%- endcomment -%}
+      {%- assign is_wp = false -%}
+      {%- if post.category == 'workingpaper' -%}
+        {%- assign is_wp = true -%}
+      {%- elsif post.categories and post.categories contains 'workingpaper' -%}
+        {%- assign is_wp = true -%}
+      {%- endif -%}
+
+      {%- assign show_toggle = is_wp and has_abstract -%}
 
       {%- capture authors_text -%}{{ post.authors | default: "" | strip }}{%- endcapture -%}
       {%- capture venue_text   -%}{{ post.venue   | default: "" | strip }}{%- endcapture -%}
@@ -104,28 +111,30 @@ redirect_from:
 
       {% capture item %}
         {% if show_toggle %}
-          <!-- Working Paper with abstract: show title, links, authors, venue in SUMMARY so they remain visible; only abstract is collapsible. -->
+          <!-- Working Paper with abstract: keep title, links, AUTHORS & VENUE visible in summary; only abstract collapses. -->
           <details id="{{ pid }}" class="pub-item pub-toggle" itemscope itemtype="https://schema.org/ScholarlyArticle">
-            <summary class="pub-top">
-              <span>
-                <span class="pub-title" itemprop="name">{{ post.title }}</span>
-                <span class="caret" aria-hidden="true"></span>
-              </span>
-              {{ render_links | strip }}
+            <summary>
+              <div class="pub-top">
+                <span>
+                  <span class="pub-title" itemprop="name">{{ post.title }}</span>
+                  <span class="caret" aria-hidden="true"></span>
+                </span>
+                {{ render_links | strip }}
+              </div>
+              {% if authors_text != "" %}
+                <div class="pub-authors" itemprop="author">{{ authors_text }}</div>
+              {% endif %}
+              {% if venue_text != "" %}
+                <div class="pub-venue" itemprop="isPartOf">{{ venue_text }}</div>
+              {% endif %}
             </summary>
-            {% if authors_text != "" %}
-              <div class="pub-authors" itemprop="author">{{ authors_text }}</div>
-            {% endif %}
-            {% if venue_text != "" %}
-              <div class="pub-venue" itemprop="isPartOf">{{ venue_text }}</div>
-            {% endif %}
             <meta itemprop="datePublished" content="{{ date_iso }}" />
             <div id="{{ abs_id }}" class="pub-abstract" itemprop="abstract">
               {{ abs_from_frontmatter | default: abs_from_excerpt | default: abs_from_content | markdownify }}
             </div>
           </details>
         {% else %}
-          <!-- WiP / no-abstract item (non-toggle) -->
+          <!-- WiP / Other / no-abstract item (non-toggle) -->
           <div id="{{ pid }}" class="pub-item" itemscope itemtype="https://schema.org/ScholarlyArticle">
             <div class="pub-top">
               <span class="pub-title" itemprop="name">{{ post.title }}</span>
@@ -163,7 +172,6 @@ redirect_from:
 
 <script>
 (function() {
-  // Progressive enhancement: if URL hash matches an item id or abstract id, open its details.
   function openFromHash() {
     var id = location.hash ? location.hash.slice(1) : null;
     if (!id) return;
