@@ -1,192 +1,64 @@
----
-layout: single
-title: "Research"
-permalink: /research/
-author_profile: false
-custom_tab_title: "Research | Björn Hartmann"
-redirect_from:
-  - /publications/
----
 
-{%- assign pubs = site.publications | sort: "date" | reverse -%}
-{%- assign category_order = "workingpaper,workinprogress,otherwriting" | split: "," -%}
+{% include base_path %}
 
-<style>
-  .pub-section { margin: 2rem 0 1rem; }
-  .pub-h2 { font-size: 1.35rem; font-weight: 800; margin: 0 0 .75rem; }
+<div class="masthead">
 
-  .pub-item { padding: 0.6rem 0; border-bottom: 1px solid #eee; }
-  .pub-top { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
 
-  /* Title now blue */
-  .pub-title { font-weight: 600; color: #2563eb; text-decoration: none; }
-  .pub-title:hover { text-decoration: underline; }
+  <div class="masthead__inner-wrap">
 
-  /* All other links (coauthors, [paper], etc.) black */
-  .pub-links a,
-  .pub-authors a,
-  .pub-venue a {
-    color: #000;
-    text-decoration: none;
-  }
-  .pub-links a:hover,
-  .pub-authors a:hover,
-  .pub-venue a:hover {
-    text-decoration: underline;
-  }
 
-  .pub-authors { color: #555; margin-top: 0.2rem; }
-  .pub-venue   { color: #666; margin-top: 0.2rem; }
+    <div class="masthead__menu">
 
-  .pub-abstract { margin-top: 0.6rem; color: #333; }
 
-  details.pub-toggle { border-bottom: 1px solid #eee; padding: .6rem 0; }
-  details.pub-toggle > summary { list-style: none; cursor: pointer; }
-  details.pub-toggle > summary::-webkit-details-marker { display: none; }
-  details.pub-toggle > summary .caret::after {
-    content: "▸"; margin-left: .4rem; line-height: 1; transition: transform .15s ease;
-  }
-  details.pub-toggle[open] > summary .caret::after { transform: rotate(90deg); }
+      <nav id="site-nav" class="greedy-nav">
 
-  [hidden] { display: none !important; }
 
-  @media print {
-    details.pub-toggle[open] > summary .caret::after,
-    details.pub-toggle > summary .caret::after { content: none; }
-    details.pub-toggle { border: 0; padding: 0; }
-    details.pub-toggle { page-break-inside: avoid; }
-  }
+        <ul class="visible-links">
 
-  @media (max-width: 640px) { .pub-top { flex-direction: column; align-items: flex-start; } }
-</style>
 
-{%- comment -%}
-  Utility to render the per-item links block
-{%- endcomment -%}
-{% capture render_links %}
-  <span class="pub-links">
-    {% if post.paperurl %}
-      [<a href="{{ post.paperurl }}" target="_blank" rel="noopener noreferrer">{{ post.paperlabel | default: "paper" }}</a>]
-    {% endif %}
-    {% if post.slidesurl %}
-      [<a href="{{ post.slidesurl }}" target="_blank" rel="noopener noreferrer">{{ post.slideslabel | default: "slides" }}</a>]
-    {% endif %}
-    {% if post.codeurl %}
-      [<a href="{{ post.codeurl }}" target="_blank" rel="noopener noreferrer">{{ post.codelabel | default: "code" }}</a>]
-    {% endif %}
-    {% if post.doi %}
-      [<a href="https://doi.org/{{ post.doi | escape }}" target="_blank" rel="noopener noreferrer">doi</a>]
-    {% endif %}
-  </span>
-{% endcapture %}
+          <!-- Home stays at far left -->
 
-{%- for cat in category_order -%}
-  {% assign items = "" %}
 
-  {% for post in pubs %}
-    {% assign matches_cat = false %}
-    {% if post.category == cat %}
-      {% assign matches_cat = true %}
-    {% elsif post.categories and post.categories contains cat %}
-      {% assign matches_cat = true %}
-    {% endif %}
+          <li class="masthead__menu-item masthead__menu-item--lg persist">
 
-    {% if matches_cat %}
-      {%- assign pid_source = post.id | default: post.slug | default: post.title -%}
-      {%- assign pid = pid_source | slugify -%}
-      {%- assign abs_id = "abs-" | append: pid -%}
 
-      {%- assign abs_from_frontmatter = post.abstract | default: "" -%}
-      {%- assign abs_from_excerpt     = post.excerpt  | default: "" -%}
-      {%- assign abs_from_content     = post.content  | default: "" -%}
-      {%- assign abs_text_raw = abs_from_frontmatter | default: abs_from_excerpt | default: abs_from_content -%}
-      {%- assign abs_text = abs_text_raw | markdownify | strip_html | strip -%}
-      {%- assign has_abstract = abs_text != "" -%}
+            <a href="{{ '/' | relative_url }}">{{ site.masthead_title | default: 'Home' }}</a>
 
-      {%- assign is_wp = false -%}
-      {%- if post.category == 'workingpaper' -%}
-        {%- assign is_wp = true -%}
-      {%- elsif post.categories and post.categories contains 'workingpaper' -%}
-        {%- assign is_wp = true -%}
-      {%- endif -%}
 
-      {%- assign show_toggle = is_wp and has_abstract -%}
+          </li>
 
-      {%- capture authors_text -%}{{ post.authors | default: "" | strip }}{%- endcapture -%}
-      {%- capture venue_text   -%}{{ post.venue   | default: "" | strip }}{%- endcapture -%}
-      {%- assign date_iso = post.date | date: "%Y-%m-%d" -%}
 
-      {% capture item %}
-        {% if show_toggle %}
-          <details id="{{ pid }}" class="pub-item pub-toggle" itemscope itemtype="https://schema.org/ScholarlyArticle">
-            <summary>
-              <span class="pub-top" style="display:flex;justify-content:space-between;align-items:baseline;gap:1rem;">
-                <span>
-                  <span class="pub-title" itemprop="name">{{ post.title }}</span>
-                  <span class="caret" aria-hidden="true"></span>
-                </span>
-                {{ render_links | strip }}
-              </span>
-              {% if authors_text != "" %}
-                <span class="pub-authors" itemprop="author" style="display:block;">{{ authors_text }}</span>
-              {% endif %}
-              {% if venue_text != "" %}
-                <span class="pub-venue" itemprop="isPartOf" style="display:block;">{{ venue_text }}</span>
-              {% endif %}
-            </summary>
-            <meta itemprop="datePublished" content="{{ date_iso }}" />
-            <div id="{{ abs_id }}" class="pub-abstract" itemprop="abstract">
-              {{ abs_from_frontmatter | default: abs_from_excerpt | default: abs_from_content | markdownify }}
-            </div>
-          </details>
-        {% else %}
-          <div id="{{ pid }}" class="pub-item" itemscope itemtype="https://schema.org/ScholarlyArticle">
-            <div class="pub-top">
-              <span class="pub-title" itemprop="name">{{ post.title }}</span>
-              {{ render_links | strip }}
-            </div>
-            {% if authors_text != "" %}
-              <div class="pub-authors" itemprop="author">{{ authors_text }}</div>
-            {% endif %}
-            {% if venue_text != "" %}
-              <div class="pub-venue" itemprop="isPartOf">{{ venue_text }}</div>
-            {% endif %}
-            <meta itemprop="datePublished" content="{{ date_iso }}" />
-          </div>
-        {% endif %}
-      {% endcapture %}
 
-      {% assign items = items | append: item %}
-    {% endif %}
-  {% endfor %}
 
-  {% if items != "" %}
-    <section class="pub-section" id="{{ cat }}" aria-label="{{ cat | replace: 'workingpaper', 'Working Papers' | replace: 'workinprogress','Work in Progress' | replace: 'otherwriting','Other Writings' }}">
-      <h2 class="pub-h2">
-        {% case cat %}
-          {% when "workingpaper" %}Working Papers
-          {% when "workinprogress" %}Work in Progress
-          {% when "otherwriting" %}Other Writings
-          {% else %}{{ cat | capitalize }}
-        {% endcase %}
-      </h2>
-      {{ items }}
-    </section>
-  {% endif %}
-{%- endfor -%}
 
-<script>
-(function() {
-  function openFromHash() {
-    var id = location.hash ? location.hash.slice(1) : null;
-    if (!id) return;
-    var el = document.getElementById(id);
-    if (!el) return;
-    var details = el.tagName === 'DETAILS' ? el : el.closest('details');
-    if (details) details.open = true;
-    setTimeout(function(){ el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 0);
-  }
-  window.addEventListener('hashchange', openFromHash);
-  openFromHash();
-})();
-</script>
+          <!-- Other tabs; now all are large -->
+
+
+          {% for link in site.data.navigation.main %}
+
+
+            <li class="masthead__menu-item masthead__menu-item--lg{% if forloop.first %} nav-offset-start{% endif %}">
+
+
+              <a href="{{ link.url | relative_url }}">{{ link.title }}</a>
+
+
+            </li>
+
+
+          {% endfor %}
+
+
+        </ul>
+
+
+      </nav>
+
+
+    </div>
+
+
+  </div>
+
+
+</div>
