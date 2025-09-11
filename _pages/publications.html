@@ -18,7 +18,7 @@ redirect_from:
   .pub-item { padding: 0.6rem 0; border-bottom: 1px solid #eee; }
   .pub-top { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
 
-  /* Fix: ensure [paper] links show up inside <summary> */
+  /* Ensure [paper] links show inside <summary> */
   details.pub-toggle > summary .pub-top {
     display: inline-flex;
     width: 100%;
@@ -27,11 +27,11 @@ redirect_from:
     gap: 1rem;
   }
 
-  /* Title now blue but no underline on hover */
+  /* Title: blue, no underline on hover */
   .pub-title { font-weight: 600; color: #2563eb; text-decoration: none; }
   .pub-title:hover { text-decoration: none; }
 
-  /* All other links (coauthors, [paper], etc.) same color as caret */
+  /* Other links (coauthors, [paper], etc.) match caret color */
   .pub-links a,
   .pub-authors a,
   .pub-venue a {
@@ -83,25 +83,15 @@ redirect_from:
       {%- assign pid = pid_source | slugify -%}
       {%- assign abs_id = "abs-" | append: pid -%}
 
-      {%- assign abs_from_frontmatter = post.abstract | default: "" -%}
-      {%- assign abs_from_excerpt     = post.excerpt  | default: "" -%}
-      {%- assign abs_from_content     = post.content  | default: "" -%}
-      {%- assign abs_text_raw = abs_from_frontmatter | default: abs_from_excerpt | default: abs_from_content -%}
-      {%- assign abs_text = abs_text_raw | markdownify | strip_html | strip -%}
-      {%- assign has_abstract = abs_text != "" -%}
-
-      {%- assign is_wp = false -%}
-      {%- if post.category == 'workingpaper' -%}
-        {%- assign is_wp = true -%}
-      {%- elsif post.categories and post.categories contains 'workingpaper' -%}
-        {%- assign is_wp = true -%}
-      {%- endif -%}
-
-      {%- assign show_toggle = is_wp and has_abstract -%}
-
       {%- capture authors_text -%}{{ post.authors | default: "" | strip }}{%- endcapture -%}
       {%- capture venue_text   -%}{{ post.venue   | default: "" | strip }}{%- endcapture -%}
       {%- assign date_iso = post.date | date: "%Y-%m-%d" -%}
+
+      {%- comment -%} Only treat *explicit* front matter `abstract:` as a dropdown {%- endcomment -%}
+      {%- assign abs_from_frontmatter_raw = post.abstract | default: "" -%}
+      {%- assign abs_from_frontmatter = abs_from_frontmatter_raw | markdownify | strip_html | strip -%}
+      {%- assign has_explicit_abstract = abs_from_frontmatter != "" -%}
+      {%- assign show_toggle = has_explicit_abstract -%}
 
       {%- comment -%} Build links for THIS post (must be inside the loop) {%- endcomment -%}
       {% capture render_links %}
@@ -141,7 +131,7 @@ redirect_from:
             </summary>
             <meta itemprop="datePublished" content="{{ date_iso }}" />
             <div id="{{ abs_id }}" class="pub-abstract" itemprop="abstract">
-              {{ abs_from_frontmatter | default: abs_from_excerpt | default: abs_from_content | markdownify }}
+              {{ abs_from_frontmatter_raw | markdownify }}
             </div>
           </details>
         {% else %}
