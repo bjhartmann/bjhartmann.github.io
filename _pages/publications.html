@@ -90,12 +90,6 @@ redirect_from:
       {%- assign abs_text = abs_text_raw | markdownify | strip_html | strip -%}
       {%- assign has_abstract = abs_text != "" -%}
 
-      {%- assign is_wp = false -%}
-      {%- if post.category == 'workingpaper' -%}
-        {%- assign is_wp = true -%}
-      {%- elsif post.categories and post.categories contains 'workingpaper' -%}
-        {%- assign is_wp = true -%}
-      {%- endif -%}
 
       {%- assign show_toggle = has_abstract -%}
 
