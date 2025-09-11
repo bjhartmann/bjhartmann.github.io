@@ -89,6 +89,13 @@
         <li><a href="https://www.stackoverflow.com/users/{{ author.stackoverflow }}"><i class="fab fa-fw fa-stack-overflow icon-pad-right" aria-hidden="true"></i>Stackoverflow</a></li>
       {% endif %}      
 
+      {% if author.employer_url %}
+  <a href="{{ author.employer_url }}" target="_blank">{{ author.employer }}</a>
+{% else %}
+  {{ author.employer }}
+{% endif %}
+
+
       <!-- Font Awesome icons / Social media -->
       {% if author.artstation %}
         <li><a href="https://www.artstation.com/{{ author.artstation }}"><i class="fab fa-fw fa-artstation icon-pad-right" aria-hidden="true"></i>Artstation</a></li>
