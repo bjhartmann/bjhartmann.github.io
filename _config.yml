@@ -24,9 +24,11 @@ masthead_title           : "Home"
 author:
   # Biographic information
   name             : "Björn Hartmann"
-  employer         : "University of St. Gallen"
-  employer_url     : "https://www.unisg.ch/en/"
   email            : "bjoern.hartmann@unisg.ch" 
+  links:
+    - label: "University of St. Gallen"
+      icon: "fas fa-university"
+      url: "https://www.unisg.ch/en/"
 
   # Academic websites
   academia         : # URL
