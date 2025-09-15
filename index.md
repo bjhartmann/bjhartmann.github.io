@@ -25,7 +25,7 @@ redirect_from:
 
 /* Let the content column expand next to the sidebar */
 .layout--single .page__content {
-  max-width: 900px !important;
+  max-width: 1100px !important;
   width: auto !important;
   flex: 1 1 auto !important;
 }
