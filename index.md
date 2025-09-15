@@ -26,6 +26,8 @@ redirect_from:
   border-radius: 50%;
 }
 
+  .slim .page__content { max-width: 1100px; }
+
 .about-text {
   flex: 1;                  /* text fills the rest of the row */
 }
