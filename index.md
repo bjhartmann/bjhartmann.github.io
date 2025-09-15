@@ -27,7 +27,7 @@ custom_tab_title: "Björn Hartmann"
   grid-row: 1;
   width: 240px;
   max-width: 240px;
-  position: sticky;  /* optional */
+  position: sticky;      /* optional */
   top: 2rem;
 }
 
@@ -43,6 +43,7 @@ custom_tab_title: "Björn Hartmann"
   max-width: none !important;
   width: 100% !important;
   min-width: 0 !important;
+  flex: 1 1 auto !important;    /* neutralize flex sizing */
 }
 
 /* About block: image left, text right */
