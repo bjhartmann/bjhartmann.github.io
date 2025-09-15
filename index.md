@@ -7,22 +7,6 @@ hide_meta: true
 custom_tab_title: "Björn Hartmann"
 ---
 
-<style>
-.analytics-box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: bold;
-  border-radius: 8px;
-  padding: 1rem;
-  margin: 1rem 0;
-}
-
-.box-red   { background: #e74c3c; }
-.box-green { background: #27ae60; }
-.box-blue  { background: #2980b9; }
-</style>
 
 <div class="analytics-box box-red"></div>
 <div class="analytics-box box-green"></div>
@@ -105,11 +89,19 @@ window.addEventListener('resize', updateBoxSizes);
 
 /* Default reading width for all direct children of page__content */
 #main.frontpage-wide article.page .page__content > * {
-  max-width: 1200px;
+  max-width: 980px;
   width: 100%;
   margin-inline: auto;  /* centered */
 }
 
+  #main.frontpage-wide article.page .page__content > .about-wrapper {
+  max-width: 1400px;   /* choose 1300–1500 to taste */
+  width: 100%;
+  margin-left: 0;      /* left align */
+  margin-right: auto;
+}
+
+  
 /* Teal box ONLY: wider and centered */
 .about-wrapper{
   max-width: 1600px;            /* ← adjust to taste: 1100–1200 */
