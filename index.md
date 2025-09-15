@@ -10,68 +10,42 @@ redirect_from:
   - /about.html
 ---
 
-<style id="debug-xray">
-/* Outline the main wrappers so we can see their boxes */
-.initial-content, .page, .page__layout, .page__inner-wrap,
-.page__content, .sidebar {
-  outline: 2px dashed rgba(0,0,0,.25);
-}
-
-/* Show the element’s computed width in the corner */
-.initial-content::after, .page::after, .page__layout::after,
-.page__inner-wrap::after, .page__content::after, .sidebar::after {
-  content: attr(class) " → " attr(data-mmw);
-  position: absolute; font: 12px/1.2 system-ui, sans-serif;
-  background: rgba(255,255,0,.85); padding: 2px 6px; border-radius: 4px;
-  transform: translateY(-100%); pointer-events: none; color:#000;
-}
-.initial-content, .page, .page__layout, .page__inner-wrap,
-.page__content, .sidebar { position: relative; }
-
-/* Set a CSS var to the computed width via JS below */
-</style>
+<!-- Give THIS page a unique body class so overrides apply only here -->
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const targets = document.querySelectorAll(
-    '.initial-content, .page, .page__layout, .page__inner-wrap, .page__content, .sidebar'
-  );
-  const update = () => targets.forEach(el => {
-    el.setAttribute('data-mmw', Math.round(el.getBoundingClientRect().width)+'px');
+  document.addEventListener('DOMContentLoaded', () => {
+    document.body.classList.add('about-override');
   });
-  update();
-  new ResizeObserver(update).observe(document.documentElement);
-});
 </script>
 
-
-
 <style>
+/* — Only affects THIS page because it's scoped to .about-override — */
 
-.layout--single .initial-content,
-.layout--single .page,
-.layout--single .page__layout,
-.layout--single .page__inner-wrap {
-  max-width: 1400px;
-  margin-left: auto;
-  margin-right: auto;
+/* Let the overall single-page wrapper breathe */
+body.about-override.layout--single .initial-content,
+body.about-override.layout--single .page,
+body.about-override.layout--single .page__layout,
+body.about-override.layout--single .page__inner-wrap {
+  max-width: 1400px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
   padding-left: 2rem;
   padding-right: 2rem;
 }
 
 /* Keep the author sidebar but fix a sensible width */
-.layout--single .sidebar {
-  flex: 0 0 240px;
-  max-width: 240px;
+body.about-override.layout--single .sidebar {
+  flex: 0 0 240px !important;
+  max-width: 240px !important;
 }
 
-/* WIN against the theme’s 770px clamp for the main content column */
-body.layout--single article.page .page__content {
-  max-width: 1100px;          /* ← tweak this to taste */
-  width: auto;
-  flex: 1 1 auto;
+/* Beat the theme’s 770px clamp for the main content column */
+body.about-override.layout--single article.page .page__content {
+  max-width: 1100px !important;   /* tweak to taste */
+  width: auto !important;
+  flex: 1 1 auto !important;
 }
 
-/* --- About section layout (Grid): photo left, text right --- */
+/* --- About section (Grid): photo left, text right --- */
 .about-wrapper {
   display: grid;
   grid-template-columns: 220px 1fr;  /* image | text */
