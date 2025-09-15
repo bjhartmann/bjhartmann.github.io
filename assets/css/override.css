@@ -1,6 +1,6 @@
 /* Tweakable variables */
 :root {
-  --sidebar-width: 240px;   /* narrower sidebar */
+  --sidebar-width: 180px;   /* narrower sidebar */
   --sidebar-gap: 32px;      /* space between divider and content */
   --sidebar-bg: #f7f7f8;    /* light grey shading */
   --sidebar-border: #e6e6e6;/* divider line color */
