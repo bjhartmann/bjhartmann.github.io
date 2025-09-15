@@ -68,7 +68,7 @@ custom_tab_title: "Björn Hartmann"
 
 /* Default reading width for all direct children of page__content */
 #main.frontpage-wide article.page .page__content > * {
-  max-width: 980px;
+  max-width: 1200px;
   width: 100%;
   margin-inline: auto;  /* centered */
 }
