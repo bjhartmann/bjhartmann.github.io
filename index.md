@@ -8,6 +8,42 @@ custom_tab_title: "Björn Hartmann"
 ---
 
 <style>
+
+  /* Debug: visualize layout boxes */
+#main.frontpage-wide {
+  outline: 3px solid red;      /* outer grid */
+}
+
+#main.frontpage-wide .sidebar {
+  outline: 3px dashed blue;    /* sidebar */
+}
+
+#main.frontpage-wide article.page {
+  outline: 3px dashed green;   /* content column */
+}
+
+#main.frontpage-wide .page__inner-wrap {
+  outline: 2px dotted orange;  /* inner wrapper */
+}
+
+#main.frontpage-wide .page__content {
+  outline: 2px dotted purple;  /* actual content */
+}
+
+.about-wrapper {
+  outline: 2px solid teal;     /* about block wrapper */
+}
+
+.about-wrapper img.home-portrait {
+  outline: 2px solid pink;     /* portrait image */
+}
+
+.about-text {
+  outline: 2px solid brown;    /* text box */
+}
+
+
+  
 /* Outer site wrapper — let the page breathe */
 .initial-content {
   max-width: 1600px !important;   /* ↑ was 1400; this was the choke point */
