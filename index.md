@@ -125,12 +125,13 @@ window.addEventListener('resize', updateBoxSizes);
   .about-wrapper{ grid-template-columns: 1fr; }
   .about-wrapper img.home-portrait{ margin-bottom: 1rem; }
 }
-
-  #main.frontpage-wide article.page .page__content > .about-wrapper{
-  max-width: clamp(1100px, 90vw, 1600px); /* or: none */
+  
+#main.frontpage-wide article.page .page__content > .about-wrapper{
+  max-width: clamp(1100px, 75vw, 1400px); /* grows wider than text but stops earlier */
   width: 100%;
-  margin-inline: auto; /* re-center */
+  margin-inline: auto;
 }
+
 
 
 </style>
