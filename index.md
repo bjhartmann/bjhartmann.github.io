@@ -101,6 +101,7 @@ window.addEventListener('resize', updateBoxSizes);
   margin-right: auto;
 }
 
+
   
 /* Teal box ONLY: wider and centered */
 .about-wrapper{
@@ -127,9 +128,10 @@ window.addEventListener('resize', updateBoxSizes);
 }
   
 #main.frontpage-wide article.page .page__content > .about-wrapper{
-  max-width: clamp(1100px, 75vw, 1400px); /* grows wider than text but stops earlier */
+  max-width: min(1400px, calc(100% - 3rem)); /* leave ~3rem before the green edge */
   width: 100%;
-  margin-inline: auto;
+  margin-left: 0;     /* lock to the left edge */
+  margin-right: auto; /* push expansion to the right */
 }
 
 
