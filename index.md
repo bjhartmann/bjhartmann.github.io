@@ -2,7 +2,7 @@
 layout: single
 title: " "
 author_profile: true
-classes: [wide, hide-title]
+classes: [hide-title]
 hide_meta: true
 custom_tab_title: "Björn Hartmann"
 redirect_from:
@@ -10,14 +10,13 @@ redirect_from:
   - /about.html
 ---
 
-
 <style>
-/* — Only this page — */
+/* — Only affects THIS page because it's inline here — */
 
-/* Uncap EVERY wrapper used by the single layout */
+/* Uncap every wrapper in the single layout */
 .layout--single .initial-content,
-.layout--single .page,               /* some versions add this */
-.layout--single .page__layout,       /* and/or this */
+.layout--single .page,
+.layout--single .page__layout,
 .layout--single .page__inner-wrap,
 .layout--single .page__content {
   max-width: 1400px !important;
@@ -25,24 +24,47 @@ redirect_from:
   margin-right: auto !important;
 }
 
-/* Let the content column actually expand next to the sidebar */
+/* Let the content column expand next to the sidebar */
 .layout--single .page__content {
   max-width: none !important;
   width: auto !important;
   flex: 1 1 auto !important;
 }
 
-/* Keep the author sidebar but give it a fixed, narrower width */
+/* Keep the author sidebar but give it a fixed width */
 .layout--single .sidebar {
   flex: 0 0 240px !important;
   max-width: 240px !important;
 }
 
-/* (Optional) a bit more breathing room at large widths */
-.layout--single .page__inner-wrap { padding-left: 2rem; padding-right: 2rem; }
+/* Add breathing room at large widths */
+.layout--single .page__inner-wrap {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+/* --- About wrapper layout --- */
+.about-wrapper {
+  display: grid;
+  grid-template-columns: 220px 1fr;   /* photo | text */
+  column-gap: 1.5rem;
+  align-items: start;
+  margin-top: 2rem;
+}
+.about-wrapper img.home-portrait {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.about-text { min-width: 0; }
+
+/* Stack only on small screens */
+@media (max-width: 700px) {
+  .about-wrapper { grid-template-columns: 1fr; }
+  .about-wrapper img.home-portrait { margin-bottom: 1rem; }
+}
 </style>
-
-
 
 <div class="about-wrapper">
   <img src="{{ '/assets/images/me.jpg' | relative_url }}" alt="Björn Hartmann" class="home-portrait">
