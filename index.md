@@ -88,7 +88,7 @@ custom_tab_title: "Björn Hartmann"
 
 /* Right-shift the page on desktop without changing width */
 @media (min-width: 900px){
-  :root{ --page-offset: 56px; } /* tweak this value */
+  :root{ --page-offset: 150px; } /* tweak this value */
   #main.frontpage-wide{
     transform: translateX(var(--page-offset));
   }
