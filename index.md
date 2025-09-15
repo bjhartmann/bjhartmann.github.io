@@ -30,7 +30,7 @@ redirect_from:
 .slim .initial-content,
 .slim .page,
 .slim .page__inner {
-  max-width: 1300px !important;   /* nudge above theme default (~1200px) */
+  max-width: 1400px !important;   /* nudge above theme default (~1200px) */
   margin-left: auto;
   margin-right: auto;
 }
