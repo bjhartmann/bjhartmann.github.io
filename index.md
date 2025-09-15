@@ -10,7 +10,7 @@ custom_tab_title: "Björn Hartmann"
 <style>
 /* Scope ONLY to this page via #main.frontpage-wide */
 #main.frontpage-wide{
-  max-width: 1400px;
+  max-width: 1600px;
   margin: 0 auto;
   padding: 0 2rem;
 
