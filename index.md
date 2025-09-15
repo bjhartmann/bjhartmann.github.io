@@ -126,6 +126,13 @@ window.addEventListener('resize', updateBoxSizes);
   .about-wrapper img.home-portrait{ margin-bottom: 1rem; }
 }
 
+  #main.frontpage-wide article.page .page__content > .about-wrapper{
+  max-width: clamp(1100px, 90vw, 1600px); /* or: none */
+  width: 100%;
+  margin-inline: auto; /* re-center */
+}
+
+
 </style>
 
 <div class="about-wrapper">
