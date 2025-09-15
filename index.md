@@ -44,10 +44,14 @@ article.page.slim .page__content {
   max-width: 1400px !important;
 }
 
+  /* Uncap the outer wrapper only when it contains this page's article */
+.initial-content:has(article.page.slim) {
+  max-width: 1400px !important;   /* nudge above default; tweak to taste */
+  margin-left: auto;
+  margin-right: auto;
+}
 
-/* If this still doesn't move, uncomment the line below to confirm selectors hit:
-.slim .initial-content, .slim .page, .slim .page__inner, .slim .page__content { max-width: none !important; }
-*/
+
 </style>
 
 
