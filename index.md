@@ -8,6 +8,43 @@ custom_tab_title: "Björn Hartmann"
 ---
 
 <style>
+.analytics-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.box-red   { background: #e74c3c; }
+.box-green { background: #27ae60; }
+.box-blue  { background: #2980b9; }
+</style>
+
+<div class="analytics-box box-red"></div>
+<div class="analytics-box box-green"></div>
+<div class="analytics-box box-blue"></div>
+
+<script>
+function updateBoxSizes() {
+  document.querySelectorAll('.analytics-box').forEach(box => {
+    const rect = box.getBoundingClientRect();
+    box.textContent = `${Math.round(rect.width)}px × ${Math.round(rect.height)}px`;
+  });
+}
+
+// Initial run
+updateBoxSizes();
+
+// Update on window resize
+window.addEventListener('resize', updateBoxSizes);
+</script>
+
+
+<style>
 
  /* Debug (optional) */
 #main.frontpage-wide { outline: 3px solid red; }
