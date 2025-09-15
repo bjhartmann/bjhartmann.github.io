@@ -10,10 +10,43 @@ redirect_from:
   - /about.html
 ---
 
-<style>
-/* — This stylesheet is embedded on THIS page only — */
+<style id="debug-xray">
+/* Outline the main wrappers so we can see their boxes */
+.initial-content, .page, .page__layout, .page__inner-wrap,
+.page__content, .sidebar {
+  outline: 2px dashed rgba(0,0,0,.25);
+}
 
-/* Let the overall single-page wrapper breathe a bit wider */
+/* Show the element’s computed width in the corner */
+.initial-content::after, .page::after, .page__layout::after,
+.page__inner-wrap::after, .page__content::after, .sidebar::after {
+  content: attr(class) " → " attr(data-mmw);
+  position: absolute; font: 12px/1.2 system-ui, sans-serif;
+  background: rgba(255,255,0,.85); padding: 2px 6px; border-radius: 4px;
+  transform: translateY(-100%); pointer-events: none; color:#000;
+}
+.initial-content, .page, .page__layout, .page__inner-wrap,
+.page__content, .sidebar { position: relative; }
+
+/* Set a CSS var to the computed width via JS below */
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const targets = document.querySelectorAll(
+    '.initial-content, .page, .page__layout, .page__inner-wrap, .page__content, .sidebar'
+  );
+  const update = () => targets.forEach(el => {
+    el.setAttribute('data-mmw', Math.round(el.getBoundingClientRect().width)+'px');
+  });
+  update();
+  new ResizeObserver(update).observe(document.documentElement);
+});
+</script>
+
+
+
+<style>
+
 .layout--single .initial-content,
 .layout--single .page,
 .layout--single .page__layout,
