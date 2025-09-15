@@ -67,6 +67,38 @@ custom_tab_title: "Björn Hartmann"
 }
 </style>
 
+<style>
+/* FRONT PAGE ONLY — kill float-based layout so grid can stretch the column */
+#main.frontpage-wide .page__inner-wrap,
+#main.frontpage-wide .page__content {
+  float: none !important;
+  display: block !important;
+  width: 100% !important;      /* keep full column width */
+  max-width: none !important;  /* you've already set this */
+  min-width: 0 !important;     /* allow shrinking without wrapping */
+  clear: none !important;      /* theme sets clear: both; unset it */
+}
+
+/* Make sure the grid track can actually grow */
+#main.frontpage-wide article.page {
+  min-width: 0;                /* critical for grid/flex overflow */
+}
+#main.frontpage-wide .page__inner-wrap {
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* (Optional) widen the outer site wrapper a bit */
+.initial-content {             /* this wrapper sits outside #main */
+  max-width: 1400px !important;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+</style>
+
+
 <div class="about-wrapper">
   <img src="{{ '/assets/images/me.jpg' | relative_url }}" alt="Björn Hartmann" class="home-portrait">
   <div class="about-text">
