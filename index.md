@@ -12,31 +12,34 @@ redirect_from:
 
 
 <style>
-/* — Only affects THIS page because it's inline here — */
+/* — Only this page — */
 
-/* 1) Uncap the site container */
-.layout--single .initial-content {
+/* Uncap EVERY wrapper used by the single layout */
+.layout--single .initial-content,
+.layout--single .page,               /* some versions add this */
+.layout--single .page__layout,       /* and/or this */
+.layout--single .page__inner-wrap,
+.layout--single .page__content {
   max-width: 1400px !important;
   margin-left: auto !important;
   margin-right: auto !important;
 }
 
-/* 2) Uncap the article wrapper */
-.layout--single .page__inner-wrap {
-  max-width: 1400px !important;
-}
-
-/* 3) Let the content column actually grow */
+/* Let the content column actually expand next to the sidebar */
 .layout--single .page__content {
-  max-width: none !important;   /* remove the narrow cap */
-  flex: 1 1 auto !important;    /* grow to fill space next to the sidebar */
+  max-width: none !important;
+  width: auto !important;
+  flex: 1 1 auto !important;
 }
 
-/* Keep the author sidebar but make it a fixed, narrower width */
+/* Keep the author sidebar but give it a fixed, narrower width */
 .layout--single .sidebar {
   flex: 0 0 240px !important;
   max-width: 240px !important;
 }
+
+/* (Optional) a bit more breathing room at large widths */
+.layout--single .page__inner-wrap { padding-left: 2rem; padding-right: 2rem; }
 </style>
 
 
