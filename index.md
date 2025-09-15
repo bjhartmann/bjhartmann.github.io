@@ -9,6 +9,26 @@ redirect_from:
   - /about/
   - /about.html
 ---
+
+
+.about-wrapper {
+  display: flex;
+  align-items: flex-start;  /* text aligns to top of the image */
+  gap: 1.5rem;              /* space between picture and text */
+  margin-top: 2rem;
+}
+
+.about-wrapper img.home-portrait {
+  max-width: 160px;         /* keep photo size tidy */
+  height: auto;
+  border-radius: 50%;       /* optional round portrait */
+}
+
+.about-text {
+  flex: 1;                  /* text fills the rest of the row */
+}
+
+
 <div class="about-wrapper">
   <img src="{{ '/assets/images/me.jpg' | relative_url }}" alt="Björn Hartmann" class="home-portrait">
   
