@@ -44,29 +44,34 @@ custom_tab_title: "Björn Hartmann"
   display: block !important;
 }
 
-/* Default reading width for everything in this page’s content */
+/* Wider reading width for everything in this page’s content
+   (was 980px; increase for more characters per line) */
 .frontpage-wide__content > *{
-  max-width: 980px;
+  max-width: 1200px;
   width: 100%;
   margin-inline: auto;
 }
 
-/* Teal "About" box: left-locked, expands right, stops before edge */
+/* About box: left-locked, wide, and NO blue box */
 .frontpage-wide__content > .about-wrapper{
   box-sizing: border-box;
   width: 100%;
-  margin-left: 0;            /* stay under the portrait/left edge */
-  margin-right: auto;        /* expand to the right */
-  max-width: min(1400px, calc(100% - 3rem)); /* ~3rem gap to column edge */
+  margin-left: 0;              /* stay under the portrait/left edge */
+  margin-right: auto;          /* expand to the right */
+  max-width: min(1500px, calc(100% - 3rem));
   display: grid;
   grid-template-columns: 220px 1fr;
   column-gap: 1.5rem;
   align-items: start;
   margin-top: 2rem;
-  border: 1px solid #1d9aa5;           /* optional styling */
-  border-radius: 6px;
-  padding: 1rem;
-  background: #f6fbfc;
+
+  /* remove the teal box */
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+
+  /* optional: reduce inner padding since we removed the box */
+  padding: 0;
 }
 
 /* About internals */
@@ -82,6 +87,7 @@ custom_tab_title: "Björn Hartmann"
   .about-wrapper img.home-portrait{ margin-bottom: 1rem; }
 }
 </style>
+
 
 <div class="about-wrapper">
   <img src="{{ '/assets/images/me.jpg' | relative_url }}" alt="Björn Hartmann" class="home-portrait" width="220" height="220" loading="eager" decoding="async">
