@@ -75,7 +75,7 @@ custom_tab_title: "Björn Hartmann"
 
 /* Teal box ONLY: wider and centered */
 .about-wrapper{
-  max-width: 1400px;            /* ← adjust to taste: 1100–1200 */
+  max-width: 1600px;            /* ← adjust to taste: 1100–1200 */
   margin-inline: auto;
   display: grid;
   grid-template-columns: 220px 1fr;
