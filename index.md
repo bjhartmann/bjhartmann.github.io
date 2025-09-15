@@ -10,7 +10,7 @@ custom_tab_title: "Björn Hartmann"
 <style>
 /* Grid shell for front page */
 #main.frontpage-wide{
-  max-width: 1600px;
+  max-width: 1800px;           /* wider overall page (was 1600px) */
   margin: 0 auto;
   padding: 0 2rem;
   display: grid;
@@ -44,33 +44,25 @@ custom_tab_title: "Björn Hartmann"
   display: block !important;
 }
 
-/* Wider reading width for everything in this page’s content
-   (was 980px; increase for more characters per line) */
-.frontpage-wide__content > *{
-  max-width: 1200px;
-  width: 100%;
-  margin-inline: auto;
-}
-
-/* About box: left-locked, wide, and NO blue box */
+/* —— About block (keep only THIS rule; delete any duplicate) —— */
 .frontpage-wide__content > .about-wrapper{
   box-sizing: border-box;
   width: 100%;
-  margin-left: 0;              /* stay under the portrait/left edge */
-  margin-right: auto;          /* expand to the right */
-  max-width: min(1500px, calc(100% - 3rem));
+  margin-left: 0;
+  margin-right: auto;
+  /* no max-width clamp so the text can stretch */
+  max-width: none !important;
+
   display: grid;
-  grid-template-columns: 220px 1fr;
+  grid-template-columns: 220px 1fr; /* photo fixed, text flexible */
   column-gap: 1.5rem;
   align-items: start;
   margin-top: 2rem;
 
-  /* remove the teal box */
+  /* remove any previous box styling */
   border: 0 !important;
   background: transparent !important;
   box-shadow: none !important;
-
-  /* optional: reduce inner padding since we removed the box */
   padding: 0;
 }
 
@@ -78,7 +70,10 @@ custom_tab_title: "Björn Hartmann"
 .about-wrapper img.home-portrait{
   width: 220px; height: 220px; object-fit: cover; border-radius: 50%;
 }
-.about-text{ min-width: 0; }
+.about-text{
+  min-width: 0;
+  max-width: none !important;   /* ensure no inner clamp */
+}
 
 /* Mobile stack */
 @media (max-width: 700px){
@@ -87,6 +82,7 @@ custom_tab_title: "Björn Hartmann"
   .about-wrapper img.home-portrait{ margin-bottom: 1rem; }
 }
 </style>
+
 
 
 <div class="about-wrapper">
