@@ -26,7 +26,19 @@ redirect_from:
   border-radius: 50%;
 }
 
-  .slim .page__content { max-width: 1800px; }
+/* Slightly wider content only on pages with `slim` class */
+.slim .initial-content,
+.slim .page,
+.slim .page__inner {
+  max-width: 1300px !important;   /* nudge above theme default (~1200px) */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Optional: also relax the leaf node in case it’s capped separately */
+.slim .page__content {
+  max-width: 1300px !important;
+}
 
 .about-text {
   flex: 1;                  /* text fills the rest of the row */
