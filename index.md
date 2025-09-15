@@ -1,57 +1,15 @@
 ---
 layout: frontpage
-title: " "
+title: ""
 author_profile: true
 classes: [hide-title]
 hide_meta: true
 custom_tab_title: "Björn Hartmann"
 ---
 
-
-<div class="analytics-box box-red"></div>
-<div class="analytics-box box-green"></div>
-<div class="analytics-box box-blue"></div>
-
-<script>
-function updateBoxSizes() {
-  document.querySelectorAll('.analytics-box').forEach(box => {
-    const rect = box.getBoundingClientRect();
-    box.textContent = `${Math.round(rect.width)}px × ${Math.round(rect.height)}px`;
-  });
-}
-
-// Initial run
-updateBoxSizes();
-
-// Update on window resize
-window.addEventListener('resize', updateBoxSizes);
-</script>
-
-
 <style>
-
-/* --- Debug outlines (optional, remove when done) --- */
-#main.frontpage-wide { outline: 3px solid red; }
-#main.frontpage-wide .sidebar { outline: 3px dashed blue; }
-#main.frontpage-wide article.page { outline: 3px dashed green; }
-#main.frontpage-wide .page__inner-wrap { outline: 2px dotted orange; }
-#main.frontpage-wide .page__content { outline: 2px dotted purple; }
-.about-wrapper { outline: 2px solid teal; }
-.about-wrapper img.home-portrait { border: 2px dashed pink; border-radius: 50%; } /* border instead of outline */
-.about-text { outline: 2px solid brown; }
-
-/* --- Layout --- */
-
-/* Outer wrapper */
-.initial-content {
-  max-width: 1600px !important;
-  margin-left: 0;       /* stick to left edge */
-  margin-right: auto;
-  padding: 0 2rem;
-}
-
-/* Frontpage grid: sidebar | content */
-#main.frontpage-wide {
+/* Grid shell for front page */
+#main.frontpage-wide{
   max-width: 1600px;
   margin: 0 auto;
   padding: 0 2rem;
@@ -61,26 +19,23 @@ window.addEventListener('resize', updateBoxSizes);
   align-items: start;
 }
 
-/* Sidebar */
-#main.frontpage-wide .sidebar {
+/* Sidebar and content placement */
+#main.frontpage-wide .sidebar{
   grid-column: 1;
   grid-row: 1;
   width: 240px;
-  max-width: 240px;
   position: sticky;
   top: 2rem;
 }
-
-/* Content column */
-#main.frontpage-wide article.page {
+#main.frontpage-wide article.page{
   grid-column: 2;
   grid-row: 1;
-  min-width: 0; /* prevent overflow in grid */
+  min-width: 0;
 }
 
-/* Remove the theme’s clamp/float */
+/* Remove theme clamps for this page’s content area */
 #main.frontpage-wide .page__inner-wrap,
-#main.frontpage-wide .page__content {
+#main.frontpage-wide .page__content{
   max-width: none !important;
   width: 100% !important;
   min-width: 0 !important;
@@ -89,54 +44,55 @@ window.addEventListener('resize', updateBoxSizes);
   display: block !important;
 }
 
-/* Default reading width for all direct children of page__content */
-#main.frontpage-wide article.page .page__content > * {
+/* Default reading width for everything in this page’s content */
+.frontpage-wide__content > *{
   max-width: 980px;
   width: 100%;
-  margin-inline: auto;  /* centered text blocks */
+  margin-inline: auto;
 }
 
-/* --- The teal box --- */
-#main.frontpage-wide article.page .page__content > .about-wrapper {
+/* Teal "About" box: left-locked, expands right, stops before edge */
+.frontpage-wide__content > .about-wrapper{
+  box-sizing: border-box;
   width: 100%;
-  margin-left: 0;                 /* lock under the portrait */
-  margin-right: auto;             /* expand to the right */
-  max-width: min(1400px, calc(100% - 3rem)); /* stop before green edge */
+  margin-left: 0;            /* stay under the portrait/left edge */
+  margin-right: auto;        /* expand to the right */
+  max-width: min(1400px, calc(100% - 3rem)); /* ~3rem gap to column edge */
   display: grid;
   grid-template-columns: 220px 1fr;
   column-gap: 1.5rem;
   align-items: start;
   margin-top: 2rem;
+  border: 1px solid #1d9aa5;           /* optional styling */
+  border-radius: 6px;
+  padding: 1rem;
+  background: #f6fbfc;
 }
 
 /* About internals */
-.about-wrapper img.home-portrait {
-  width: 220px;
-  height: 220px;
-  object-fit: cover;
-  border-radius: 50%;
+.about-wrapper img.home-portrait{
+  width: 220px; height: 220px; object-fit: cover; border-radius: 50%;
 }
-.about-text { min-width: 0; }
+.about-text{ min-width: 0; }
 
 /* Mobile stack */
-@media (max-width: 700px) {
-  #main.frontpage-wide { grid-template-columns: 1fr; }
-  .about-wrapper { grid-template-columns: 1fr; }
-  .about-wrapper img.home-portrait { margin-bottom: 1rem; }
+@media (max-width: 700px){
+  #main.frontpage-wide{ grid-template-columns: 1fr; }
+  .about-wrapper{ grid-template-columns: 1fr; }
+  .about-wrapper img.home-portrait{ margin-bottom: 1rem; }
 }
-
 </style>
 
 <div class="about-wrapper">
-  <img src="{{ '/assets/images/me.jpg' | relative_url }}" alt="Björn Hartmann" class="home-portrait">
+  <img src="{{ '/assets/images/me.jpg' | relative_url }}" alt="Björn Hartmann" class="home-portrait" width="220" height="220" loading="eager" decoding="async">
   <div class="about-text">
     <strong>About me</strong>
-    <p>I am a 5th year Ph.D. student in Economics at the University of St. Gallen. 
+    <p>I am a 5th year Ph.D. student in Economics at the University of St. Gallen.
     My primary advisor is Reto Föllmi.</p>
     <p>My research interests cover International Trade, Economic Growth, and Structural Change.</p>
     <p>In the academic year 25/26, I visit
-    <a href="https://sites.google.com/site/fjbuera/" target="_blank" rel="noopener">Francisco Buera</a> (Washington University in St. Louis) and 
+    <a href="https://sites.google.com/site/fjbuera/" target="_blank" rel="noopener">Francisco Buera</a> (Washington University in St. Louis) and
     <a href="https://sites.google.com/site/valentinyiakos/" target="_blank" rel="noopener">Ákos Valentinyi</a> (University of Manchester) as a Visiting Researcher.</p>
-    <p>You can find my CV <a href="/files/Academic_CV.pdf" target="_blank" rel="noopener">here</a>.</p>
+    <p>You can find my <a href="/files/Academic_CV.pdf" target="_blank" rel="noopener">CV (PDF)</a>.</p>
   </div>
 </div>
