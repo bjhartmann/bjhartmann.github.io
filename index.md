@@ -1,131 +1,45 @@
 ---
-layout: single
+layout: frontpage
 title: " "
 author_profile: true
 classes: [hide-title]
 hide_meta: true
 custom_tab_title: "Björn Hartmann"
-redirect_from:
-  - /about/
-  - /about.html
 ---
 
-<style id="debug-xray">
-/* Outline the main wrappers so we can see their boxes */
-.initial-content, .page, .page__layout, .page__inner-wrap,
-.page__content, .sidebar {
-  outline: 2px dashed rgba(0,0,0,.25);
-}
-
-/* Show the element’s computed width in the corner */
-.initial-content::after, .page::after, .page__layout::after,
-.page__inner-wrap::after, .page__content::after, .sidebar::after {
-  content: attr(class) " → " attr(data-mmw);
-  position: absolute; font: 12px/1.2 system-ui, sans-serif;
-  background: rgba(255,255,0,.85); padding: 2px 6px; border-radius: 4px;
-  transform: translateY(-100%); pointer-events: none; color:#000;
-}
-.initial-content, .page, .page__layout, .page__inner-wrap,
-.page__content, .sidebar { position: relative; }
-
-/* Set a CSS var to the computed width via JS below */
-</style>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const targets = document.querySelectorAll(
-    '.initial-content, .page, .page__layout, .page__inner-wrap, .page__content, .sidebar'
-  );
-  const update = () => targets.forEach(el => {
-    el.setAttribute('data-mmw', Math.round(el.getBoundingClientRect().width)+'px');
-  });
-  update();
-  new ResizeObserver(update).observe(document.documentElement);
-});
-</script>
-
-
-
-<!-- Give THIS page a unique body class so overrides apply only here -->
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    document.body.classList.add('about-override');
-  });
-</script>
-
 <style>
-/* — Only affects THIS page because it's scoped to .about-override — */
+/* Scope to the custom layout only */
+#main.frontpage-wide { max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
 
-/* Let the overall single-page wrapper breathe */
-body.about-override.layout--single .initial-content,
-body.about-override.layout--single .page,
-body.about-override.layout--single .page__layout,
-body.about-override.layout--single .page__inner-wrap {
-  max-width: 1400px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  padding-left: 2rem;
-  padding-right: 2rem;
-}
-
-
-/* — FORCE a 2-column layout only on this page — */
-body.about-override.layout--single .page__layout {
-  display: grid !important;
-  grid-template-columns: 240px minmax(0, 1fr) !important; /* sidebar | content */
-  column-gap: 2rem !important;
-  align-items: start !important;
-}
-
-/* Pin the sidebar to column 1 */
-body.about-override.layout--single .sidebar {
-  grid-column: 1 !important;
-  grid-row: 1 !important;
-  max-width: 240px !important;
-  width: 240px !important;
-  position: static !important;   /* avoid sticky quirks while testing */
-}
-
-/* Make the main content truly fluid in column 2 */
-body.about-override.layout--single article.page .page__content {
-  grid-column: 2 !important;
-  grid-row: 1 !important;
-  max-width: none !important;     /* remove 770px clamp */
-  width: auto !important;
-  min-width: 0 !important;        /* allow shrinking without wrapping under */
-  flex: initial !important;       /* neutralize theme flex rules */
-}
-
-/* Optional: widen the outer wrapper so the grid has room */
-body.about-override.layout--single .initial-content,
-body.about-override.layout--single .page,
-body.about-override.layout--single .page__inner-wrap {
-  max-width: 1400px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  padding-left: 2rem;
-  padding-right: 2rem;
-}
-
-
-/* --- About section (Grid): photo left, text right --- */
-.about-wrapper {
+/* Make the main area a two-column grid: sidebar | content */
+#main.frontpage-wide {
   display: grid;
-  grid-template-columns: 220px 1fr;  /* image | text */
-  column-gap: 1.5rem;
+  grid-template-columns: 240px minmax(0, 1fr);
+  column-gap: 2rem;
   align-items: start;
-  margin-top: 2rem;
 }
-.about-wrapper img.home-portrait {
-  width: 220px;
-  height: 220px;
-  object-fit: cover;
-  border-radius: 50%;
+
+/* Sidebar column */
+#main.frontpage-wide .sidebar {
+  grid-column: 1;
+  grid-row: 1;
+  max-width: 240px;
+  width: 240px;
+  position: sticky; top: 2rem; /* optional: make it sticky */
 }
+
+/* Content column */
+#main.frontpage-wide article.page { grid-column: 2; grid-row: 1; }
+#main.frontpage-wide .page__content { max-width: none; width: 100%; min-width: 0; }
+
+/* About section inside content: image left, text right */
+.about-wrapper { display: grid; grid-template-columns: 220px 1fr; column-gap: 1.5rem; align-items: start; margin-top: 2rem; }
+.about-wrapper img.home-portrait { width: 220px; height: 220px; object-fit: cover; border-radius: 50%; }
 .about-text { min-width: 0; }
 
-/* Stack only on small screens */
+/* Stack on small screens */
 @media (max-width: 700px) {
+  #main.frontpage-wide { grid-template-columns: 1fr; }
   .about-wrapper { grid-template-columns: 1fr; }
   .about-wrapper img.home-portrait { margin-bottom: 1rem; }
 }
