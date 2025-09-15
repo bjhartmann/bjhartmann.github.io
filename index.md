@@ -80,8 +80,8 @@ body.layout--single article.page .page__content {
   margin-top: 2rem;
 }
 .about-wrapper img.home-portrait {
-  width: 220px;
-  height: 220px;
+  width: 20px;
+  height: 200px;
   object-fit: cover;
   border-radius: 50%;
 }
