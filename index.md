@@ -34,14 +34,14 @@ redirect_from:
 
 /* Slightly wider content only on this page (the article has class "slim") */
 article.page.slim .page__inner-wrap {
-  max-width: 1300px !important;   /* nudge above the ~1200px theme default */
+  max-width: 1400px !important;   /* nudge above the ~1200px theme default */
   margin-left: auto;
   margin-right: auto;
 }
 
 /* (Optional) if your theme also caps .page__content, relax that too */
 article.page.slim .page__content {
-  max-width: 1300px !important;
+  max-width: 1400px !important;
 }
 
 
