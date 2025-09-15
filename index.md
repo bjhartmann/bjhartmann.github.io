@@ -47,7 +47,7 @@ custom_tab_title: "Björn Hartmann"
 /* Outer site wrapper — let the page breathe */
 .initial-content {
   max-width: 1600px !important;   /* ↑ was 1400; this was the choke point */
-  margin-left: auto;
+  margin-left: 0; 
   margin-right: auto;
   padding-left: 2rem;
   padding-right: 2rem;
@@ -76,6 +76,18 @@ custom_tab_title: "Björn Hartmann"
   top: 2rem;
 }
 
+.about-wrapper {
+  max-width: 1100px;   /* wider than the 980px text column */
+  margin-left: auto;   /* keep it centered */
+  margin-right: auto;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  column-gap: 1.5rem;
+  align-items: start;
+  margin-top: 2rem;
+}
+
+
 /* Content column */
 #main.frontpage-wide article.page{
   max-width: 1600px;
@@ -84,15 +96,7 @@ custom_tab_title: "Björn Hartmann"
   min-width: 0;                 /* critical for grid overflow */
 }
 
-#main.frontpage-wide article.page,
-#main.frontpage-wide article.page .page__inner-wrap,
-#main.frontpage-wide article.page .page__content {
-  max-width: 980px;      /* ← pick your taste: 900–1100 usually reads well */
-  width: 100%;
-  margin-left: auto;     /* center within the right grid track */
-  margin-right: auto;
-}
-  
+
 /* Remove the theme's clamp + float layout ONLY here */
 #main.frontpage-wide .page__inner-wrap,
 #main.frontpage-wide .page__content{
@@ -118,6 +122,30 @@ custom_tab_title: "Björn Hartmann"
 }
 .about-text{ min-width: 0; }
 
+  /* UNCAP the container so the teal box can exceed 980 */
+#main.frontpage-wide article.page .page__content {
+  max-width: none !important;
+}
+
+/* Keep 980px reading width for everything EXCEPT the teal .about-wrapper */
+#main.frontpage-wide article.page .page__content > :not(.about-wrapper) {
+  max-width: 980px;
+  width: 100%;
+  margin-inline: auto;
+}
+
+/* Teal box: make it a bit wider and centered */
+.about-wrapper {
+  max-width: 1100px;          /* adjust: 1050–1200 to taste */
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  column-gap: 1.5rem;
+  align-items: start;
+  margin-top: 2rem;
+}
+
+  
 /* Stack on mobile */
 @media (max-width: 700px){
   #main.frontpage-wide{ grid-template-columns: 1fr; }
