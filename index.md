@@ -10,8 +10,9 @@ redirect_from:
   - /about.html
 ---
 
-<img src="{{ '/assets/images/me.jpg' | relative_url }}" alt="Björn Hartmann" class="home-portrait">
-
+<img src="{{ '/assets/images/me.jpg' | relative_url }}" alt="Björn Hartmann" 
+     class="home-portrait" style="float: left; margin: 0 1.5rem 1rem 0; max-width: 160px;">
+     
 **About me**
 
 I am a 5th year Ph.D. student in Economics at the University of St. Gallen. 
