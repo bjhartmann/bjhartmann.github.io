@@ -32,16 +32,18 @@ redirect_from:
   .about-wrapper img.home-portrait { margin-bottom: 1rem; }
 }
 
-/* --- Widen content ONLY on this page (body has `slim`) --- */
-/* Minimal Mistakes caps width on several wrappers; raise all of them. */
-.slim .initial-content,
-.slim .page,
-.slim .page__inner,
-.slim .page__content {
-  max-width: 1500px !important;   /* slightly wider than the ~1200px default */
+/* Slightly wider content only on this page (the article has class "slim") */
+article.page.slim .page__inner-wrap {
+  max-width: 1300px !important;   /* nudge above the ~1200px theme default */
   margin-left: auto;
   margin-right: auto;
 }
+
+/* (Optional) if your theme also caps .page__content, relax that too */
+article.page.slim .page__content {
+  max-width: 1300px !important;
+}
+
 
 /* If this still doesn't move, uncomment the line below to confirm selectors hit:
 .slim .initial-content, .slim .page, .slim .page__inner, .slim .page__content { max-width: none !important; }
