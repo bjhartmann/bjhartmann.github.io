@@ -1,0 +1,36 @@
+/* Tweakable variables */
+:root {
+  --sidebar-width: 240px;   /* narrower sidebar */
+  --sidebar-gap: 32px;      /* space between divider and content */
+  --sidebar-bg: #f7f7f8;    /* light grey shading */
+  --sidebar-border: #e6e6e6;/* divider line color */
+}
+
+/* Sidebar visuals */
+.sidebar {
+  width: var(--sidebar-width);
+  flex: 0 0 var(--sidebar-width);
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--sidebar-border);
+  /* Pull the sidebar closer to the left edge if your theme adds padding */
+  margin-left: 0; 
+  padding: 16px 20px;
+}
+
+/* Make sure the page uses a side-by-side layout (most themes already do) */
+.page, .initial-content, .page__inner-wrap {
+  display: flex;
+  align-items: flex-start;
+}
+
+/* Main content spacing from the divider */
+.page__content {
+  flex: 1 1 auto;
+  padding-left: var(--sidebar-gap);
+}
+
+/* Keep the sticky behavior you already have */
+.sidebar.sticky {
+  position: sticky;
+  top: 2rem;
+}
