@@ -11,8 +11,7 @@ redirect_from:
 ---
 
 <style>
-/* — Only affects THIS page because it's inline here — */
-
+  
 /* Uncap every wrapper in the single layout */
 .layout--single .initial-content,
 .layout--single .page,
@@ -26,7 +25,7 @@ redirect_from:
 
 /* Let the content column expand next to the sidebar */
 .layout--single .page__content {
-  max-width: none !important;
+  max-width: 900px !important;
   width: auto !important;
   flex: 1 1 auto !important;
 }
