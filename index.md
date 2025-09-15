@@ -30,14 +30,14 @@ redirect_from:
 .slim .initial-content,
 .slim .page,
 .slim .page__inner {
-  max-width: 1400px !important;   /* nudge above theme default (~1200px) */
+  max-width: 1500px !important;   /* nudge above theme default (~1200px) */
   margin-left: auto;
   margin-right: auto;
 }
 
 /* Optional: also relax the leaf node in case it’s capped separately */
 .slim .page__content {
-  max-width: 1400px !important;
+  max-width: 1500px !important;
 }
 
 .about-text {
