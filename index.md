@@ -12,44 +12,42 @@ redirect_from:
 
 
 <style>
+/* --- About layout --- */
 .about-wrapper {
   display: flex;
-  align-items: flex-start;  /* text aligns to top of the image */
-  gap: 1.5rem;              /* space between picture and text */
+  align-items: flex-start;
+  gap: 1.5rem;
   margin-top: 2rem;
 }
-
 .about-wrapper img.home-portrait {
   width: 220px;
   height: 220px;
   object-fit: cover;
   border-radius: 50%;
 }
+.about-text { flex: 1; }
 
-/* Slightly wider content only on pages with `slim` class */
-.slim .initial-content,
-.slim .page,
-.slim .page__inner {
-  max-width: 1600px !important;   /* nudge above theme default (~1200px) */
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Optional: also relax the leaf node in case it’s capped separately */
-.slim .page__content {
-  max-width: 1600px !important;
-}
-
-.about-text {
-  flex: 1;                  /* text fills the rest of the row */
-}
-
-/* Optional: stack on small screens */
 @media (max-width: 768px) {
   .about-wrapper { display: block; }
   .about-wrapper img.home-portrait { margin-bottom: 1rem; }
 }
+
+/* --- Widen content ONLY on this page (body has `slim`) --- */
+/* Minimal Mistakes caps width on several wrappers; raise all of them. */
+.slim .initial-content,
+.slim .page,
+.slim .page__inner,
+.slim .page__content {
+  max-width: 1350px !important;   /* slightly wider than the ~1200px default */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* If this still doesn't move, uncomment the line below to confirm selectors hit:
+.slim .initial-content, .slim .page, .slim .page__inner, .slim .page__content { max-width: none !important; }
+*/
 </style>
+
 
 <div class="about-wrapper">
   <img src="{{ '/assets/images/me.jpg' | relative_url }}" alt="Björn Hartmann" class="home-portrait">
