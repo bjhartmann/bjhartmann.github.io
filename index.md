@@ -84,6 +84,15 @@ custom_tab_title: "Björn Hartmann"
   min-width: 0;                 /* critical for grid overflow */
 }
 
+#main.frontpage-wide article.page,
+#main.frontpage-wide article.page .page__inner-wrap,
+#main.frontpage-wide article.page .page__content {
+  max-width: 980px;      /* ← pick your taste: 900–1100 usually reads well */
+  width: 100%;
+  margin-left: auto;     /* center within the right grid track */
+  margin-right: auto;
+}
+  
 /* Remove the theme's clamp + float layout ONLY here */
 #main.frontpage-wide .page__inner-wrap,
 #main.frontpage-wide .page__content{
