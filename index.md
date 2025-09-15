@@ -74,11 +74,12 @@ body.about-override.layout--single .sidebar {
 }
 
 /* Beat the theme’s 770px clamp for the main content column */
-body.about-override.layout--single article.page .page__content {
-  max-width: 1100px !important;   /* tweak to taste */
+body.about-override.layout--single article.page div.page__content {
+  max-width: 1100px !important;
   width: auto !important;
   flex: 1 1 auto !important;
 }
+
 
 /* --- About section (Grid): photo left, text right --- */
 .about-wrapper {
