@@ -20,9 +20,10 @@ redirect_from:
 }
 
 .about-wrapper img.home-portrait {
-  max-width: 160px;         /* keep photo size tidy */
-  height: auto;
-  border-radius: 50%;       /* optional round portrait */
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .about-text {
