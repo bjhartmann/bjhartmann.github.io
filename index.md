@@ -78,6 +78,7 @@ custom_tab_title: "Björn Hartmann"
 
 /* Content column */
 #main.frontpage-wide article.page{
+  max-width: 800px;
   grid-column: 2;
   grid-row: 1;
   min-width: 0;                 /* critical for grid overflow */
