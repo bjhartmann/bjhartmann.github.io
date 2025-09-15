@@ -76,16 +76,6 @@ custom_tab_title: "Björn Hartmann"
   top: 2rem;
 }
 
-.about-wrapper {
-  max-width: 1200px;   /* wider than the 980px text column */
-  margin-left: auto;   /* keep it centered */
-  margin-right: auto;
-  display: grid;
-  grid-template-columns: 220px 1fr;
-  column-gap: 1.5rem;
-  align-items: start;
-  margin-top: 2rem;
-}
 
 
 /* Content column */
@@ -109,17 +99,16 @@ custom_tab_title: "Björn Hartmann"
   flex: 1 1 auto !important;    /* neutralize flex sizing */
 }
 
-/* About block: image left, text right */
-.about-wrapper{
+.about-wrapper {
+  max-width: 1200px;          /* pick your number: 1100–1200 */
+  margin-inline: auto;
   display: grid;
   grid-template-columns: 220px 1fr;
   column-gap: 1.5rem;
   align-items: start;
   margin-top: 2rem;
 }
-.about-wrapper img.home-portrait{
-  width: 220px; height: 220px; object-fit: cover; border-radius: 50%;
-}
+  
 .about-text{ min-width: 0; }
 
   /* UNCAP the container so the teal box can exceed 980 */
