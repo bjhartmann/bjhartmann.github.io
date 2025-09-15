@@ -38,7 +38,7 @@ redirect_from:
 .slim .page,
 .slim .page__inner,
 .slim .page__content {
-  max-width: 1350px !important;   /* slightly wider than the ~1200px default */
+  max-width: 1500px !important;   /* slightly wider than the ~1200px default */
   margin-left: auto;
   margin-right: auto;
 }
