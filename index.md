@@ -11,6 +11,7 @@ redirect_from:
 ---
 
 
+<style>
 .about-wrapper {
   display: flex;
   align-items: flex-start;  /* text aligns to top of the image */
@@ -28,6 +29,12 @@ redirect_from:
   flex: 1;                  /* text fills the rest of the row */
 }
 
+/* Optional: stack on small screens */
+@media (max-width: 768px) {
+  .about-wrapper { display: block; }
+  .about-wrapper img.home-portrait { margin-bottom: 1rem; }
+}
+</style>
 
 <div class="about-wrapper">
   <img src="{{ '/assets/images/me.jpg' | relative_url }}" alt="Björn Hartmann" class="home-portrait">
