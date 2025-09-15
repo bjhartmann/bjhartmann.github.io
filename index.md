@@ -37,7 +37,7 @@ redirect_from:
 
 /* Optional: also relax the leaf node in case it’s capped separately */
 .slim .page__content {
-  max-width: 1300px !important;
+  max-width: 1400px !important;
 }
 
 .about-text {
