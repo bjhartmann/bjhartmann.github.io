@@ -8,9 +8,9 @@ custom_tab_title: "Björn Hartmann"
 ---
 
 <style>
-/* Grid shell for front page */
+/* ===== Page Grid Shell ===== */
 #main.frontpage-wide{
-  max-width: 1800px;           /* wider overall page (was 1600px) */
+  max-width: 1800px;           /* overall page width */
   margin: 0 auto;
   padding: 0 2rem;
   display: grid;
@@ -19,7 +19,7 @@ custom_tab_title: "Björn Hartmann"
   align-items: start;
 }
 
-/* Sidebar and content placement */
+/* Sidebar placement */
 #main.frontpage-wide .sidebar{
   grid-column: 1;
   grid-row: 1;
@@ -33,7 +33,7 @@ custom_tab_title: "Björn Hartmann"
   min-width: 0;
 }
 
-/* Remove theme clamps for this page’s content area */
+/* Remove theme clamps inside content area */
 #main.frontpage-wide .page__inner-wrap,
 #main.frontpage-wide .page__content{
   max-width: none !important;
@@ -44,22 +44,23 @@ custom_tab_title: "Björn Hartmann"
   display: block !important;
 }
 
-/* —— About block (keep only THIS rule; delete any duplicate) —— */
+/* ===== Content Width Control ===== */
+/* Center all direct children of content */
+.frontpage-wide__content > *{
+  max-width: 1400px;     /* wide enough for one-liner */
+  width: 100%;
+  margin-inline: auto;   /* center horizontally */
+}
+
+/* ===== About Block ===== */
 .frontpage-wide__content > .about-wrapper{
   box-sizing: border-box;
-  width: 100%;
-  margin-left: 0;
-  margin-right: auto;
-  /* no max-width clamp so the text can stretch */
-  max-width: none !important;
-
   display: grid;
-  grid-template-columns: 220px 1fr; /* photo fixed, text flexible */
+  grid-template-columns: 220px 1fr;  /* photo fixed, text flexible */
   column-gap: 1.5rem;
   align-items: start;
-  margin-top: 2rem;
-
-  /* remove any previous box styling */
+  margin: 2rem auto 0;               /* center block */
+  max-width: 1400px;
   border: 0 !important;
   background: transparent !important;
   box-shadow: none !important;
@@ -68,20 +69,24 @@ custom_tab_title: "Björn Hartmann"
 
 /* About internals */
 .about-wrapper img.home-portrait{
-  width: 220px; height: 220px; object-fit: cover; border-radius: 50%;
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 50%;
 }
 .about-text{
   min-width: 0;
-  max-width: none !important;   /* ensure no inner clamp */
+  max-width: none !important;  /* text stretches fully */
 }
 
-/* Mobile stack */
+/* ===== Mobile ===== */
 @media (max-width: 700px){
   #main.frontpage-wide{ grid-template-columns: 1fr; }
   .about-wrapper{ grid-template-columns: 1fr; }
   .about-wrapper img.home-portrait{ margin-bottom: 1rem; }
 }
 </style>
+
 
 
 
@@ -95,6 +100,6 @@ custom_tab_title: "Björn Hartmann"
     <p>In the academic year 25/26, I visit
     <a href="https://sites.google.com/site/fjbuera/" target="_blank" rel="noopener">Francisco Buera</a> (Washington University in St. Louis) and
     <a href="https://sites.google.com/site/valentinyiakos/" target="_blank" rel="noopener">Ákos Valentinyi</a> (University of Manchester) as a Visiting Researcher.</p>
-    <p>You can find my <a href="/files/Academic_CV.pdf" target="_blank" rel="noopener">CV (PDF)</a>.</p>
+    <p>You can find my <a href="/files/Academic_CV.pdf" target="_blank" rel="noopener">CV</a>.</p>
   </div>
 </div>
