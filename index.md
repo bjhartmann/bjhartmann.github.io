@@ -30,6 +30,7 @@ redirect_from:
 
 /* Set a CSS var to the computed width via JS below */
 </style>
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const targets = document.querySelectorAll(
@@ -67,17 +68,43 @@ body.about-override.layout--single .page__inner-wrap {
   padding-right: 2rem;
 }
 
-/* Keep the author sidebar but fix a sensible width */
-body.about-override.layout--single .sidebar {
-  flex: 0 0 240px !important;
-  max-width: 240px !important;
+
+/* — FORCE a 2-column layout only on this page — */
+body.about-override.layout--single .page__layout {
+  display: grid !important;
+  grid-template-columns: 240px minmax(0, 1fr) !important; /* sidebar | content */
+  column-gap: 2rem !important;
+  align-items: start !important;
 }
 
-/* Beat the theme’s 770px clamp for the main content column */
-body.about-override.layout--single article.page div.page__content {
-  max-width: 1100px !important;
+/* Pin the sidebar to column 1 */
+body.about-override.layout--single .sidebar {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  max-width: 240px !important;
+  width: 240px !important;
+  position: static !important;   /* avoid sticky quirks while testing */
+}
+
+/* Make the main content truly fluid in column 2 */
+body.about-override.layout--single article.page .page__content {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  max-width: none !important;     /* remove 770px clamp */
   width: auto !important;
-  flex: 1 1 auto !important;
+  min-width: 0 !important;        /* allow shrinking without wrapping under */
+  flex: initial !important;       /* neutralize theme flex rules */
+}
+
+/* Optional: widen the outer wrapper so the grid has room */
+body.about-override.layout--single .initial-content,
+body.about-override.layout--single .page,
+body.about-override.layout--single .page__inner-wrap {
+  max-width: 1400px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 
