@@ -12,47 +12,33 @@ redirect_from:
 
 
 <style>
-/* --- About layout --- */
-.about-wrapper {
-  display: flex;
-  align-items: flex-start;
-  gap: 1.5rem;
-  margin-top: 2rem;
-}
-.about-wrapper img.home-portrait {
-  width: 220px;
-  height: 220px;
-  object-fit: cover;
-  border-radius: 50%;
-}
-.about-text { flex: 1; }
+/* — Only affects THIS page because it's inline here — */
 
-@media (max-width: 768px) {
-  .about-wrapper { display: block; }
-  .about-wrapper img.home-portrait { margin-bottom: 1rem; }
+/* 1) Uncap the site container */
+.layout--single .initial-content {
+  max-width: 1400px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
-/* Slightly wider content only on this page (the article has class "slim") */
-article.page.slim .page__inner-wrap {
-  max-width: 1400px !important;   /* nudge above the ~1200px theme default */
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* (Optional) if your theme also caps .page__content, relax that too */
-article.page.slim .page__content {
+/* 2) Uncap the article wrapper */
+.layout--single .page__inner-wrap {
   max-width: 1400px !important;
 }
 
-  /* Uncap the outer wrapper only when it contains this page's article */
-.initial-content:has(article.page.slim) {
-  max-width: 1400px !important;   /* nudge above default; tweak to taste */
-  margin-left: auto;
-  margin-right: auto;
+/* 3) Let the content column actually grow */
+.layout--single .page__content {
+  max-width: none !important;   /* remove the narrow cap */
+  flex: 1 1 auto !important;    /* grow to fill space next to the sidebar */
 }
 
-
+/* Keep the author sidebar but make it a fixed, narrower width */
+.layout--single .sidebar {
+  flex: 0 0 240px !important;
+  max-width: 240px !important;
+}
 </style>
+
 
 
 <div class="about-wrapper">
