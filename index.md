@@ -63,7 +63,7 @@ permalink: /
       <a href="mailto:YOUR_EMAIL@DOMAIN">Email</a>
     </p>
     <p>
-      <i class="fa fa-id-card"></i>
+      <i class="fa fa-file-alt"></i>
       <a href="/files/Academic_CV.pdf" target="_blank" rel="noopener">CV</a>
     </p>
     <p>
