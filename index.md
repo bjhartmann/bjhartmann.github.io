@@ -11,7 +11,7 @@ custom_tab_title: "Björn Hartmann"
 /* ===== Page Grid Shell ===== */
 #main.frontpage-wide{
   max-width: 1800px;           /* overall page width */
-  margin: 0 auto;
+  margin: 3rem auto 0; 
   padding: 0 2rem;
   display: grid;
   grid-template-columns: 240px minmax(0, 1fr);
