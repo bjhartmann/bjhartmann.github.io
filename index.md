@@ -47,7 +47,7 @@ custom_tab_title: "Björn Hartmann"
 /* ===== Content Width Control ===== */
 /* Center all direct children of content */
 .frontpage-wide__content > *{
-  max-width: 1400px;     /* wide enough for one-liner */
+  max-width: 1500px;     /* wide enough for one-liner */
   width: 100%;
   margin-inline: auto;   /* center horizontally */
 }
@@ -60,7 +60,7 @@ custom_tab_title: "Björn Hartmann"
   column-gap: 1.5rem;
   align-items: start;
   margin: 2rem auto 0;               /* center block */
-  max-width: 1400px;
+  max-width: 1500px;
   border: 0 !important;
   background: transparent !important;
   box-shadow: none !important;
@@ -100,6 +100,7 @@ body{
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 /* Your main area becomes the flexible spacer */
@@ -112,7 +113,7 @@ body{
   flex-shrink: 0;
   margin-top: 0;    /* keep the gap tight; tweak if you want e.g., 1rem */
 }
-  
+
 </style>
 
 
