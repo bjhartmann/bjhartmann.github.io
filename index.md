@@ -86,7 +86,9 @@ custom_tab_title: "Björn Hartmann"
   .about-wrapper img.home-portrait{ margin-bottom: 1rem; }
 }
 
-
+/* Right-shift the page on desktop without changing width */
+@media (min-width: 900px){ :root{ --page-offset: 150px; } /* tweak this value */ 
+#main.frontpage-wide{ transform: translateX(var(--page-offset)); } }
 
 html, body { height: 100%; }
 
@@ -119,7 +121,7 @@ body{
     <strong>About me</strong>
     <p>I am a 5th year Ph.D. student in Economics at the University of St. Gallen.<br>
     My primary advisor is Reto Föllmi.</p>
-    <p>My research interests cover International Trade, Economic Growth, and Structural Change.</p>
+    <p>My research interests cover Trade, Economic Growth, and Structural Change.</p>
     <p>In the academic year 25/26, I visit
     <a href="https://sites.google.com/site/fjbuera/" target="_blank" rel="noopener">Francisco Buera</a> (Washington University in St. Louis) and
     <a href="https://sites.google.com/site/valentinyiakos/" target="_blank" rel="noopener">Ákos Valentinyi</a> (University of Manchester) as a Visiting Researcher.</p>
