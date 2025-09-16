@@ -86,13 +86,7 @@ custom_tab_title: "Björn Hartmann"
   .about-wrapper img.home-portrait{ margin-bottom: 1rem; }
 }
 
-/* Right-shift the page on desktop without changing width */
-@media (min-width: 900px){
-  :root{ --page-offset: 150px; } /* tweak this value */
-  #main.frontpage-wide{
-    transform: translateX(var(--page-offset));
-  }
-}
+
 
 html, body { height: 100%; }
 
