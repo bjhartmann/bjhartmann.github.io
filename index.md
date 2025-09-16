@@ -12,7 +12,7 @@ permalink: /
 .profile-row {
   display: grid;
   grid-template-columns: 220px 1fr;
-  column-gap: 2rem;
+  column-gap: 4rem;
   align-items: center;
   max-width: 900px;
   margin: 0 auto 1.5rem;
@@ -59,10 +59,6 @@ permalink: /
   <div class="profile-meta">
     <p><strong>Björn Hartmann</strong></p>
     <p>
-      <i class="fa fa-university"></i>
-      <a href="https://www.unisg.ch/en/" target="_blank" rel="noopener">University of St. Gallen</a>
-    </p>
-    <p>
       <i class="fa fa-envelope"></i>
       <a href="mailto:YOUR_EMAIL@DOMAIN">Email</a>
     </p>
@@ -70,8 +66,13 @@ permalink: /
       <i class="fa fa-file-alt"></i>
       <a href="/files/Academic_CV.pdf" target="_blank" rel="noopener">CV</a>
     </p>
+    <p>
+      <i class="fa fa-university"></i>
+      <a href="https://www.unisg.ch/en/" target="_blank" rel="noopener">University of St. Gallen</a>
+    </p>
   </div>
 </div>
+
 
 
 <section class="about-text">
