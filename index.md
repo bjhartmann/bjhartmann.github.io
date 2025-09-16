@@ -42,6 +42,15 @@ permalink: /
   }
 }
 
+.profile-meta a {
+  color: inherit;          /* take surrounding text color */
+  text-decoration: none;   /* remove underline */
+}
+.profile-meta a:hover {
+  text-decoration: underline; /* optional subtle hover effect */
+}
+
+
 </style>
 
 
@@ -58,8 +67,8 @@ permalink: /
       <a href="mailto:YOUR_EMAIL@DOMAIN">Email</a>
     </p>
     <p>
-      <i class="fa fa-file-pdf-o"></i>
-      <a href="/files/Academic_CV.pdf" target="_blank" rel="noopener">CV (PDF)</a>
+      <i class="fa fa-file-pdf"></i>
+      <a href="/files/Academic_CV.pdf" target="_blank" rel="noopener">CV</a>
     </p>
   </div>
 </div>
