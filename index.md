@@ -49,14 +49,21 @@ permalink: /
   <img src="{{ '/assets/images/me.jpg' | relative_url }}" alt="Björn Hartmann" class="home-portrait" width="220" height="220" loading="eager" decoding="async">
   <div class="profile-meta">
     <p><strong>Björn Hartmann</strong></p>
-    <p><i class="fa fa-university"></i> University of St. Gallen</p>
+    <p>
+      <i class="fa fa-university"></i>
+      <a href="https://www.unisg.ch/en/" target="_blank" rel="noopener">University of St. Gallen</a>
+    </p>
     <p>
       <i class="fa fa-envelope"></i>
-      <a href="mailto:YOUR_EMAIL@DOMAIN">Email</a> ·
+      <a href="mailto:YOUR_EMAIL@DOMAIN">Email</a>
+    </p>
+    <p>
+      <i class="fa fa-file-pdf-o"></i>
       <a href="/files/Academic_CV.pdf" target="_blank" rel="noopener">CV (PDF)</a>
     </p>
   </div>
 </div>
+
 
 <section class="about-text">
   <strong>About me</strong>
