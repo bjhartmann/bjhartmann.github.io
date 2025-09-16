@@ -94,6 +94,24 @@ custom_tab_title: "Björn Hartmann"
   }
 }
 
+html, body { height: 100%; }
+
+body{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Your main area becomes the flexible spacer */
+#main.frontpage-wide{
+  flex: 1 0 auto;   /* grow to fill leftover height */
+}
+
+/* Footer sits after content without a huge gap */
+.page__footer{
+  flex-shrink: 0;
+  margin-top: 0;    /* keep the gap tight; tweak if you want e.g., 1rem */
+}
   
 </style>
 
@@ -104,7 +122,7 @@ custom_tab_title: "Björn Hartmann"
   <img src="{{ '/assets/images/me.jpg' | relative_url }}" alt="Björn Hartmann" class="home-portrait" width="220" height="220" loading="eager" decoding="async">
   <div class="about-text">
     <strong>About me</strong>
-    <p>I am a 5th year Ph.D. student in Economics at the University of St. Gallen.
+    <p>I am a 5th year Ph.D. student in Economics at the University of St. Gallen.<br>
     My primary advisor is Reto Föllmi.</p>
     <p>My research interests cover International Trade, Economic Growth, and Structural Change.</p>
     <p>In the academic year 25/26, I visit
