@@ -14,7 +14,7 @@ custom_tab_title: "Björn Hartmann"
   margin: 3rem auto 0; 
   padding: 0 2rem;
   display: grid;
-  grid-template-columns: 240px minmax(0, 1fr);
+  grid-template-columns: 200px minmax(0, 1fr);
   column-gap: 0.5rem;
   align-items: start;
 }
