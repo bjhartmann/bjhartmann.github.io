@@ -12,7 +12,7 @@ permalink: /
 .profile-row {
   display: grid;
   grid-template-columns: 220px 1fr;
-  column-gap: 1.25rem;
+  column-gap: 2rem;
   align-items: center;
   max-width: 900px;
   margin: 0 auto 1.5rem;
@@ -67,7 +67,7 @@ permalink: /
       <a href="mailto:YOUR_EMAIL@DOMAIN">Email</a>
     </p>
     <p>
-      <i class="fa fa-file-pdf"></i>
+      <i class="fa fa-file-alt"></i>
       <a href="/files/Academic_CV.pdf" target="_blank" rel="noopener">CV</a>
     </p>
   </div>
@@ -76,10 +76,10 @@ permalink: /
 
 <section class="about-text">
   <strong>About me</strong>
-  <p>I am a 5th year Ph.D. student in Economics at the University of St. Gallen. My primary advisor is Reto Föllmi.</p>
+  <p>I am a 5th year Ph.D. student in Economics at the University of St. Gallen.<br> My primary advisor is Reto Föllmi.</p>
   <p>My research interests cover International Trade, Economic Growth, and Structural Change.</p>
   <p>In the academic year 25/26, I visit
-    <a href="https://sites.google.com/site/fjbuera/" target="_blank" rel="noopener">Francisco Buera</a> (Washington University in St. Louis) and
+    <a href="https://sites.google.com/site/fjbuera/" target="_blank" rel="noopener">Francisco Buera</a> (Washington University in St. Louis) and<br>
     <a href="https://sites.google.com/site/valentinyiakos/" target="_blank" rel="noopener">Ákos Valentinyi</a> (University of Manchester) as a Visiting Researcher.</p>
 </section>
 
