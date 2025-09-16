@@ -60,7 +60,7 @@ permalink: /
     <p><strong>Björn Hartmann</strong></p>
     <p>
       <i class="fa fa-envelope fa-fw"></i>
-      <a href="mailto:YOUR_EMAIL@DOMAIN">Email</a>
+      <a href="mailto:bjoern.hartmann@unisg.ch">Email</a>
     </p>
     <p>
       <i class="fa fa-file-alt fa-fw"></i>
