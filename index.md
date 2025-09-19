@@ -66,10 +66,6 @@ permalink: /
       <i class="fa fa-file-alt fa-fw"></i>
       <a href="/files/Academic_CV.pdf" target="_blank" rel="noopener">CV</a>
     </p>
-    <p>
-      <i class="fa fa-university fa-fw"></i>
-      <a href="https://www.unisg.ch/en/" target="_blank" rel="noopener">University of St. Gallen</a>
-    </p>
   </div>
 </div>
 
