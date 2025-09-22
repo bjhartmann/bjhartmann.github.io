@@ -50,8 +50,17 @@ permalink: /
   text-decoration: underline; /* optional subtle hover effect */
 }
 
+  .profile-meta strong {
+  color: var(--header-bg);      /* name */
+}
+
+.profile-meta a {
+  color: var(--header-bg);      /* email & CV links */
+  text-decoration: none;
+}
 
 </style>
+
 
 
 <div class="profile-row">
