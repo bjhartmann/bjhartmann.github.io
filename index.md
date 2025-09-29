@@ -58,7 +58,6 @@ permalink: /
 <div class="profile-row">
   <img src="{{ '/assets/images/me.jpg' | relative_url }}" alt="Björn Hartmann" class="home-portrait" width="220" height="220" loading="eager" decoding="async">
   <div class="profile-meta">
-    <p><strong>Björn Hartmann</strong></p>
     <p>
       <i class="fa fa-envelope fa-fw"></i>
       <a href="mailto:bjoern.hartmann@unisg.ch">Email</a>
