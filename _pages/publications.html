@@ -123,22 +123,22 @@ redirect_from:
       {%- capture venue_text   -%}{{ post.venue   | default: "" | strip }}{%- endcapture -%}
       {%- assign date_iso = post.date | date: "%Y-%m-%d" -%}
 
-{% capture render_links %}
-  <span class="pub-links">
-    {% assign first = true %}
-    {% if post.paperurl %}
-      [<a href="{{ post.paperurl }}" target="_blank" rel="noopener noreferrer">{{ post.paperlabel | default: "paper" }}</a>]
-      {% assign first = false %}
-    {% endif %}
-    {% if post.germanurl %}
-      {% unless first %} {% endunless %}[<a href="{{ post.germanurl }}" ...>german</a>]
-      {% assign first = false %}
-    {% endif %}
-    {% if post.frenchurl %}
-      {% unless first %} {% endunless %}[<a href="{{ post.frenchurl }}" ...>french</a>]
-    {% endif %}
-  </span>
-{% endcapture %}
+      {%- capture render_links -%}
+        <span class="pub-links">
+          {%- if post.paperurl -%}
+            [<a href="{{ post.paperurl }}" target="_blank" rel="noopener noreferrer">{{ post.paperlabel | default: "paper" }}</a>]
+          {%- endif -%}
+          {%- if post.slidesurl -%}
+            [<a href="{{ post.slidesurl }}" target="_blank" rel="noopener noreferrer">{{ post.slideslabel | default: "slides" }}</a>]
+          {%- endif -%}
+          {%- if post.codeurl -%}
+            [<a href="{{ post.codeurl }}" target="_blank" rel="noopener noreferrer">{{ post.codelabel | default: "code" }}</a>]
+          {%- endif -%}
+          {%- if post.doi -%}
+            [<a href="https://doi.org/{{ post.doi | escape }}" target="_blank" rel="noopener noreferrer">doi</a>]
+          {%- endif -%}
+        </span>
+      {%- endcapture -%}
 
 
       {%- capture item -%}
