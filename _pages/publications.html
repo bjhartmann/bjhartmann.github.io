@@ -90,8 +90,8 @@ redirect_from:
       {%- assign abs_id = "abs-" | append: pid -%}
 
       {%- assign abs_from_frontmatter = post.abstract | default: "" -%}
-      {%- assign abs_text = abs_from_frontmatter | markdownify | strip_html | strip -%}
-      {%- assign has_abstract = abs_text != "" -%}
+      {%- assign has_abstract = abs_from_frontmatter | strip | size | minus: 0 -%}
+      {%- assign has_abstract = has_abstract > 0 -%}
 
       {%- assign in_toggle_cat = false -%}
       {%- if post.category and toggle_cats contains post.category -%}
