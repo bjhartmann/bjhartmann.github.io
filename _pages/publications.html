@@ -89,15 +89,17 @@ redirect_from:
       {%- assign pid = pid_source | slugify -%}
       {%- assign abs_id = "abs-" | append: pid -%}
 
-      {%- assign abs_from_frontmatter = post.abstract -%}
-      {%- assign has_abstract = false -%}
-      
-      {%- if abs_from_frontmatter -%}
-        {%- assign abs_text = abs_from_frontmatter | markdownify | strip_html | strip -%}
-        {%- if abs_text != "" -%}
-          {%- assign has_abstract = true -%}
-        {%- endif -%}
-      {%- endif -%}
+
+{%- assign abs_raw = post.abstract -%}
+{%- assign has_abstract = false -%}
+{%- if abs_raw -%}
+  {%- assign abs_text = abs_raw | strip -%}
+  {%- if abs_text != "" -%}
+    {%- assign has_abstract = true -%}
+  {%- endif -%}
+{%- endif -%}
+
+
 
 
       {%- assign in_toggle_cat = false -%}
@@ -160,7 +162,7 @@ redirect_from:
 
             <meta itemprop="datePublished" content="{{ date_iso }}" />
             <div id="{{ abs_id }}" class="pub-abstract" itemprop="abstract">
-              {{ abs_from_frontmatter | markdownify }}
+              {{ abs_raw | markdownify }}
             </div>
           </details>
         {%- else -%}
