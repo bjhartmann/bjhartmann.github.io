@@ -105,7 +105,10 @@ redirect_from:
         {%- endfor -%}
       {%- endif -%}
 
-      {%- assign show_toggle = in_toggle_cat and has_abstract -%}
+      {%- assign show_toggle = false -%}
+      {%- if in_toggle_cat and has_abstract -%}
+        {%- assign show_toggle = true -%}
+      {%- endif -%}
 
       {%- capture authors_text -%}{{ post.authors | default: "" | strip }}{%- endcapture -%}
       {%- capture venue_text   -%}{{ post.venue   | default: "" | strip }}{%- endcapture -%}
