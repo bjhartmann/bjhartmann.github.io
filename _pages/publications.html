@@ -10,6 +10,7 @@ redirect_from:
 
 {%- assign pubs = site.publications | sort: "date" | reverse -%}
 {%- assign category_order = "workingpaper,workinprogress,otherwriting" | split: "," -%}
+{%- assign toggle_cats = "workingpaper,workinprogress" | split: "," -%}
 
 <style>
   .pub-section { margin: 2rem 0 1rem; }
@@ -18,7 +19,7 @@ redirect_from:
   .pub-item { padding: 0.6rem 0; border-bottom: 1px solid #eee; }
   .pub-top { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
 
-  /* Fix: ensure [paper] links show up inside <summary> */
+  /* Ensure links render/click inside <summary> */
   details.pub-toggle > summary .pub-top {
     display: inline-flex;
     width: 100%;
@@ -27,11 +28,11 @@ redirect_from:
     gap: 1rem;
   }
 
-  /* Title now blue but no underline on hover */
+  /* Title styling */
   .pub-title { font-weight: 600; color: #2563eb; text-decoration: none; }
   .pub-title:hover { text-decoration: none; }
 
-  /* All other links (coauthors, [paper], etc.) same color as caret */
+  /* Secondary links (authors/venue/[paper]) */
   .pub-links a,
   .pub-authors a,
   .pub-venue a {
@@ -46,95 +47,89 @@ redirect_from:
 
   .pub-authors { color: #555; margin-top: 0.2rem; }
   .pub-venue   { color: #666; margin-top: 0.2rem; }
-
   .pub-abstract { margin-top: 0.6rem; color: #555; }
 
-  details.pub-toggle { border-bottom: 1px solid #eee; padding: .6rem 0; }
+  /* Toggle/caret styling */
   details.pub-toggle > summary { list-style: none; cursor: pointer; }
   details.pub-toggle > summary::-webkit-details-marker { display: none; }
+
   details.pub-toggle > summary .caret::after {
-    content: "▸"; margin-left: .4rem; line-height: 1; transition: transform .15s ease; color: #555;
+    content: "▸";
+    margin-left: .4rem;
+    line-height: 1;
+    transition: transform .15s ease;
+    color: #555;
   }
   details.pub-toggle[open] > summary .caret::after { transform: rotate(90deg); }
 
   @media print {
     details.pub-toggle[open] > summary .caret::after,
     details.pub-toggle > summary .caret::after { content: none; }
-    details.pub-toggle { border: 0; padding: 0; }
     details.pub-toggle { page-break-inside: avoid; }
   }
 
-  @media (max-width: 640px) { .pub-top { flex-direction: column; align-items: flex-start; } }
+  @media (max-width: 640px) {
+    .pub-top { flex-direction: column; align-items: flex-start; }
+  }
 </style>
 
 {%- for cat in category_order -%}
-  {% assign items = "" %}
+  {%- capture section_items -%}{%- endcapture -%}
 
-  {% for post in pubs %}
-    {% assign matches_cat = false %}
-    {% if post.category == cat %}
-      {% assign matches_cat = true %}
-    {% elsif post.categories and post.categories contains cat %}
-      {% assign matches_cat = true %}
-    {% endif %}
+  {%- for post in pubs -%}
+    {%- assign matches_cat = false -%}
+    {%- if post.category == cat -%}
+      {%- assign matches_cat = true -%}
+    {%- elsif post.categories and post.categories contains cat -%}
+      {%- assign matches_cat = true -%}
+    {%- endif -%}
 
-    {% if matches_cat %}
+    {%- if matches_cat -%}
       {%- assign pid_source = post.id | default: post.slug | default: post.title -%}
       {%- assign pid = pid_source | slugify -%}
       {%- assign abs_id = "abs-" | append: pid -%}
 
       {%- assign abs_from_frontmatter = post.abstract | default: "" -%}
-      {%- assign abs_from_excerpt     = post.excerpt  | default: "" -%}
-      {%- assign abs_from_content     = post.content  | default: "" -%}
-      {%- assign abs_text_raw = abs_from_frontmatter | default: abs_from_excerpt | default: abs_from_content -%}
-      {%- assign abs_text = abs_text_raw | markdownify | strip_html | strip -%}
+      {%- assign abs_text = abs_from_frontmatter | markdownify | strip_html | strip -%}
       {%- assign has_abstract = abs_text != "" -%}
 
-{%- assign toggle_cats = "workingpaper,workinprogress" | split: "," -%}
-{%- assign in_toggle_cat = false -%}
+      {%- assign in_toggle_cat = false -%}
+      {%- if post.category and toggle_cats contains post.category -%}
+        {%- assign in_toggle_cat = true -%}
+      {%- endif -%}
+      {%- if post.categories -%}
+        {%- for c in toggle_cats -%}
+          {%- if post.categories contains c -%}
+            {%- assign in_toggle_cat = true -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
 
-{%- if post.category and toggle_cats contains post.category -%}
-  {%- assign in_toggle_cat = true -%}
-{%- endif -%}
-
-{%- if post.categories -%}
-  {%- for c in toggle_cats -%}
-    {%- if post.categories contains c -%}
-      {%- assign in_toggle_cat = true -%}
-    {%- endif -%}
-  {%- endfor -%}
-{%- endif -%}
-
-{%- assign show_toggle = false -%}
-{%- if in_toggle_cat and has_abstract -%}
-  {%- assign show_toggle = true -%}
-{%- endif -%}
-
+      {%- assign show_toggle = in_toggle_cat and has_abstract -%}
 
       {%- capture authors_text -%}{{ post.authors | default: "" | strip }}{%- endcapture -%}
       {%- capture venue_text   -%}{{ post.venue   | default: "" | strip }}{%- endcapture -%}
       {%- assign date_iso = post.date | date: "%Y-%m-%d" -%}
 
-      {%- comment -%} Build links for THIS post (must be inside the loop) {%- endcomment -%}
-      {% capture render_links %}
+      {%- capture render_links -%}
         <span class="pub-links">
-          {% if post.paperurl %}
+          {%- if post.paperurl -%}
             [<a href="{{ post.paperurl }}" target="_blank" rel="noopener noreferrer">{{ post.paperlabel | default: "paper" }}</a>]
-          {% endif %}
-          {% if post.slidesurl %}
+          {%- endif -%}
+          {%- if post.slidesurl -%}
             [<a href="{{ post.slidesurl }}" target="_blank" rel="noopener noreferrer">{{ post.slideslabel | default: "slides" }}</a>]
-          {% endif %}
-          {% if post.codeurl %}
+          {%- endif -%}
+          {%- if post.codeurl -%}
             [<a href="{{ post.codeurl }}" target="_blank" rel="noopener noreferrer">{{ post.codelabel | default: "code" }}</a>]
-          {% endif %}
-          {% if post.doi %}
+          {%- endif -%}
+          {%- if post.doi -%}
             [<a href="https://doi.org/{{ post.doi | escape }}" target="_blank" rel="noopener noreferrer">doi</a>]
-          {% endif %}
+          {%- endif -%}
         </span>
-      {% endcapture %}
+      {%- endcapture -%}
 
-      {% capture item %}
-        {% if show_toggle %}
+      {%- capture item -%}
+        {%- if show_toggle -%}
           <details id="{{ pid }}" class="pub-item pub-toggle" itemscope itemtype="https://schema.org/ScholarlyArticle">
             <summary>
               <span class="pub-top">
@@ -144,66 +139,82 @@ redirect_from:
                 </span>
                 {{ render_links | strip }}
               </span>
-              {% if authors_text != "" %}
+
+              {%- if authors_text != "" -%}
                 <span class="pub-authors" itemprop="author" style="display:block;">{{ authors_text }}</span>
-              {% endif %}
-              {% if venue_text != "" %}
+              {%- endif -%}
+              {%- if venue_text != "" -%}
                 <span class="pub-venue" itemprop="isPartOf" style="display:block;">{{ venue_text }}</span>
-              {% endif %}
+              {%- endif -%}
             </summary>
+
             <meta itemprop="datePublished" content="{{ date_iso }}" />
             <div id="{{ abs_id }}" class="pub-abstract" itemprop="abstract">
-              {{ abs_from_frontmatter | default: abs_from_excerpt | default: abs_from_content | markdownify }}
+              {{ abs_from_frontmatter | markdownify }}
             </div>
           </details>
-        {% else %}
+        {%- else -%}
           <div id="{{ pid }}" class="pub-item" itemscope itemtype="https://schema.org/ScholarlyArticle">
             <div class="pub-top">
               <span class="pub-title" itemprop="name">{{ post.title }}</span>
               {{ render_links | strip }}
             </div>
-            {% if authors_text != "" %}
+
+            {%- if authors_text != "" -%}
               <div class="pub-authors" itemprop="author">{{ authors_text }}</div>
-            {% endif %}
-            {% if venue_text != "" %}
+            {%- endif -%}
+            {%- if venue_text != "" -%}
               <div class="pub-venue" itemprop="isPartOf">{{ venue_text }}</div>
-            {% endif %}
+            {%- endif -%}
+
             <meta itemprop="datePublished" content="{{ date_iso }}" />
           </div>
-        {% endif %}
-      {% endcapture %}
+        {%- endif -%}
+      {%- endcapture -%}
 
-      {% assign items = items | append: item %}
-    {% endif %}
-  {% endfor %}
+      {%- capture section_items -%}{{ section_items }}{{ item }}{%- endcapture -%}
+    {%- endif -%}
+  {%- endfor -%}
 
-  {% if items != "" %}
-    <section class="pub-section" id="{{ cat }}" aria-label="{{ cat | replace: 'workingpaper', 'Working Papers' | replace: 'workinprogress','Work in Progress' | replace: 'otherwriting','Other Writings' }}">
-      <h2 class="pub-h2">
-        {% case cat %}
-          {% when "workingpaper" %}Working Papers
-          {% when "workinprogress" %}Work in Progress
-          {% when "otherwriting" %}Other Writings
-          {% else %}{{ cat | capitalize }}
-        {% endcase %}
-      </h2>
-      {{ items }}
+  {%- if section_items != "" -%}
+    {%- assign cat_title = "" -%}
+    {%- if site.publication_category and site.publication_category[cat] and site.publication_category[cat].title -%}
+      {%- assign cat_title = site.publication_category[cat].title -%}
+    {%- endif -%}
+    {%- if cat_title == "" -%}
+      {%- case cat -%}
+        {%- when "workingpaper" -%}{%- assign cat_title = "Working Papers" -%}
+        {%- when "workinprogress" -%}{%- assign cat_title = "Work in Progress" -%}
+        {%- when "otherwriting" -%}{%- assign cat_title = "Other Writings" -%}
+        {%- else -%}{%- assign cat_title = cat | capitalize -%}
+      {%- endcase -%}
+    {%- endif -%}
+
+    <section class="pub-section" id="{{ cat }}" aria-label="{{ cat_title }}">
+      <h2 class="pub-h2">{{ cat_title }}</h2>
+      {{ section_items }}
     </section>
-  {% endif %}
+  {%- endif -%}
 {%- endfor -%}
 
 <script>
-(function() {
+(function () {
   function openFromHash() {
     var id = location.hash ? location.hash.slice(1) : null;
     if (!id) return;
+
     var el = document.getElementById(id);
     if (!el) return;
-    var details = el.tagName === 'DETAILS' ? el : el.closest('details');
+
+    var details = (el.tagName === "DETAILS") ? el : el.closest("details");
     if (details) details.open = true;
-    setTimeout(function(){ el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 0);
+
+    setTimeout(function () {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 0);
   }
-  window.addEventListener('hashchange', openFromHash);
+
+  window.addEventListener("hashchange", openFromHash);
   openFromHash();
 })();
 </script>
