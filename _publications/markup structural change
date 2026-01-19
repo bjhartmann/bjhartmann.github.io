@@ -5,4 +5,5 @@ authors: "<em>single-authored</em>"
 permalink: /publication/markup-structural change
 date: 2025-07-01
 category: workinprogress
+abstract: This paper extends a standard structural-change framework along two dimensions: variable markups within sectors and endogenous sectoral productivity growth through technology diffusion via learning-by-imitation. Variable markups separate the canonical price-effect channel into two distinct objects: sector-specific productivity growth and the sector-specific pass-through of that growth into the sectoral price index. Because firms adjust markups in response to productivity improvements, growth pass-through is incomplete. Technology diffusion endogenises productivity growth, and the firm productivity distribution shapes growth and pass-through in opposite directions: sectors with thicker upper tails grow faster through imitation but exhibit weaker growth pass-through. With incomplete growth pass-through, observed sectoral price changes diverge from underlying productivity changes, creating a wedge between measured prices and TFP.
 ---
