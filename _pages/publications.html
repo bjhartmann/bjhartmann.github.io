@@ -90,14 +90,26 @@ redirect_from:
       {%- assign abs_text = abs_text_raw | markdownify | strip_html | strip -%}
       {%- assign has_abstract = abs_text != "" -%}
 
-      {%- assign is_wp = false -%}
-      {%- if post.category == 'workingpaper' -%}
-        {%- assign is_wp = true -%}
-      {%- elsif post.categories and post.categories contains 'workingpaper' -%}
-        {%- assign is_wp = true -%}
-      {%- endif -%}
+{%- assign toggle_cats = "workingpaper,workinprogress" | split: "," -%}
+{%- assign in_toggle_cat = false -%}
 
-      {%- assign show_toggle = is_wp and has_abstract -%}
+{%- if post.category and toggle_cats contains post.category -%}
+  {%- assign in_toggle_cat = true -%}
+{%- endif -%}
+
+{%- if post.categories -%}
+  {%- for c in toggle_cats -%}
+    {%- if post.categories contains c -%}
+      {%- assign in_toggle_cat = true -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
+{%- assign show_toggle = false -%}
+{%- if in_toggle_cat and has_abstract -%}
+  {%- assign show_toggle = true -%}
+{%- endif -%}
+
 
       {%- capture authors_text -%}{{ post.authors | default: "" | strip }}{%- endcapture -%}
       {%- capture venue_text   -%}{{ post.venue   | default: "" | strip }}{%- endcapture -%}
