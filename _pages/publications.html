@@ -44,9 +44,6 @@ redirect_from:
   .pub-venue a:hover {
     text-decoration: underline;
   }
-
-  .pub-links a { margin: 0; }
-  .pub-links a + a { margin-left: .35rem; }
   
   .pub-authors { color: #555; margin-top: 0.2rem; }
   .pub-venue   { color: #666; margin-top: 0.2rem; }
@@ -93,16 +90,14 @@ redirect_from:
       {%- assign abs_id = "abs-" | append: pid -%}
 
 
-{%- assign abs_raw = post.abstract -%}
-{%- assign has_abstract = false -%}
-{%- if abs_raw -%}
-  {%- assign abs_text = abs_raw | strip -%}
-  {%- if abs_text != "" -%}
-    {%- assign has_abstract = true -%}
-  {%- endif -%}
-{%- endif -%}
-
-
+      {%- assign abs_raw = post.abstract -%}
+      {%- assign has_abstract = false -%}
+      {%- if abs_raw -%}
+        {%- assign abs_text = abs_raw | strip -%}
+        {%- if abs_text != "" -%}
+          {%- assign has_abstract = true -%}
+        {%- endif -%}
+      {%- endif -%}
 
 
       {%- assign in_toggle_cat = false -%}
@@ -126,22 +121,34 @@ redirect_from:
       {%- capture venue_text   -%}{{ post.venue   | default: "" | strip }}{%- endcapture -%}
       {%- assign date_iso = post.date | date: "%Y-%m-%d" -%}
 
-      {%- capture render_links -%}
-        <span class="pub-links">
-          {%- if post.paperurl -%}
-            [<a href="{{ post.paperurl }}" target="_blank" rel="noopener noreferrer">{{ post.paperlabel | default: "paper" }}</a>]
-          {%- endif -%}
-          {%- if post.slidesurl -%}
-            [<a href="{{ post.slidesurl }}" target="_blank" rel="noopener noreferrer">{{ post.slideslabel | default: "slides" }}</a>]
-          {%- endif -%}
-          {%- if post.codeurl -%}
-            [<a href="{{ post.codeurl }}" target="_blank" rel="noopener noreferrer">{{ post.codelabel | default: "code" }}</a>]
-          {%- endif -%}
-          {%- if post.doi -%}
-            [<a href="https://doi.org/{{ post.doi | escape }}" target="_blank" rel="noopener noreferrer">doi</a>]
-          {%- endif -%}
-        </span>
-      {%- endcapture -%}
+{%- capture render_links -%}
+  <span class="pub-links">
+    {%- assign first_link = true -%}
+
+    {%- if post.paperurl -%}
+      [<a href="{{ post.paperurl }}" target="_blank" rel="noopener noreferrer">{{ post.paperlabel | default: "paper" }}</a>]
+      {%- assign first_link = false -%}
+    {%- endif -%}
+
+    {%- if post.slidesurl -%}
+      {%- unless first_link -%}&nbsp;{%- endunless -%}
+      [<a href="{{ post.slidesurl }}" target="_blank" rel="noopener noreferrer">{{ post.slideslabel | default: "slides" }}</a>]
+      {%- assign first_link = false -%}
+    {%- endif -%}
+
+    {%- if post.codeurl -%}
+      {%- unless first_link -%}&nbsp;{%- endunless -%}
+      [<a href="{{ post.codeurl }}" target="_blank" rel="noopener noreferrer">{{ post.codelabel | default: "code" }}</a>]
+      {%- assign first_link = false -%}
+    {%- endif -%}
+
+    {%- if post.doi -%}
+      {%- unless first_link -%}&nbsp;{%- endunless -%}
+      [<a href="https://doi.org/{{ post.doi | escape }}" target="_blank" rel="noopener noreferrer">doi</a>]
+    {%- endif -%}
+  </span>
+{%- endcapture -%}
+
 
 
       {%- capture item -%}
