@@ -29,8 +29,16 @@ redirect_from:
   }
 
   /* Title styling */
-  .pub-title { font-weight: 600; color: #2563eb; text-decoration: none; }
-  .pub-title:hover { text-decoration: none; }
+.pub-title {
+  font-weight: 600;
+  color: var(--global-masthead-link-color, var(--global-link-color, inherit));
+  text-decoration: none;
+}
+.pub-title:hover {
+  color: var(--global-masthead-link-color-hover, var(--global-link-color-hover, inherit));
+  text-decoration: none;
+}
+
 
   /* Secondary links (authors/venue/[paper]) */
   .pub-links a,
