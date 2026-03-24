@@ -14,7 +14,7 @@ permalink: /
   column-gap: 4rem;
   align-items: center;
   max-width: 900px;
-  margin: 0 auto 1.5rem;
+  margin: 2rem auto 1.5rem;
 }
 
 /* Portrait image: keep original aspect ratio */
