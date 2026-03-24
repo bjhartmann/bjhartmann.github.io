@@ -36,10 +36,14 @@ permalink: /
 
 .profile-meta {
   margin-top: 1.5rem;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .profile-meta p {
-  margin: 0.4rem 0;
+  margin: 0;
 }
 
 .profile-meta a {
