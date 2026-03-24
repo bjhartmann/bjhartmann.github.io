@@ -72,7 +72,7 @@ permalink: /
 <div class="profile-row">
   <section class="about-text">
     <strong>About me</strong>
-    <p>I am a 5th year Ph.D. student in Economics at the University of St. Gallen.<br> My primary advisor is Reto Föllmi.</p>
+    <p>I am a 5th year PhD student in Economics at the University of St. Gallen.<br> My primary advisor is Reto Föllmi.</p>
     <p>My research interests cover International Trade, Economic Growth, and Structural Change.</p>
     <p>In the academic year 25/26, I visit
       <a href="https://sites.google.com/site/fjbuera/" target="_blank" rel="noopener">Francisco Buera</a> (Washington University in St. Louis) and<br>
