@@ -37,7 +37,7 @@ permalink: /
 .profile-meta {
   margin-top: 1.5rem;
   display: flex;
-  gap: 1.5rem;
+  gap: 3rem;
   align-items: center;
   flex-wrap: wrap;
 }
