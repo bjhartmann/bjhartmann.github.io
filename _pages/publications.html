@@ -138,14 +138,14 @@ redirect_from:
   <span class="pub-links">
     {%- assign first_link = true -%}
 
-    {%- if post.paperurl -%}
-      [<a href="{{ post.paperurl }}" target="_blank" rel="noopener noreferrer">{{ post.paperlabel | default: "paper" }}</a>]
-      {%- assign first_link = false -%}
-    {%- endif -%}
-
     {%- if post.slidesurl -%}
       {%- unless first_link -%}&nbsp;{%- endunless -%}
       [<a href="{{ post.slidesurl }}" target="_blank" rel="noopener noreferrer">{{ post.slideslabel | default: "slides" }}</a>]
+      {%- assign first_link = false -%}
+    {%- endif -%}
+    
+    {%- if post.paperurl -%}
+      [<a href="{{ post.paperurl }}" target="_blank" rel="noopener noreferrer">{{ post.paperlabel | default: "paper" }}</a>]
       {%- assign first_link = false -%}
     {%- endif -%}
 
