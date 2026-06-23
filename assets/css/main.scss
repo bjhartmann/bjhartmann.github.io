@@ -213,3 +213,32 @@ html[data-theme="dark"] .greedy-nav { background: var(--header-bg) !important; }
 .page__meta:first-child { margin-top: 0 !important; }
 
 
+
+/* -------------------- Improved dark-mode palette -------------------- */
+
+html[data-theme="dark"] {
+  --global-base-color:                #b8c0cc;
+  --global-bg-color:                  #181b20;
+  --global-footer-bg-color:           #12151a;
+
+  --global-border-color:              #4b5563;
+  --global-dark-border-color:         #2d333b;
+
+  --global-code-background-color:     #252a31;
+  --global-code-text-color:           #f1f3f5;
+
+  --global-fig-caption-color:         #c8ced7;
+
+  --global-link-color:                #8ab4f8;
+  --global-link-color-hover:          #c2d7ff;
+  --global-link-color-visited:        #d0b8ff;
+
+  --global-masthead-link-color:       #ffffff;
+  --global-masthead-link-color-hover: #d8e2ef;
+
+  --global-text-color:                #f1f3f5;
+  --global-text-color-light:          #c7ced8;
+
+  --global-thead-color:               #2d333b;
+}
+
