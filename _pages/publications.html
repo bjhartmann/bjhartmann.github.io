@@ -84,7 +84,37 @@ redirect_from:
   @media (max-width: 640px) {
     .pub-top { flex-direction: column; align-items: flex-start; }
   }
+
+
+.pub-item {
+  border-bottom-color: var(--global-border-color);
+}
+
+.pub-links a,
+.pub-authors a,
+.pub-venue a {
+  color: var(--global-link-color);
+}
+
+.pub-authors,
+.pub-venue,
+.pub-abstract {
+  color: var(--global-text-color);
+}
+
+details.pub-toggle > summary .caret::after {
+  color: var(--global-text-color);
+}
+
+/* The navy heading colour works in light mode but not on a dark background */
+html[data-theme="dark"] .pub-h2,
+html[data-theme="dark"] .pub-title,
+html[data-theme="dark"] .pub-title:hover {
+  color: var(--global-text-color);
+}
+  
 </style>
+
 
 {%- for cat in category_order -%}
   {%- capture section_items -%}{%- endcapture -%}
