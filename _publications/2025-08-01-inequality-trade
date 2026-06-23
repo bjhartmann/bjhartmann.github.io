@@ -4,8 +4,8 @@ authors: 'with <a href="https://sites.google.com/site/foellmireto/home" target="
 collection: publications
 permalink: /publication/income-distribution
 date: 2025-08-01
-#slidesurl:  /files/2026-05-27-inequality-trade.pdf
-#slideslabel: "update"
+slidesurl:  /files/2026-6-inequality-paper.pdf
+slideslabel: "update"
 paperurl: "https://www.ifo.de/DocDL/cesifo1_wp12107.pdf"
 paperlabel: "CESifo WP"             # 👈 custom label
 abstract: >
