@@ -63,17 +63,22 @@ redirect_from:
   
 
   /* Toggle/caret styling */
-  details.pub-toggle > summary { list-style: none; cursor: pointer; }
-  details.pub-toggle > summary::-webkit-details-marker { display: none; }
+details.pub-toggle > summary { list-style: none; cursor: pointer; }
+details.pub-toggle > summary::-webkit-details-marker { display: none; }
 
-  details.pub-toggle > summary .caret::after {
-    content: "▸";
-    margin-left: .4rem;
-    line-height: 1;
-    transition: transform .15s ease;
-    color: #555;
-  }
-  details.pub-toggle[open] > summary .caret::after { transform: rotate(90deg); }
+details.pub-toggle > summary .caret::after {
+  content: "▸";
+  display: inline-block;
+  margin-left: .4rem;
+  line-height: 1;
+  transform-origin: 50% 50%;
+  transition: transform .15s ease;
+  color: #555;
+}
+
+details.pub-toggle[open] > summary .caret::after {
+  transform: rotate(90deg);
+}
 
   @media print {
     details.pub-toggle[open] > summary .caret::after,
