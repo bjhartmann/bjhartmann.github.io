@@ -6,6 +6,7 @@ authors: >
 collection: publications
 permalink: /publication/parallel-trade
 date: 2024-12-01
+order: 3
 paperurl: /files/parallel-trade-policy.pdf
 paperlabel: "paper"
 slidesurl: # /files/parallel-trade-slides.pdf
