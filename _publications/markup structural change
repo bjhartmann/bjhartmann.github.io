@@ -3,6 +3,11 @@ title: "Structural Change under Limited Growth Pass-Through"
 authors: <em>Job Market Paper</em>
 collection: publications
 permalink: /publication/markup-structural change
+paperurl: /files/Structural_Change_under_Limited_Growth_Pass_Through.pdf
+paperlabel: "paper"
 date: 2025-07-01
-category: workinprogress
+abstract: >
+  I incorporate variable markups into a model of structural change. This separates the canonical price effect into two objects: productivity growth and its *growth pass-through* into the sectoral price index. Growth pass-through is incomplete and depends on the sectoral firm distribution. Consequently, observed price changes do not directly reveal underlying productivity. I quantify the mechanism for the United States from 1980 to 2014 and find that growth pass-through has declined in every sector as markups have risen. In the full pass-through counterfactual, structural change toward Services would have been 31.4% larger, corresponding to a 2.92 percentage-point higher Services expenditure share in 2014. This effect is primarily driven by limited pass-through in Industry.
+category: workingpaper
+
 ---
