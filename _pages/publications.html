@@ -8,7 +8,7 @@ redirect_from:
   - /publications/
 ---
 
-{%- assign pubs = site.publications | sort: "date" | reverse -%}
+{%- assign pubs = site.publications | sort: "order" -%}
 {%- assign category_order = "workingpaper,workinprogress,otherwriting" | split: "," -%}
 {%- assign toggle_cats = "workingpaper,workinprogress" | split: "," -%}
 
