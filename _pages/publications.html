@@ -54,11 +54,24 @@ redirect_from:
   text-decoration: none;
 }
 
-.pub-links a:hover {
+/* Links on the right: [paper], [update], etc. */
+.pub-links {
   color: #2F75A8;
+}
+
+.pub-links a,
+.pub-links a:visited,
+.pub-links a:hover,
+.pub-links a:active {
+  color: #2F75A8 !important;
+  text-decoration: none;
+}
+
+.pub-links a:hover {
   text-decoration: underline;
 }
 
+/* Co-author and venue links */
 .pub-authors a,
 .pub-venue a,
 .pub-authors a:visited,
