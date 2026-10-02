@@ -44,16 +44,6 @@ redirect_from:
 }
 
 
-  /* Secondary links */
-.pub-links {
-  color: #2F75A8;
-}
-
-.pub-links a {
-  color: inherit;
-  text-decoration: none;
-}
-
 /* Links on the right: [paper], [update], etc. */
 .pub-links {
   color: #2F75A8;
@@ -61,28 +51,40 @@ redirect_from:
 
 .pub-links a,
 .pub-links a:visited,
-.pub-links a:hover,
 .pub-links a:active {
   color: #2F75A8 !important;
-  text-decoration: none;
+  text-decoration: none !important;
+  border-bottom: none !important;
 }
 
 .pub-links a:hover {
-  text-decoration: underline;
+  color: #2F75A8 !important;
+  text-decoration: underline !important;
+  border-bottom: none !important;
 }
 
-/* Co-author and venue links */
-.pub-authors a,
-.pub-venue a,
-.pub-authors a:visited,
-.pub-venue a:visited,
-.pub-authors a:hover,
-.pub-venue a:hover,
-.pub-authors a:active,
-.pub-venue a:active {
-  color: var(--global-link-color);
-  text-decoration: none;
+
+/* Author, venue, and abstract text */
+.pub-authors,
+.pub-venue,
+.pub-abstract {
+  color: var(--global-text-color);
 }
+
+/* Co-author and venue links: exactly the same grey as surrounding text */
+.pub-authors a,
+.pub-authors a:visited,
+.pub-authors a:hover,
+.pub-authors a:active,
+.pub-venue a,
+.pub-venue a:visited,
+.pub-venue a:hover,
+.pub-venue a:active {
+  color: var(--global-text-color) !important;
+  text-decoration: none !important;
+  border-bottom: none !important;
+}
+  
 
   /* Toggle/caret styling */
 details.pub-toggle > summary { list-style: none; cursor: pointer; }
@@ -117,17 +119,7 @@ details.pub-toggle[open] > summary .caret::after {
   border-bottom-color: var(--global-border-color);
 }
 
-.pub-links a,
-.pub-authors a,
-.pub-venue a {
-  color: var(--global-link-color);
-}
-
-.pub-authors,
-.pub-venue,
-.pub-abstract {
-  color: var(--global-text-color);
-}
+  
 
 details.pub-toggle > summary .caret::after {
   color: var(--global-text-color);
